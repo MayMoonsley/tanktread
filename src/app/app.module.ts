@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { UnitComponent } from './unit/unit.component';
+import { BattlefieldRegionComponent } from './battlefield-region/battlefield-region.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UnitComponent
+    UnitComponent,
+    BattlefieldRegionComponent
   ],
   imports: [
     BrowserModule

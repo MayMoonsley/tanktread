@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Unit } from '../Unit'
 
 @Component({
@@ -8,11 +8,7 @@ import { Unit } from '../Unit'
 })
 export class UnitComponent implements OnInit {
 
-  unit: Unit = {
-    name: 'TEMP',
-    health: 10,
-    maxHealth: 10
-  };
+  @Input() unit: Unit;
 
   constructor() { }
 
