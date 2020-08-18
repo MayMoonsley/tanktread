@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Unit } from '../Unit';
+import { Component, OnInit, Input } from '@angular/core';
+import { BattlefieldRegion } from '../interfaces/BattlefieldRegion';
 
 @Component({
   selector: 'app-battlefield-region',
@@ -8,12 +8,7 @@ import { Unit } from '../Unit';
 })
 export class BattlefieldRegionComponent implements OnInit {
 
-  units: Unit[] = [
-    {name: 'Temp1', health: 10, maxHealth: 10},
-    {name: 'Temp2', health: 10, maxHealth: 10},
-    {name: 'Temp3', health: 10, maxHealth: 10},
-    {name: 'Temp4', health: 10, maxHealth: 10}
-  ];
+  @Input() region: BattlefieldRegion;
 
   constructor() { }
 
