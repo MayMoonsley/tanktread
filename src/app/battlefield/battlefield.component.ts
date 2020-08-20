@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Battlefield } from '../interfaces/Battlefield';
 import { BattlefieldService } from '../battlefield.service'
+import { Game } from '../Game';
 
 @Component({
   selector: 'app-battlefield',
@@ -15,6 +16,10 @@ export class BattlefieldComponent implements OnInit {
 
   ngOnInit(): void {
     this.battlefield = this.battlefieldService.getBattlefield();
+  }
+
+  hurtEveryone(): void {
+    Game.hurtEveryone();
   }
 
 }
