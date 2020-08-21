@@ -1,5 +1,6 @@
 import { Battlefield } from './interfaces/Battlefield';
 import { Unit } from './interfaces/Unit';
+import { TurnCount } from './interfaces/TurnCount';
 
 export namespace Game {
 
@@ -24,6 +25,10 @@ export namespace Game {
             initBattlefield();
         }
         return battlefield;
+    }
+
+    export function getTurnCount(): TurnCount {
+        return {halfTurns: 3, fullTurns: 3};
     }
 
     export function hurtEveryone(): void {
