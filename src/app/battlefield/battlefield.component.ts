@@ -22,4 +22,8 @@ export class BattlefieldComponent implements OnInit {
     Game.hurtEveryone();
   }
 
+  hurtSomeone(): void {
+    Game.hurtSomeone();
+  }
+
 }
