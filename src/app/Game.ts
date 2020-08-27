@@ -41,7 +41,9 @@ export namespace Game {
     }
 
     export function hurtSomeone(): void {
-
+        const region = Random.fromArray(battlefield.regions);
+        const unit = Random.fromArray(region.units);
+        unit.health--;
     }
 
     init();
