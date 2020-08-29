@@ -1,7 +1,6 @@
-import * as Interfaces from '../interfaces/Unit';
 import { Skill } from './Skill';
 
-export class Unit implements Interfaces.Unit {
+export class Unit {
 
     name: string;
     health: number;

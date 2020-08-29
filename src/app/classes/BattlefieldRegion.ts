@@ -1,7 +1,6 @@
-import * as Interfaces from '../interfaces/BattlefieldRegion';
 import { Unit } from './Unit';
 
-export class BattlefieldRegion implements Interfaces.BattlefieldRegion {
+export class BattlefieldRegion {
 
     name: string;
     units: Unit[];

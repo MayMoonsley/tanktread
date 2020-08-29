@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Battlefield } from './interfaces/Battlefield';
+import { Battlefield } from './classes/Battlefield';
 import { Game } from './Game';
 
 @Injectable({

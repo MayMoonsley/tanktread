@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { BattlefieldRegion } from '../interfaces/BattlefieldRegion';
+import { BattlefieldRegion } from '../classes/BattlefieldRegion';
 
 @Component({
   selector: 'app-battlefield-region',

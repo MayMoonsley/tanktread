@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Unit } from '../interfaces/Unit'
+import { Unit } from '../classes/Unit'
 
 @Component({
   selector: 'app-unit',

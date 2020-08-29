@@ -1,4 +1,3 @@
-import * as Interfaces from '../interfaces/Skill';
 import { Unit } from './Unit';
 import { Effect, applyEffect, effectToString } from './Effect';
 
@@ -6,7 +5,7 @@ export enum SkillTargetingMode {
     Self, UnitMelee, UnitRanged, Region
 }
 
-export class Skill implements Interfaces.Skill {
+export class Skill {
 
     name: string;
     targetingMode: SkillTargetingMode;

@@ -1,8 +1,7 @@
-import * as Interfaces from '../interfaces/Battlefield';
 import { BattlefieldRegion } from './BattlefieldRegion';
 import { Unit } from './Unit';
 
-export class Battlefield implements Interfaces.Battlefield {
+export class Battlefield {
 
     regions: BattlefieldRegion[];
 
