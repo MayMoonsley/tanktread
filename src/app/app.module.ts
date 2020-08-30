@@ -6,6 +6,7 @@ import { UnitComponent } from './unit/unit.component';
 import { BattlefieldRegionComponent } from './battlefield-region/battlefield-region.component';
 import { BattlefieldComponent } from './battlefield/battlefield.component';
 import { CombatScreenComponent } from './combat-screen/combat-screen.component';
+import { SkillComponent } from './skill/skill.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { CombatScreenComponent } from './combat-screen/combat-screen.component';
     UnitComponent,
     BattlefieldRegionComponent,
     BattlefieldComponent,
-    CombatScreenComponent
+    CombatScreenComponent,
+    SkillComponent
   ],
   imports: [
     BrowserModule

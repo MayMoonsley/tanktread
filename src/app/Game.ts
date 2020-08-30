@@ -2,6 +2,7 @@ import { Battlefield } from './classes/Battlefield';
 import { Unit } from './classes/Unit';
 import { BattlefieldRegion } from './classes/BattlefieldRegion';
 import { Random } from './util/Random';
+import { Skill, SkillTargetingMode } from './classes/Skill';
 
 export namespace Game {
 
@@ -9,12 +10,13 @@ export namespace Game {
 
     function init(): void {
         const regionNames = ['Plains', 'Island', 'Swamp', 'Mountain', 'Forest'];
+        const skills = [new Skill('Bash', SkillTargetingMode.Self, [{type: 'damageTarget', amount: 2}])];
         battlefield = new Battlefield([]);
         let tempNum: number = 1;
         for (let name of regionNames) {
             const units: Unit[] = [];
             for (let i = 0; i < 3; i++) {
-                units.push(new Unit(`Temp${tempNum}`, 10));
+                units.push(new Unit(`Temp${tempNum}`, 10, [Random.fromArray(skills)]));
                 tempNum++;
             }
             battlefield.regions.push(new BattlefieldRegion(name, units));
