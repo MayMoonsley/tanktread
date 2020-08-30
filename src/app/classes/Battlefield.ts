@@ -1,4 +1,7 @@
+import { Arrays } from '../util/Arrays';
+import { Types } from '../util/Types';
 import { BattlefieldRegion } from './BattlefieldRegion';
+import { SkillTargetingMode } from './Skill';
 import { Unit } from './Unit';
 
 export class Battlefield {
@@ -18,6 +21,25 @@ export class Battlefield {
         }
         source.removeUnit(unit);
         destination.addUnit(unit);
+    }
+
+    getAllUnits(): Unit[] {
+        return Arrays.flatten(this.regions.map(region => region.units));
+    }
+
+    getTargetables(user: Unit, mode: SkillTargetingMode): (Unit | BattlefieldRegion)[] {
+        switch (mode) {
+            case SkillTargetingMode.UnitRanged:
+                return this.getAllUnits();
+            case SkillTargetingMode.UnitMelee:
+                return user.containingRegion.units;
+            case SkillTargetingMode.Self:
+                return [user];
+            case SkillTargetingMode.Region:
+                return this.regions;
+            default:
+                return Types.impossible(mode);
+        }
     }
 
 }
