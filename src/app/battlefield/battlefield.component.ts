@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Battlefield } from '../classes/Battlefield';
+import { BattlefieldRegion } from '../classes/BattlefieldRegion';
+import { Unit } from '../classes/Unit';
 import { BattlefieldService } from '../battlefield.service';
 import { Game } from '../Game';
 
@@ -11,11 +13,13 @@ import { Game } from '../Game';
 export class BattlefieldComponent implements OnInit {
 
   battlefield: Battlefield;
+  targetables: (Unit | BattlefieldRegion)[];
 
   constructor(private battlefieldService: BattlefieldService) {}
 
   ngOnInit(): void {
     this.battlefield = this.battlefieldService.getBattlefield();
+    this.targetables = this.battlefieldService.getTargetables();
   }
 
 }

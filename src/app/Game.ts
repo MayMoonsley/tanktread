@@ -4,9 +4,22 @@ import { BattlefieldRegion } from './classes/BattlefieldRegion';
 import { Random } from './util/Random';
 import { Skill, SkillTargetingMode } from './classes/Skill';
 
+interface TargetingState {
+    active: boolean,
+    user: Unit,
+    skill: Skill,
+    targetables: (Unit | BattlefieldRegion)[]
+}
+
 export namespace Game {
 
     let battlefield: Battlefield;
+    let currentTargetingState: TargetingState = {
+        active: false,
+        user: null,
+        skill: null,
+        targetables: []
+    };
 
     function init(): void {
         const regionNames = ['Plains', 'Island', 'Swamp', 'Mountain', 'Forest'];
@@ -26,6 +39,22 @@ export namespace Game {
 
     export function getBattlefield(): Battlefield {
         return battlefield;
+    }
+
+    export function getTargetables(): (Unit | BattlefieldRegion)[] {
+        if (currentTargetingState.active) {
+            return currentTargetingState.targetables;
+        }
+        return [];
+    }
+
+    export function beginTargeting(user: Unit, skill: Skill): void {
+        currentTargetingState = {
+            active: true,
+            user,
+            skill,
+            targetables: battlefield.getTargetables(user, skill.targetingMode)
+        }
     }
 
     export function hurtEveryone(): void {
