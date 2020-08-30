@@ -18,7 +18,7 @@ export namespace Random {
 
     export function shuffle<T>(arr: T[]): T[] {
         const result: T[] = [];
-        for (let elem of arr) {
+        for (const elem of arr) {
             result.push(elem);
         }
         for (let i = 0; i < result.length - 1; i++) {
@@ -31,13 +31,13 @@ export namespace Random {
     }
 
     export function weightedRandom<T>(arr: [T, number][]): T {
-        let total: number = 0;
-        for (let elem of arr) {
+        let total = 0;
+        for (const elem of arr) {
             total += elem[1];
         }
         const index = float(0, total);
-        let rollingSum: number = 0;
-        for (let elem of arr) {
+        let rollingSum = 0;
+        for (const elem of arr) {
             rollingSum += elem[1];
             if (index < rollingSum) {
                 return elem[0];

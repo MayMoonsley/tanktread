@@ -6,14 +6,14 @@ import { Skill, SkillTargetingMode } from './classes/Skill';
 
 export namespace Game {
 
-    var battlefield: Battlefield;
+    let battlefield: Battlefield;
 
     function init(): void {
         const regionNames = ['Plains', 'Island', 'Swamp', 'Mountain', 'Forest'];
         const skills = [new Skill('Bash', SkillTargetingMode.Self, [{type: 'damageTarget', amount: 2}])];
         battlefield = new Battlefield([]);
-        let tempNum: number = 1;
-        for (let name of regionNames) {
+        let tempNum = 1;
+        for (const name of regionNames) {
             const units: Unit[] = [];
             for (let i = 0; i < 3; i++) {
                 units.push(new Unit(`Temp${tempNum}`, 10, [Random.fromArray(skills)]));
@@ -30,8 +30,8 @@ export namespace Game {
 
     export function hurtEveryone(): void {
         const b: Battlefield = getBattlefield();
-        for (let region of b.regions) {
-            for (let unit of region.units) {
+        for (const region of b.regions) {
+            for (const unit of region.units) {
                 unit.health--;
             }
         }

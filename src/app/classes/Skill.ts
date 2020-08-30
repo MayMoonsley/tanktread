@@ -21,8 +21,8 @@ export class Skill {
         return this.effects.map(effectToString).join(' ');
     }
 
-    applyEffects(user: Unit, target: Unit) {
-        for (let effect of this.effects) {
+    applyEffects(user: Unit, target: Unit): void {
+        for (const effect of this.effects) {
             applyEffect(effect, user, target);
         }
     }
