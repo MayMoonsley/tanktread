@@ -5,9 +5,9 @@ export class BattlefieldRegion {
     name: string;
     units: Unit[];
 
-    constructor(name: string, units: Unit[] = []) {
+    constructor(name: string) {
         this.name = name;
-        this.units = units;
+        this.units = [];
     }
 
     addUnit(unit: Unit): void {
@@ -15,6 +15,7 @@ export class BattlefieldRegion {
             throw new Error('Unit cannot exist in a region twice');
         }
         this.units.push(unit);
+        unit.containingRegion = this;
     }
 
     removeUnit(unit: Unit): void {
@@ -22,6 +23,7 @@ export class BattlefieldRegion {
             throw new Error('Cannot remove Unit from a region it\'s not in');
         }
         this.units.splice(this.units.indexOf(unit), 1);
+        unit.containingRegion = null;
     }
 
 }

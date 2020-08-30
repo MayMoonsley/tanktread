@@ -14,12 +14,12 @@ export namespace Game {
         battlefield = new Battlefield([]);
         let tempNum = 1;
         for (const name of regionNames) {
-            const units: Unit[] = [];
+            const region = new BattlefieldRegion(name);
             for (let i = 0; i < 3; i++) {
-                units.push(new Unit(`Temp${tempNum}`, 10, [Random.fromArray(skills)]));
+                region.addUnit(new Unit(`Temp${tempNum}`, 10, [Random.fromArray(skills)]));
                 tempNum++;
             }
-            battlefield.regions.push(new BattlefieldRegion(name, units));
+            battlefield.regions.push(region);
         }
         battlefield.regions = Random.shuffle(battlefield.regions);
     }

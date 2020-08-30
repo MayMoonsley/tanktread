@@ -1,3 +1,4 @@
+import { BattlefieldRegion } from './BattlefieldRegion';
 import { Skill } from './Skill';
 
 export class Unit {
@@ -6,6 +7,7 @@ export class Unit {
     health: number;
     maxHealth: number;
     skills: Skill[];
+    containingRegion: BattlefieldRegion;
 
     constructor(name: string, health: number, skills: Skill[] = []) {
         this.name = name;
