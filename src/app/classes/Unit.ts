@@ -27,4 +27,11 @@ export class Unit {
         }
     }
 
+    moveTo(region: BattlefieldRegion): void {
+        if (this.containingRegion !== null) {
+            this.containingRegion.removeUnit(this);
+        }
+        region.addUnit(this);
+    }
+
 }
