@@ -18,12 +18,4 @@ export class BattlefieldComponent implements OnInit {
     this.battlefield = this.battlefieldService.getBattlefield();
   }
 
-  hurtEveryone(): void {
-    Game.hurtEveryone();
-  }
-
-  hurtSomeone(): void {
-    Game.hurtSomeone();
-  }
-
 }
