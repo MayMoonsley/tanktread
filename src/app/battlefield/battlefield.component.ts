@@ -13,13 +13,11 @@ import { Game } from '../Game';
 export class BattlefieldComponent implements OnInit {
 
   battlefield: Battlefield;
-  targetables: (Unit | BattlefieldRegion)[];
 
   constructor(private battlefieldService: BattlefieldService) {}
 
   ngOnInit(): void {
     this.battlefield = this.battlefieldService.getBattlefield();
-    this.targetables = this.battlefieldService.getTargetables();
   }
 
 }

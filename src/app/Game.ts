@@ -3,12 +3,13 @@ import { Unit } from './classes/Unit';
 import { BattlefieldRegion } from './classes/BattlefieldRegion';
 import { Random } from './util/Random';
 import { Skill, SkillTargetingMode } from './classes/Skill';
+import { Targetable } from './interfaces/Targetable';
 
 interface TargetingState {
     active: boolean,
     user: Unit,
     skill: Skill,
-    targetables: (Unit | BattlefieldRegion)[]
+    targetables: Targetable[]
 }
 
 export namespace Game {
@@ -41,7 +42,7 @@ export namespace Game {
         return battlefield;
     }
 
-    export function getTargetables(): (Unit | BattlefieldRegion)[] {
+    export function getTargetables(): Targetable[] {
         if (currentTargetingState.active) {
             return currentTargetingState.targetables;
         }

@@ -1,6 +1,8 @@
 import { Unit } from './Unit';
+import { Skill } from './Skill';
+import { Targetable } from '../interfaces/Targetable';
 
-export class BattlefieldRegion {
+export class BattlefieldRegion implements Targetable {
 
     name: string;
     units: Unit[];
@@ -24,6 +26,12 @@ export class BattlefieldRegion {
         }
         this.units.splice(this.units.indexOf(unit), 1);
         unit.containingRegion = null;
+    }
+
+    applySkill(user: Unit, skill: Skill): void {
+        for (let target of this.units) {
+            target.applySkill(user, skill);
+        }
     }
 
 }

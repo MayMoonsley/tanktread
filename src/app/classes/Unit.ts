@@ -1,5 +1,6 @@
 import { BattlefieldRegion } from './BattlefieldRegion';
 import { Skill } from './Skill';
+import { Targetable } from '../interfaces/Targetable';
 
 export class Unit {
 
@@ -32,6 +33,10 @@ export class Unit {
             this.containingRegion.removeUnit(this);
         }
         region.addUnit(this);
+    }
+
+    applySkill(user: Unit, skill: Skill): void {
+        skill.applyEffects(user, this);
     }
 
 }
