@@ -1,0 +1,12 @@
+:host {
+    display: block;
+}
+
+:host(.targetable) {
+    background: #99FF99;
+    cursor: pointer;
+}
+
+:host(.targetable):hover {
+    background: #FF9999;
+}
