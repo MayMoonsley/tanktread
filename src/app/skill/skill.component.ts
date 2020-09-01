@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Skill } from '../classes/Skill';
 import { Unit } from '../classes/Unit';
+import { Game } from '../Game';
 
 @Component({
   selector: 'app-skill',
@@ -15,6 +16,10 @@ export class SkillComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  use(): void {
+      Game.beginTargeting(this.unit, this.skill);
   }
 
 }
