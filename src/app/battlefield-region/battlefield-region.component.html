@@ -1,2 +1,2 @@
 <h2>{{ region.name }}</h2>
-<app-unit *ngFor="let unit of region.units" [unit]="unit"></app-unit>
+<app-unit *ngFor="let unit of region.units" [unit]="unit" [targetable]='isTargetable(unit)'></app-unit>

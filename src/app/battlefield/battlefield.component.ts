@@ -22,4 +22,8 @@ export class BattlefieldComponent implements OnInit {
     this.targetables = this.battlefieldService.getTargetables();
   }
 
+  isTargetable(region: BattlefieldRegion): boolean {
+    return Game.getTargetables().includes(region);
+  }
+
 }

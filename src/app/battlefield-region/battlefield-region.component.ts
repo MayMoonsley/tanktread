@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BattlefieldRegion } from '../classes/BattlefieldRegion';
+import { Game } from '../Game';
+import { Unit } from '../classes/Unit';
 
 @Component({
   selector: 'app-battlefield-region',
@@ -13,6 +15,10 @@ export class BattlefieldRegionComponent implements OnInit {
 
   @Input() region: BattlefieldRegion;
   @Input() targetable: boolean
+
+  isTargetable(unit: Unit): boolean {
+    return Game.getTargetables().includes(unit);
+  }
 
   constructor() { }
 
