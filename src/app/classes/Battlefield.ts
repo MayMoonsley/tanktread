@@ -32,7 +32,7 @@ export class Battlefield {
             case SkillTargetingMode.UnitRanged:
                 return this.getAllUnits();
             case SkillTargetingMode.UnitMelee:
-                return user.containingRegion.units;
+                return user.containingRegion!.units;
             case SkillTargetingMode.Self:
                 return [user];
             case SkillTargetingMode.Region:

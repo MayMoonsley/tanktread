@@ -7,7 +7,7 @@ export class Unit {
     health: number;
     maxHealth: number;
     skills: Skill[];
-    containingRegion: BattlefieldRegion;
+    containingRegion?: BattlefieldRegion = undefined;
 
     constructor(name: string, health: number, skills: Skill[] = []) {
         this.name = name;
@@ -28,7 +28,7 @@ export class Unit {
     }
 
     moveTo(region: BattlefieldRegion): void {
-        if (this.containingRegion !== null) {
+        if (this.containingRegion) {
             this.containingRegion.removeUnit(this);
         }
         region.addUnit(this);

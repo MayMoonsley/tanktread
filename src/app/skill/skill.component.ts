@@ -10,8 +10,8 @@ import { Game } from '../Game';
 })
 export class SkillComponent implements OnInit {
 
-  @Input() skill: Skill;
-  @Input() unit: Unit;
+  @Input() skill?: Skill;
+  @Input() unit?: Unit;
 
   constructor() { }
 
@@ -19,7 +19,7 @@ export class SkillComponent implements OnInit {
   }
 
   use(): void {
-      Game.beginTargeting(this.unit, this.skill);
+      Game.beginTargeting(this.unit!, this.skill!);
   }
 
 }

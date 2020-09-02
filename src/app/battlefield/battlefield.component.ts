@@ -12,8 +12,8 @@ import { Game } from '../Game';
 })
 export class BattlefieldComponent implements OnInit {
 
-  battlefield: Battlefield;
-  targetables: (Unit | BattlefieldRegion)[];
+  battlefield?: Battlefield;
+  targetables?: (Unit | BattlefieldRegion)[];
 
   constructor(private battlefieldService: BattlefieldService) {}
 

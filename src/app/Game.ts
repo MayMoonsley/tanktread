@@ -6,8 +6,8 @@ import { Skill, SkillTargetingMode } from './classes/Skill';
 
 interface TargetingState {
     active: boolean,
-    user: Unit,
-    skill: Skill,
+    user?: Unit,
+    skill?: Skill,
     targetables: (Unit | BattlefieldRegion)[]
 }
 
@@ -16,8 +16,8 @@ export namespace Game {
     let battlefield: Battlefield;
     let currentTargetingState: TargetingState = {
         active: false,
-        user: null,
-        skill: null,
+        user: undefined,
+        skill: undefined,
         targetables: []
     };
 

@@ -11,8 +11,8 @@ import { Unit } from '../classes/Unit';
 })
 export class UnitComponent implements OnInit {
 
-  @Input() unit: Unit;
-  @Input() targetable: boolean;
+  @Input() unit?: Unit = undefined;
+  @Input() targetable: boolean = false;
 
   constructor() { }
 

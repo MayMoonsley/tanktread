@@ -13,8 +13,8 @@ import { Unit } from '../classes/Unit';
 })
 export class BattlefieldRegionComponent implements OnInit {
 
-  @Input() region: BattlefieldRegion;
-  @Input() targetable: boolean
+  @Input() region?: BattlefieldRegion;
+  @Input() targetable: boolean = false;
 
   isTargetable(unit: Unit): boolean {
     return Game.getTargetables().includes(unit);
