@@ -5,18 +5,18 @@ import { Unit } from './classes/Unit';
 import { Game } from './Game';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class BattlefieldService {
 
-  constructor() { }
+    constructor() { }
 
-  getBattlefield(): Battlefield {
-    return Game.getBattlefield();
-  }
+    getBattlefield(): Battlefield {
+        return Game.getBattlefield();
+    }
 
-  getTargetables(): (Unit | BattlefieldRegion)[] {
-    return Game.getTargetables();
-  }
+    getTargetables(): (Unit | BattlefieldRegion)[] {
+        return Game.getTargetables();
+    }
 
 }

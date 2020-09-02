@@ -4,9 +4,9 @@ import { Unit } from '../classes/Unit';
 import { Game } from '../Game';
 
 @Component({
-  selector: 'app-skill',
-  templateUrl: './skill.component.html',
-  styleUrls: ['./skill.component.css']
+    selector: 'app-skill',
+    templateUrl: './skill.component.html',
+    styleUrls: ['./skill.component.css']
 })
 export class SkillComponent implements OnInit {
 
