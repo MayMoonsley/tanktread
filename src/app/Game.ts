@@ -5,10 +5,10 @@ import { Random } from './util/Random';
 import { Skill, SkillTargetingMode } from './classes/Skill';
 
 interface TargetingState {
-    active: boolean,
-    user: Unit,
-    skill: Skill,
-    targetables: (Unit | BattlefieldRegion)[]
+    active: boolean;
+    user?: Unit;
+    skill?: Skill;
+    targetables: (Unit | BattlefieldRegion)[];
 }
 
 export namespace Game {
@@ -16,14 +16,14 @@ export namespace Game {
     let battlefield: Battlefield;
     let currentTargetingState: TargetingState = {
         active: false,
-        user: null,
-        skill: null,
+        user: undefined,
+        skill: undefined,
         targetables: []
     };
 
     function init(): void {
         const regionNames = ['Plains', 'Island', 'Swamp', 'Mountain', 'Forest'];
-        const skills = [new Skill('Bash', SkillTargetingMode.Self, [{type: 'damageTarget', amount: 2}])];
+        const skills = [new Skill('Bash', SkillTargetingMode.Self, [{ type: 'damageTarget', amount: 2 }])];
         battlefield = new Battlefield([]);
         let tempNum = 1;
         for (const name of regionNames) {
@@ -54,7 +54,7 @@ export namespace Game {
             user,
             skill,
             targetables: battlefield.getTargetables(user, skill.targetingMode)
-        }
+        };
     }
 
     export function hurtEveryone(): void {

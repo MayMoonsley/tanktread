@@ -29,16 +29,16 @@ export class Battlefield {
 
     getTargetables(user: Unit, mode: SkillTargetingMode): (Unit | BattlefieldRegion)[] {
         switch (mode) {
-            case SkillTargetingMode.UnitRanged:
-                return this.getAllUnits();
-            case SkillTargetingMode.UnitMelee:
-                return user.containingRegion.units;
-            case SkillTargetingMode.Self:
-                return [user];
-            case SkillTargetingMode.Region:
-                return this.regions;
-            default:
-                return Types.impossible(mode);
+        case SkillTargetingMode.UnitRanged:
+            return this.getAllUnits();
+        case SkillTargetingMode.UnitMelee:
+            return user.containingRegion!.units;
+        case SkillTargetingMode.Self:
+            return [user];
+        case SkillTargetingMode.Region:
+            return this.regions;
+        default:
+            return Types.impossible(mode);
         }
     }
 

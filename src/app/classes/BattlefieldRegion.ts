@@ -23,7 +23,7 @@ export class BattlefieldRegion {
             throw new Error('Cannot remove Unit from a region it\'s not in');
         }
         this.units.splice(this.units.indexOf(unit), 1);
-        unit.containingRegion = null;
+        unit.containingRegion = undefined;
     }
 
 }

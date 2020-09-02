@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-extraneous-class */
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -9,18 +10,18 @@ import { CombatScreenComponent } from './combat-screen/combat-screen.component';
 import { SkillComponent } from './skill/skill.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    UnitComponent,
-    BattlefieldRegionComponent,
-    BattlefieldComponent,
-    CombatScreenComponent,
-    SkillComponent
-  ],
-  imports: [
-    BrowserModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        UnitComponent,
+        BattlefieldRegionComponent,
+        BattlefieldComponent,
+        CombatScreenComponent,
+        SkillComponent
+    ],
+    imports: [
+        BrowserModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
