@@ -3,6 +3,7 @@ import { Types } from '../util/Types';
 import { BattlefieldRegion } from './BattlefieldRegion';
 import { SkillTargetingMode } from './Skill';
 import { Unit } from './Unit';
+import { Targetable } from '../interfaces/Targetable';
 
 export class Battlefield {
 
@@ -27,7 +28,7 @@ export class Battlefield {
         return Arrays.flatten(this.regions.map(region => region.units));
     }
 
-    getTargetables(user: Unit, mode: SkillTargetingMode): (Unit | BattlefieldRegion)[] {
+    getTargetables(user: Unit, mode: SkillTargetingMode): Targetable[] {
         switch (mode) {
         case SkillTargetingMode.UnitRanged:
             return this.getAllUnits();
