@@ -1,4 +1,5 @@
 import { Battlefield } from './classes/Battlefield';
+import { CombatState } from './classes/CombatState';
 import { Unit } from './classes/Unit';
 import { BattlefieldRegion } from './classes/BattlefieldRegion';
 import { Random } from './util/Random';
@@ -15,13 +16,13 @@ interface TargetingState {
 
 export namespace Game {
 
-    let battlefield: Battlefield;
     let currentTargetingState: TargetingState = {
         active: false,
         user: undefined,
         skill: undefined,
         targetables: []
     };
+    let currentCombatState: CombatState;
 
     function init(): void {
         const regionNames = ['Plains', 'Island', 'Swamp', 'Mountain', 'Forest'];
@@ -33,7 +34,7 @@ export namespace Game {
             new Skill('Flying Tackle', SkillTargetingMode.UnitArtillery, [{type: 'damageTarget', amount: 1}, {type: 'moveTo'}]),
             new Skill('Incinerate', SkillTargetingMode.UnitMelee, [{type: 'statusTarget', status: Status.Fire}])
         ];
-        battlefield = new Battlefield([]);
+        const battlefield = new Battlefield([]);
         let tempNum = 1;
         for (const name of regionNames) {
             const region = new BattlefieldRegion(name);
@@ -44,10 +45,11 @@ export namespace Game {
             battlefield.regions.push(region);
         }
         battlefield.regions = Random.shuffle(battlefield.regions);
+        currentCombatState = new CombatState(battlefield);
     }
 
     export function getBattlefield(): Battlefield {
-        return battlefield;
+        return currentCombatState.battlefield;
     }
 
     export function getTargetables(): Targetable[] {
@@ -62,7 +64,7 @@ export namespace Game {
             active: true,
             user,
             skill,
-            targetables: battlefield.getTargetables(user, skill.targetingMode)
+            targetables: currentCombatState.battlefield.getTargetables(user, skill.targetingMode)
         };
     }
 
@@ -73,21 +75,6 @@ export namespace Game {
         target.applySkill(currentTargetingState.user!, currentTargetingState.skill!);
         currentTargetingState.user!.actedThisTurn = true;
         currentTargetingState.active = false;
-    }
-
-    export function hurtEveryone(): void {
-        const b: Battlefield = getBattlefield();
-        for (const region of b.regions) {
-            for (const unit of region.units) {
-                unit.health--;
-            }
-        }
-    }
-
-    export function hurtSomeone(): void {
-        const region = Random.fromArray(battlefield.regions);
-        const unit = Random.fromArray(region.units);
-        unit.health--;
     }
 
     init();
