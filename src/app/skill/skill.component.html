@@ -1,2 +1,2 @@
-<button (click)="use($event)">{{skill!.name}}</button>
+<button (click)="use($event)" [disabled]="!unit!.canAct()">{{skill!.name}}</button>
 <p *ngFor="let item of description">{{item}}</p>

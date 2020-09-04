@@ -69,6 +69,7 @@ export namespace Game {
             throw new Error('Game.target() called while not targeting, somehow');
         }
         target.applySkill(currentTargetingState.user!, currentTargetingState.skill!);
+        currentTargetingState.user!.actedThisTurn = true;
         currentTargetingState.active = false;
     }
 

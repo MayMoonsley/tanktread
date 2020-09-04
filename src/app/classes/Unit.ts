@@ -9,12 +9,14 @@ export class Unit implements Targetable {
     maxHealth: number;
     skills: Skill[];
     containingRegion?: BattlefieldRegion = undefined;
+    actedThisTurn: boolean;
 
     constructor(name: string, health: number, skills: Skill[] = []) {
         this.name = name;
         this.health = health;
         this.maxHealth = health;
         this.skills = skills;
+        this.actedThisTurn = false;
     }
 
     wound(x: number): void {
@@ -37,6 +39,11 @@ export class Unit implements Targetable {
 
     applySkill(user: Unit, skill: Skill): void {
         skill.applyEffects(user, this);
+    }
+
+    canAct(): boolean {
+        console.log(this.actedThisTurn);
+        return !this.actedThisTurn;
     }
 
 }
