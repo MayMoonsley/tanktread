@@ -58,4 +58,11 @@ export class Unit implements Targetable {
         this.statuses = Arrays.removeFrom(status, this.statuses);
     }
 
+    advanceTurn(): void {
+        this.actedThisTurn = false;
+        if (this.statuses.includes(Status.Fire)) {
+            this.wound(1);
+        }
+    }
+
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Game } from '../Game';
 
 @Component({
     selector: 'app-combat-screen',
@@ -10,6 +11,10 @@ export class CombatScreenComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
+    }
+
+    advanceTurn(): void {
+        Game.advanceTurn();
     }
 
 }

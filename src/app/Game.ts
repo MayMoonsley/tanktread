@@ -77,6 +77,10 @@ export namespace Game {
         currentTargetingState.active = false;
     }
 
+    export function advanceTurn(): void {
+        currentCombatState.advanceTurn();
+    }
+
     init();
 
 }
