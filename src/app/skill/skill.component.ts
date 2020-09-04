@@ -10,17 +10,25 @@ import { Game } from '../Game';
 })
 export class SkillComponent implements OnInit {
 
-  @Input() skill?: Skill;
-  @Input() unit?: Unit;
+    @Input() skill?: Skill;
+    @Input() unit?: Unit;
+    description: String[];
 
-  constructor() { }
+    constructor() {
+        this.description = [];
+    }
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+        if (this.skill !== undefined) {
+            this.description = this.skill.description.split('\n');
+        } else {
+            this.description = [];
+        }
+    }
 
-  use(event: MouseEvent): void {
-      event.stopPropagation();
-      Game.beginTargeting(this.unit!, this.skill!);
-  }
+    use(event: MouseEvent): void {
+        event.stopPropagation();
+        Game.beginTargeting(this.unit!, this.skill!);
+    }
 
 }

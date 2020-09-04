@@ -1,1 +1,2 @@
-<li><button (click)="use($event)">{{skill!.name}}</button> {{skill!.description}}</li>
+<button (click)="use($event)">{{skill!.name}}</button>
+<p *ngFor="let item of description">{{item}}</p>

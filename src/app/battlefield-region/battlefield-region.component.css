@@ -1,5 +1,7 @@
 :host {
     display: block;
+    border-left: 4px solid gray;
+    padding: 2px 16px;
 }
 
 :host(.targetable) {
@@ -9,4 +11,11 @@
 
 :host(.targetable):hover {
     background: #FF9999;
+}
+
+#units {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-around;
 }

@@ -18,7 +18,7 @@ export class Skill {
     }
 
     get description(): string {
-        return this.effects.map(effectToString).join(' ');
+        return this.effects.map(effectToString).join('\n');
     }
 
     applyEffects(user: Unit, target: Unit): void {

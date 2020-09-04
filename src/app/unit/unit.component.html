@@ -1,5 +1,5 @@
 <h3>{{unit!.name}}</h3>
 <p>Health: {{unit!.health}}/{{unit!.maxHealth}}</p>
-<ul>
+<div id="skills">
     <app-skill *ngFor="let skill of unit!.skills" [skill]="skill" [unit]="unit"></app-skill>
-</ul>
+</div>
