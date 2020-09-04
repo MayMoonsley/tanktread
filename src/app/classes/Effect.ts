@@ -4,7 +4,8 @@ export type Effect
     = {type: 'damageTarget'; amount: number;}
     | {type: 'healTarget'; amount: number;}
     | {type: 'damageUser'; amount: number;}
-    | {type: 'healUser'; amount: number;};
+    | {type: 'healUser'; amount: number;}
+    | {type: 'moveTo'};
 
 export function applyEffect(effect: Effect, user: Unit, target: Unit): boolean {
     switch (effect.type) {
@@ -20,6 +21,11 @@ export function applyEffect(effect: Effect, user: Unit, target: Unit): boolean {
     case 'healUser':
         user.heal(effect.amount);
         return true;
+    case 'moveTo':
+        if (user.containingRegion !== target.containingRegion && target.containingRegion !== undefined) {
+            user.moveTo(target.containingRegion);
+        }
+        return true;
     }
 }
 
@@ -33,5 +39,7 @@ export function effectToString(effect: Effect): string {
         return `Take ${effect.amount} damage.`;
     case 'healUser':
         return `Heal self for ${effect.amount} health.`;
+    case 'moveTo':
+        return 'Move to target.';
     }
 }

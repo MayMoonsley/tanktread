@@ -28,7 +28,8 @@ export namespace Game {
             new Skill('Thwack', SkillTargetingMode.UnitMelee, [{ type: 'damageTarget', amount: 3 }]),
             new Skill('Snipe', SkillTargetingMode.UnitRanged, [{ type: 'damageTarget', amount: 1 }]),
             new Skill('Comfort', SkillTargetingMode.UnitMelee, [{ type: 'healTarget', amount: 2 }]),
-            new Skill('Blanket', SkillTargetingMode.Region, [{type: 'damageTarget', amount: 2}]),
+            new Skill('Blanket', SkillTargetingMode.RegionRanged, [{type: 'damageTarget', amount: 2}]),
+            new Skill('Flying Tackle', SkillTargetingMode.UnitArtillery, [{type: 'damageTarget', amount: 1}, {type: 'moveTo'}])
         ];
         battlefield = new Battlefield([]);
         let tempNum = 1;

@@ -1,7 +1,7 @@
 import { Arrays } from '../util/Arrays';
 import { Types } from '../util/Types';
 import { BattlefieldRegion } from './BattlefieldRegion';
-import { SkillTargetingMode } from './Skill';
+import { SkillTargetingMode, Skill } from './Skill';
 import { Unit } from './Unit';
 import { Targetable } from '../interfaces/Targetable';
 
@@ -30,13 +30,19 @@ export class Battlefield {
 
     getTargetables(user: Unit, mode: SkillTargetingMode): Targetable[] {
         switch (mode) {
-        case SkillTargetingMode.UnitRanged:
-            return this.getAllUnits();
-        case SkillTargetingMode.UnitMelee:
-            return user.containingRegion!.units;
         case SkillTargetingMode.Self:
             return [user];
-        case SkillTargetingMode.Region:
+        case SkillTargetingMode.UnitMelee:
+            return user.containingRegion!.units;
+        case SkillTargetingMode.UnitArtillery:
+            return this.getAllUnits().filter(unit => unit.containingRegion !== user.containingRegion);
+        case SkillTargetingMode.UnitRanged:
+            return this.getAllUnits();
+        case SkillTargetingMode.RegionMelee:
+            return [user.containingRegion!];
+        case SkillTargetingMode.RegionArtillery:
+            return this.regions.filter(region => region !== user.containingRegion);
+        case SkillTargetingMode.RegionRanged:
             return this.regions;
         default:
             return Types.impossible(mode);
