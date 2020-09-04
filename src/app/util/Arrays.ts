@@ -8,4 +8,11 @@ export namespace Arrays {
         return array.reduce((acc, x) => acc.concat(x));
     }
 
+    export function addWithoutDuplicate<T>(toAdd: T, array: T[]): T[] {
+        if (array.includes(toAdd)) {
+            return array;
+        }
+        return array.concat([toAdd]);
+    }
+
 }
