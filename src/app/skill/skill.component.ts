@@ -18,7 +18,8 @@ export class SkillComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  use(): void {
+  use(event: MouseEvent): void {
+      event.stopPropagation();
       Game.beginTargeting(this.unit!, this.skill!);
   }
 

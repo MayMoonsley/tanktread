@@ -24,7 +24,12 @@ export namespace Game {
 
     function init(): void {
         const regionNames = ['Plains', 'Island', 'Swamp', 'Mountain', 'Forest'];
-        const skills = [new Skill('Bash', SkillTargetingMode.Self, [{ type: 'damageTarget', amount: 2 }])];
+        const skills = [
+            new Skill('Thwack', SkillTargetingMode.UnitMelee, [{ type: 'damageTarget', amount: 3 }]),
+            new Skill('Snipe', SkillTargetingMode.UnitRanged, [{ type: 'damageTarget', amount: 1 }]),
+            new Skill('Comfort', SkillTargetingMode.UnitMelee, [{ type: 'healTarget', amount: 2 }]),
+            new Skill('Blanket', SkillTargetingMode.Region, [{type: 'damageTarget', amount: 2}]),
+        ];
         battlefield = new Battlefield([]);
         let tempNum = 1;
         for (const name of regionNames) {
@@ -56,6 +61,14 @@ export namespace Game {
             skill,
             targetables: battlefield.getTargetables(user, skill.targetingMode)
         };
+    }
+
+    export function target(target: Targetable): void {
+        if (!currentTargetingState.active || !currentTargetingState.targetables.includes(target)) {
+            throw new Error('Game.target() called while not targeting, somehow');
+        }
+        target.applySkill(currentTargetingState.user!, currentTargetingState.skill!);
+        currentTargetingState.active = false;
     }
 
     export function hurtEveryone(): void {

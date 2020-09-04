@@ -7,22 +7,29 @@ import { Unit } from '../classes/Unit';
     selector: 'app-battlefield-region',
     templateUrl: './battlefield-region.component.html',
     host: {
-        '[class.targetable]': 'targetable'
+        '[class.targetable]': 'targetable',
+        '(click)': 'target()'
     },
     styleUrls: ['./battlefield-region.component.css']
 })
 export class BattlefieldRegionComponent implements OnInit {
 
-  @Input() region?: BattlefieldRegion;
-  @Input() targetable: boolean = false;
+    @Input() region?: BattlefieldRegion;
+    @Input() targetable: boolean = false;
 
-  isTargetable(unit: Unit): boolean {
-      return Game.getTargetables().includes(unit);
-  }
+    isTargetable(unit: Unit): boolean {
+        return Game.getTargetables().includes(unit);
+    }
 
-  constructor() { }
+    constructor() { }
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+    }
+
+    target(): void {
+        if (this.targetable && this.region !== undefined) {
+            Game.target(this.region);
+        }
+    }
 
 }
