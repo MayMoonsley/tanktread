@@ -1,6 +1,8 @@
 import { BattlefieldRegion } from './BattlefieldRegion';
 import { Skill } from './Skill';
+import { Status } from './Status';
 import { Targetable } from '../interfaces/Targetable';
+import { Arrays } from '../util/Arrays';
 
 export class Unit implements Targetable {
 
@@ -8,6 +10,7 @@ export class Unit implements Targetable {
     health: number;
     maxHealth: number;
     skills: Skill[];
+    statuses: Status[];
     containingRegion?: BattlefieldRegion = undefined;
     actedThisTurn: boolean;
 
@@ -16,6 +19,7 @@ export class Unit implements Targetable {
         this.health = health;
         this.maxHealth = health;
         this.skills = skills;
+        this.statuses = [];
         this.actedThisTurn = false;
     }
 
@@ -44,6 +48,14 @@ export class Unit implements Targetable {
     canAct(): boolean {
         console.log(this.actedThisTurn);
         return !this.actedThisTurn;
+    }
+
+    addStatus(status: Status): void {
+        this.statuses = Arrays.addWithoutDuplicate(status, this.statuses);
+    }
+
+    removeStatus(status: Status): void {
+        this.statuses = Arrays.removeFrom(status, this.statuses);
     }
 
 }

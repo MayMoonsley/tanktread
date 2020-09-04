@@ -4,6 +4,7 @@ import { BattlefieldRegion } from './classes/BattlefieldRegion';
 import { Random } from './util/Random';
 import { Skill, SkillTargetingMode } from './classes/Skill';
 import { Targetable } from './interfaces/Targetable';
+import { Status } from './classes/Status';
 
 interface TargetingState {
     active: boolean;
@@ -29,7 +30,8 @@ export namespace Game {
             new Skill('Snipe', SkillTargetingMode.UnitRanged, [{ type: 'damageTarget', amount: 1 }]),
             new Skill('Comfort', SkillTargetingMode.UnitMelee, [{ type: 'healTarget', amount: 2 }]),
             new Skill('Blanket', SkillTargetingMode.RegionRanged, [{type: 'damageTarget', amount: 2}]),
-            new Skill('Flying Tackle', SkillTargetingMode.UnitArtillery, [{type: 'damageTarget', amount: 1}, {type: 'moveTo'}])
+            new Skill('Flying Tackle', SkillTargetingMode.UnitArtillery, [{type: 'damageTarget', amount: 1}, {type: 'moveTo'}]),
+            new Skill('Incinerate', SkillTargetingMode.UnitMelee, [{type: 'statusTarget', status: Status.Fire}])
         ];
         battlefield = new Battlefield([]);
         let tempNum = 1;
