@@ -15,6 +15,7 @@ export class Unit implements Targetable {
     drops: ResourceDrop[];
     containingRegion?: BattlefieldRegion = undefined;
     actedThisTurn: boolean;
+    alive: boolean = true;
 
     constructor(name: string, health: number, skills: Skill[] = [], drops: ResourceDrop[] = []) {
         this.name = name;
@@ -34,12 +35,16 @@ export class Unit implements Targetable {
     }
 
     die(): void {
+        if (!this.alive) {
+            return;
+        }
         if (this.containingRegion !== undefined) {
             for (let drop of this.drops) {
                 this.containingRegion.addResource(drop.resource, resourceDropToAmount(drop));
             }
             this.containingRegion.removeUnit(this);
         }
+        this.alive = false;
     }
 
     heal(x: number): void {
