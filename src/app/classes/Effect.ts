@@ -5,9 +5,11 @@ export type Effect
     = {type: 'damageTarget'; amount: number;}
     | {type: 'healTarget'; amount: number;}
     | {type: 'statusTarget'; status: Status}
+    | {type: 'killTarget';}
     | {type: 'damageUser'; amount: number;}
     | {type: 'healUser'; amount: number;}
     | {type: 'statusUser'; status: Status;}
+    | {type: 'killUser';}
     | {type: 'moveTo'};
 
 export function applyEffect(effect: Effect, user: Unit, target: Unit): boolean {
@@ -21,6 +23,9 @@ export function applyEffect(effect: Effect, user: Unit, target: Unit): boolean {
     case 'statusTarget':
         target.addStatus(effect.status);
         return true;
+    case 'killTarget':
+        user.die();
+        return true;
     case 'damageUser':
         user.wound(effect.amount);
         return true;
@@ -29,6 +34,10 @@ export function applyEffect(effect: Effect, user: Unit, target: Unit): boolean {
         return true;
     case 'statusUser':
         user.addStatus(effect.status);
+        return true;
+    case 'killUser':
+        user.die();
+        return true;
     case 'moveTo':
         if (user.containingRegion !== target.containingRegion && target.containingRegion !== undefined) {
             user.moveTo(target.containingRegion);
@@ -45,12 +54,16 @@ export function effectToString(effect: Effect): string {
         return `Heal ${effect.amount} health.`;
     case 'statusTarget':
         return `Give target ${getStatusName(effect.status)}.`;
+    case 'killTarget':
+        return 'Kill target.';
     case 'damageUser':
         return `Take ${effect.amount} damage.`;
     case 'healUser':
         return `Heal self for ${effect.amount} health.`;
     case 'statusUser':
         return `Gain ${getStatusName(effect.status)}.`;
+    case 'killUser':
+        return 'Self-destruct.'
     case 'moveTo':
         return 'Move to target.';
     }
