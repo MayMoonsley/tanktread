@@ -1,3 +1,5 @@
+import { Random } from '../util/Random';
+
 export class Resource {
 
     public static readonly Aluminite = new Resource('Aluminite', 'Ambiguous metallic alloy. Cheap and ubiquitous');
@@ -8,6 +10,11 @@ export class Resource {
 }
 
 export type ResourceAmount = {resource: Resource, amount: number};
+export type ResourceDrop = {resource: Resource, min: number, max: number};
+
+export function resourceDropToAmount(drop: ResourceDrop): number {
+    return Random.int(drop.min, drop.max + 1);
+}
 
 export class ResourceInventory {
 

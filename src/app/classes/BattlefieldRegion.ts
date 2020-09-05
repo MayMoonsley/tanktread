@@ -1,7 +1,7 @@
 import { Unit } from './Unit';
 import { Targetable } from '../interfaces/Targetable';
 import { Skill } from './Skill';
-import { ResourceInventory } from './Resource';
+import { ResourceInventory, Resource } from './Resource';
 
 export class BattlefieldRegion implements Targetable {
 
@@ -35,6 +35,10 @@ export class BattlefieldRegion implements Targetable {
         for (const target of this.units) {
             target.applySkill(user, skill);
         }
+    }
+
+    addResource(resource: Resource, amount: number): void {
+        this.resources = this.resources.add(resource, amount);
     }
 
 }

@@ -3,6 +3,7 @@ import { Skill } from './Skill';
 import { Status } from './Status';
 import { Targetable } from '../interfaces/Targetable';
 import { Arrays } from '../util/Arrays';
+import { ResourceDrop, resourceDropToAmount } from './Resource';
 
 export class Unit implements Targetable {
 
@@ -11,20 +12,34 @@ export class Unit implements Targetable {
     maxHealth: number;
     skills: Skill[];
     statuses: Status[];
+    drops: ResourceDrop[];
     containingRegion?: BattlefieldRegion = undefined;
     actedThisTurn: boolean;
 
-    constructor(name: string, health: number, skills: Skill[] = []) {
+    constructor(name: string, health: number, skills: Skill[] = [], drops: ResourceDrop[] = []) {
         this.name = name;
         this.health = health;
         this.maxHealth = health;
         this.skills = skills;
         this.statuses = [];
+        this.drops = drops;
         this.actedThisTurn = false;
     }
 
     wound(x: number): void {
         this.health -= x;
+        if (this.health <= 0) {
+            this.die();
+        }
+    }
+
+    die(): void {
+        if (this.containingRegion !== undefined) {
+            for (let drop of this.drops) {
+                this.containingRegion.addResource(drop.resource, resourceDropToAmount(drop));
+            }
+            this.containingRegion.removeUnit(this);
+        }
     }
 
     heal(x: number): void {
