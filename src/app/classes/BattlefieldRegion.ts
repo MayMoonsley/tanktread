@@ -1,15 +1,18 @@
 import { Unit } from './Unit';
 import { Targetable } from '../interfaces/Targetable';
 import { Skill } from './Skill';
+import { ResourceInventory } from './Resource';
 
 export class BattlefieldRegion implements Targetable {
 
     name: string;
     units: Unit[];
+    resources: ResourceInventory;
 
     constructor(name: string) {
         this.name = name;
         this.units = [];
+        this.resources = new ResourceInventory();
     }
 
     addUnit(unit: Unit): void {

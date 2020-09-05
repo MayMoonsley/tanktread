@@ -2,3 +2,6 @@
 <div id="units">
     <app-unit *ngFor="let unit of region!.units" [unit]="unit" [targetable]='isTargetable(unit)'></app-unit>
 </div>
+<div id="resources" *ngIf="region!.resources.arr.length > 0">
+    <p *ngFor="let item of region!.resources.arr"><strong>{{item.resource.name}}</strong> &times;{{item.amount}}</p>
+</div>
