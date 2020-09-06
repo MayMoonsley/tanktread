@@ -2,6 +2,7 @@ import { Unit } from './Unit';
 import { Targetable } from '../interfaces/Targetable';
 import { Skill } from './Skill';
 import { ResourceInventory, Resource } from './Resource';
+import { TEMPORARY_NAME } from '@angular/compiler/src/render3/view/util';
 
 export class BattlefieldRegion implements Targetable {
 
@@ -32,7 +33,8 @@ export class BattlefieldRegion implements Targetable {
     }
 
     applySkill(user: Unit, skill: Skill): void {
-        for (const target of this.units) {
+        const tempUnits = this.units.map(x => x);
+        for (const target of tempUnits) {
             target.applySkill(user, skill);
         }
     }

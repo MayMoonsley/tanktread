@@ -66,7 +66,6 @@ export class Unit implements Targetable {
     }
 
     canAct(): boolean {
-        console.log(this.actedThisTurn);
         return !this.actedThisTurn;
     }
 
