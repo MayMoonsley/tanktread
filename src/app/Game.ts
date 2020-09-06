@@ -1,4 +1,5 @@
 import { Battlefield } from './classes/Battlefield';
+import { InventoryState } from './state-trackers/InventoryState';
 import { CombatState } from './state-trackers/CombatState';
 import { Unit } from './classes/Unit';
 import { BattlefieldRegion } from './classes/BattlefieldRegion';
@@ -24,6 +25,7 @@ export namespace Game {
         targetables: []
     };
     let currentCombatState: CombatState;
+    let currentInventory: InventoryState = new InventoryState();
 
     function init(): void {
         const regionNames = ['Plains', 'Island', 'Swamp', 'Mountain', 'Forest'];
@@ -51,6 +53,10 @@ export namespace Game {
 
     export function getBattlefield(): Battlefield {
         return currentCombatState.battlefield;
+    }
+
+    export function getInventoryState(): InventoryState {
+        return currentInventory;
     }
 
     export function getTargetables(): Targetable[] {

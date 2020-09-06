@@ -8,6 +8,7 @@ import { BattlefieldRegionComponent } from './battlefield-region/battlefield-reg
 import { BattlefieldComponent } from './battlefield/battlefield.component';
 import { CombatScreenComponent } from './combat-screen/combat-screen.component';
 import { SkillComponent } from './skill/skill.component';
+import { InventoryScreenComponent } from './inventory-screen/inventory-screen.component';
 
 @NgModule({
     declarations: [
@@ -16,7 +17,8 @@ import { SkillComponent } from './skill/skill.component';
         BattlefieldRegionComponent,
         BattlefieldComponent,
         CombatScreenComponent,
-        SkillComponent
+        SkillComponent,
+        InventoryScreenComponent
     ],
     imports: [
         BrowserModule
