@@ -44,5 +44,12 @@
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "typescript": "~3.9.5"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MayMoonsley/tanktread.git"
+  },
+  "author": "May Lawver",
+  "license": "MIT",
+  "homepage": "https://github.com/MayMoonsley/tanktread#readme"
 }
