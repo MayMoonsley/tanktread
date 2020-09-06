@@ -1,5 +1,5 @@
 import { Battlefield } from './classes/Battlefield';
-import { CombatState } from './classes/CombatState';
+import { CombatState } from './state-trackers/CombatState';
 import { Unit } from './classes/Unit';
 import { BattlefieldRegion } from './classes/BattlefieldRegion';
 import { Random } from './util/Random';

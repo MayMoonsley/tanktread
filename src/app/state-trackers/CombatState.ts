@@ -1,4 +1,4 @@
-import { Battlefield } from './Battlefield';
+import { Battlefield } from '../classes/Battlefield';
 
 export class CombatState {
 
