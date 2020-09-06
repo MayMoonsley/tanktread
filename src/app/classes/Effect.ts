@@ -1,6 +1,7 @@
 import { Unit } from './Unit';
 import { Status, getStatusName } from './Status';
 import { Game } from '../Game';
+import { Types } from '../util/Types';
 
 export type Effect
     = {type: 'damageTarget'; amount: number;}
@@ -14,42 +15,44 @@ export type Effect
     | {type: 'moveTo';}
     | {type: 'collect';};
 
-export function applyEffect(effect: Effect, user: Unit, target: Unit): boolean {
+export function applyEffect(effect: Effect, user: Unit, target: Unit): void {
     switch (effect.type) {
     case 'damageTarget':
         target.wound(effect.amount);
-        return true;
+        return;
     case 'healTarget':
         target.heal(effect.amount);
-        return true;
+        return;
     case 'statusTarget':
         target.addStatus(effect.status);
-        return true;
+        return;
     case 'killTarget':
         user.die();
-        return true;
+        return;
     case 'damageUser':
         user.wound(effect.amount);
-        return true;
+        return;
     case 'healUser':
         user.heal(effect.amount);
-        return true;
+        return;
     case 'statusUser':
         user.addStatus(effect.status);
-        return true;
+        return;
     case 'killUser':
         user.die();
-        return true;
+        return;
     case 'moveTo':
         if (user.containingRegion !== target.containingRegion && target.containingRegion !== undefined) {
             user.moveTo(target.containingRegion);
         }
-        return true;
+        return;
     case 'collect':
         if (user.containingRegion !== undefined) {
             Game.getInventoryState().addResourceInventory(user.containingRegion.collectResources());
         }
-        return true;
+        return;
+    default:
+        return Types.impossible(effect);
     }
 }
 

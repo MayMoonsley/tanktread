@@ -2,7 +2,6 @@ import { Unit } from './Unit';
 import { Targetable } from '../interfaces/Targetable';
 import { Skill } from './Skill';
 import { ResourceInventory, Resource } from './Resource';
-import { TEMPORARY_NAME } from '@angular/compiler/src/render3/view/util';
 
 export class BattlefieldRegion implements Targetable {
 
