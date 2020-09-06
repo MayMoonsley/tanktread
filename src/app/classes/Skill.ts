@@ -7,6 +7,7 @@ export enum SkillTargetingMode {
     UnitArtillery, // can target any unit not in the same region
     UnitRanged, // can target any unit on the battlefield
     RegionMelee, // can target region user is in
+    RegionAdjacent, // can target regions next to the user
     RegionArtillery, // can target regions user isn't in
     RegionRanged, // can target any region
 }

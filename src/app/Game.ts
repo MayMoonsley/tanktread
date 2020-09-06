@@ -39,12 +39,13 @@ export namespace Game {
             new Skill('Incinerate', SkillTargetingMode.UnitMelee, [{type: 'statusTarget', status: Status.Fire}]),
             new Skill('Collect', SkillTargetingMode.Self, [{type: 'collect'}])
         ]);
+        const move = new Skill('Move', SkillTargetingMode.RegionAdjacent, [{ type: 'moveTo' }]);
         const battlefield = new Battlefield([]);
         let tempNum = 1;
         for (const name of regionNames) {
             const region = new BattlefieldRegion(name);
             for (let i = 0; i < 3; i++) {
-                region.addUnit(new Unit(`Temp${tempNum}`, 2, [skills.next().value], [{resource: Resource.Aluminite, min: 2, max: 5}]));
+                region.addUnit(new Unit(`Temp${tempNum}`, 2, [move, skills.next().value], [{resource: Resource.Aluminite, min: 2, max: 5}]));
                 tempNum++;
             }
             battlefield.regions.push(region);
