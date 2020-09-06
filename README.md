@@ -1,4 +1,4 @@
-# Tanktread
+# Tanktread [![Build Status](https://travis-ci.com/maymoonsley/tanktread.svg?branch=master)](https://travis-ci.com/maymoonsley/tanktread)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.6.
 
