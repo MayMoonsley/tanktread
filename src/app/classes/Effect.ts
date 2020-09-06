@@ -1,5 +1,6 @@
 import { Unit } from './Unit';
 import { Status, getStatusName } from './Status';
+import { Game } from '../Game';
 
 export type Effect
     = {type: 'damageTarget'; amount: number;}
@@ -10,7 +11,8 @@ export type Effect
     | {type: 'healUser'; amount: number;}
     | {type: 'statusUser'; status: Status;}
     | {type: 'killUser';}
-    | {type: 'moveTo'};
+    | {type: 'moveTo';}
+    | {type: 'collect';};
 
 export function applyEffect(effect: Effect, user: Unit, target: Unit): boolean {
     switch (effect.type) {
@@ -43,6 +45,11 @@ export function applyEffect(effect: Effect, user: Unit, target: Unit): boolean {
             user.moveTo(target.containingRegion);
         }
         return true;
+    case 'collect':
+        if (user.containingRegion !== undefined) {
+            Game.getInventoryState().addResourceInventory(user.containingRegion.collectResources());
+        }
+        return true;
     }
 }
 
@@ -66,5 +73,7 @@ export function effectToString(effect: Effect): string {
         return 'Self-destruct.'
     case 'moveTo':
         return 'Move to target.';
+    case 'collect':
+        return 'Collect resources.';
     }
 }

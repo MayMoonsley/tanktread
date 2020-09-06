@@ -41,4 +41,10 @@ export class BattlefieldRegion implements Targetable {
         this.resources = this.resources.add(resource, amount);
     }
 
+    collectResources(): ResourceInventory {
+        const temp = this.resources;
+        this.resources = new ResourceInventory();
+        return temp;
+    }
+
 }

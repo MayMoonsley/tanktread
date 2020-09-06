@@ -8,6 +8,7 @@ import { Generators } from './util/Generators';
 import { Skill, SkillTargetingMode } from './classes/Skill';
 import { Targetable } from './interfaces/Targetable';
 import { Status } from './classes/Status';
+import { Resource } from './classes/Resource';
 
 interface TargetingState {
     active: boolean;
@@ -35,14 +36,15 @@ export namespace Game {
             new Skill('Comfort', SkillTargetingMode.UnitMelee, [{ type: 'healTarget', amount: 2 }]),
             new Skill('Blanket', SkillTargetingMode.RegionRanged, [{type: 'damageTarget', amount: 2}]),
             new Skill('Flying Tackle', SkillTargetingMode.UnitArtillery, [{type: 'damageTarget', amount: 1}, {type: 'moveTo'}]),
-            new Skill('Incinerate', SkillTargetingMode.UnitMelee, [{type: 'statusTarget', status: Status.Fire}])
+            new Skill('Incinerate', SkillTargetingMode.UnitMelee, [{type: 'statusTarget', status: Status.Fire}]),
+            new Skill('Collect', SkillTargetingMode.Self, [{type: 'collect'}])
         ]);
         const battlefield = new Battlefield([]);
         let tempNum = 1;
         for (const name of regionNames) {
             const region = new BattlefieldRegion(name);
             for (let i = 0; i < 3; i++) {
-                region.addUnit(new Unit(`Temp${tempNum}`, 10, [skills.next().value]));
+                region.addUnit(new Unit(`Temp${tempNum}`, 2, [skills.next().value], [{resource: Resource.Aluminite, min: 2, max: 5}]));
                 tempNum++;
             }
             battlefield.regions.push(region);

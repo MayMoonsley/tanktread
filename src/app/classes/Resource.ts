@@ -66,6 +66,15 @@ export class ResourceInventory {
         return new ResourceInventory(newArr);
     }
 
+    // TODO: make this more efficient
+    combine(other: ResourceInventory): ResourceInventory {
+        let acc: ResourceInventory = this;
+        for (let item of other._arr) {
+            acc = acc.add(item.resource, item.amount);
+        }
+        return acc;
+    }
+
     toString(): string {
         return this._arr.map(item => `${item.resource.name} (${item.amount})`).join('\n');
     }

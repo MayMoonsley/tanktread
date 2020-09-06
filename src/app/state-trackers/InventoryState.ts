@@ -27,4 +27,8 @@ export class InventoryState {
         this.resources = this.resources.remove(resource, amount);
     }
 
+    addResourceInventory(resources: ResourceInventory): void {
+        this.resources = this.resources.combine(resources);
+    }
+
 }
