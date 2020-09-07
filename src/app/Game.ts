@@ -37,7 +37,8 @@ export namespace Game {
             new Skill('Blanket', SkillTargetingMode.RegionRanged, [{type: 'damageTarget', amount: 2}]),
             new Skill('Flying Tackle', SkillTargetingMode.UnitArtillery, [{type: 'damageTarget', amount: 1}, {type: 'moveTo'}]),
             new Skill('Incinerate', SkillTargetingMode.UnitMelee, [{type: 'statusTarget', status: Status.Fire}]),
-            new Skill('Collect', SkillTargetingMode.Self, [{type: 'collect'}])
+            new Skill('Collect', SkillTargetingMode.Self, [{type: 'collect'}]),
+            new Skill('Overclock', SkillTargetingMode.UnitMelee, [{type: 'statusTarget', status: Status.Advantage}]),
         ]);
         const move = new Skill('Move', SkillTargetingMode.RegionAdjacent, [{ type: 'moveTo' }]);
         const battlefield = new Battlefield([]);
@@ -83,7 +84,7 @@ export namespace Game {
             throw new Error('Game.target() called while not targeting, somehow');
         }
         target.applySkill(currentTargetingState.user!, currentTargetingState.skill!);
-        currentTargetingState.user!.actionSpent = true;
+        currentTargetingState.user!.spendAction();
         currentTargetingState.active = false;
     }
 

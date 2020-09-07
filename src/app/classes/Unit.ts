@@ -66,7 +66,15 @@ export class Unit implements Targetable {
     }
 
     canAct(): boolean {
-        return !this.actionSpent;
+        return !this.actionSpent || this.statuses.includes(Status.Advantage);
+    }
+
+    spendAction(): void {
+        if (!this.actionSpent) {
+            this.actionSpent = false;
+        } else if (this.statuses.includes(Status.Advantage)) {
+            this.removeStatus(Status.Advantage);
+        }
     }
 
     addStatus(status: Status): void {
