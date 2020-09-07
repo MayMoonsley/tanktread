@@ -14,7 +14,7 @@ export class Unit implements Targetable {
     statuses: Status[];
     drops: ResourceDrop[];
     containingRegion?: BattlefieldRegion = undefined;
-    actedThisTurn: boolean;
+    actionSpent: boolean;
     alive: boolean = true;
 
     constructor(name: string, health: number, skills: Skill[] = [], drops: ResourceDrop[] = []) {
@@ -24,7 +24,7 @@ export class Unit implements Targetable {
         this.skills = skills;
         this.statuses = [];
         this.drops = drops;
-        this.actedThisTurn = false;
+        this.actionSpent = false;
     }
 
     wound(x: number): void {
@@ -66,7 +66,7 @@ export class Unit implements Targetable {
     }
 
     canAct(): boolean {
-        return !this.actedThisTurn;
+        return !this.actionSpent;
     }
 
     addStatus(status: Status): void {
@@ -78,7 +78,7 @@ export class Unit implements Targetable {
     }
 
     advanceTurn(): void {
-        this.actedThisTurn = false;
+        this.actionSpent = false;
         if (this.statuses.includes(Status.Fire)) {
             this.wound(1);
         }
