@@ -27,7 +27,7 @@ export function applyEffect(effect: Effect, user: Unit, target: Unit): void {
         target.addStatus(effect.status);
         return;
     case 'killTarget':
-        user.die();
+        target.die();
         return;
     case 'damageUser':
         user.wound(effect.amount);
