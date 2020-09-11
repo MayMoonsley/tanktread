@@ -14,17 +14,19 @@ export class Unit implements Targetable {
     statuses: Status[];
     drops: ResourceDrop[];
     containingRegion?: BattlefieldRegion = undefined;
-    actionSpent: boolean;
+    actionsLeft: number;
+    actionsPerTurn: number;
     alive: boolean = true;
 
-    constructor(name: string, health: number, skills: Skill[] = [], drops: ResourceDrop[] = []) {
+    constructor(name: string, health: number, actionsPerTurn: number, skills: Skill[] = [], drops: ResourceDrop[] = []) {
         this.name = name;
         this.health = health;
         this.maxHealth = health;
         this.skills = skills;
         this.statuses = [];
         this.drops = drops;
-        this.actionSpent = false;
+        this.actionsPerTurn = actionsPerTurn;
+        this.actionsLeft = actionsPerTurn;
     }
 
     wound(x: number): void {
@@ -66,12 +68,12 @@ export class Unit implements Targetable {
     }
 
     canAct(): boolean {
-        return !this.actionSpent || this.statuses.includes(Status.Advantage);
+        return this.actionsLeft > 0 || this.statuses.includes(Status.Advantage);
     }
 
     spendAction(): void {
-        if (!this.actionSpent) {
-            this.actionSpent = false;
+        if (this.actionsLeft > 0) {
+            this.actionsLeft--;
         } else if (this.statuses.includes(Status.Advantage)) {
             this.removeStatus(Status.Advantage);
         }
@@ -86,7 +88,7 @@ export class Unit implements Targetable {
     }
 
     advanceTurn(): void {
-        this.actionSpent = false;
+        this.actionsLeft = this.actionsPerTurn;
         if (this.statuses.includes(Status.Fire)) {
             this.wound(1);
         }
