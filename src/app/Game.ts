@@ -30,29 +30,20 @@ export namespace Game {
 
     function init(): void {
         const regionNames = ['Plains', 'Island', 'Swamp', 'Mountain', 'Forest'];
-        const skills = Generators.shuffleCycle([
-            new Skill('Thwack', SkillTargetingMode.UnitMelee, [{ type: 'damageTarget', amount: 3 }]),
-            new Skill('Snipe', SkillTargetingMode.UnitRanged, [{ type: 'damageTarget', amount: 1 }]),
-            new Skill('Comfort', SkillTargetingMode.UnitMelee, [{ type: 'healTarget', amount: 2 }]),
-            new Skill('Blanket', SkillTargetingMode.RegionRanged, [{type: 'damageTarget', amount: 2}]),
-            new Skill('Flying Tackle', SkillTargetingMode.UnitArtillery, [{type: 'damageTarget', amount: 1}, {type: 'moveTo'}]),
-            new Skill('Incinerate', SkillTargetingMode.UnitMelee, [{type: 'statusTarget', status: Status.Fire}]),
-            new Skill('Collect', SkillTargetingMode.Self, [{type: 'collect'}]),
-            new Skill('Overclock', SkillTargetingMode.UnitMelee, [{type: 'statusTarget', status: Status.Advantage}]),
-        ]);
-        const move = new Skill('Move', SkillTargetingMode.RegionAdjacent, [{ type: 'moveTo' }]);
+        const tank = new Unit('Tank', Infinity, 1, [Skill.Move]);
         const battlefield = new Battlefield([]);
         let tempNum = 1;
         for (const name of regionNames) {
             const region = new BattlefieldRegion(name);
             for (let i = 0; i < 3; i++) {
-                region.addUnit(new Unit(`Temp${tempNum}`, 2, 2, [move, skills.next().value], [{resource: Resource.Aluminite, min: 2, max: 5}]));
+                region.addUnit(new Unit(`Temp${tempNum}`, 2, 2, [Skill.Move, Skill.Prod], [{resource: Resource.Aluminite, min: 2, max: 5}]));
                 tempNum++;
             }
             battlefield.regions.push(region);
         }
         battlefield.regions = Random.shuffle(battlefield.regions);
-        currentCombatState = new CombatState(battlefield);
+        battlefield.regions[0].addUnit(tank);
+        currentCombatState = new CombatState(tank, battlefield);
     }
 
     export function getBattlefield(): Battlefield {

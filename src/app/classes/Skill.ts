@@ -18,7 +18,10 @@ export class Skill {
     targetingMode: SkillTargetingMode;
     effects: Effect[];
 
-    constructor(name: string, targetingMode: SkillTargetingMode, effects: Effect[]) {
+    public static readonly Move = new Skill('Move', SkillTargetingMode.RegionAdjacent, [{type: 'moveTo'}]);
+    public static readonly Prod = new Skill('Prod', SkillTargetingMode.UnitMelee, [{type: 'damageTarget', amount: 1}]);
+
+    private constructor(name: string, targetingMode: SkillTargetingMode, effects: Effect[]) {
         this.name = name;
         this.targetingMode = targetingMode;
         this.effects = effects;

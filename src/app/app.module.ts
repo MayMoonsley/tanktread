@@ -9,6 +9,7 @@ import { BattlefieldComponent } from './battlefield/battlefield.component';
 import { CombatScreenComponent } from './combat-screen/combat-screen.component';
 import { SkillComponent } from './skill/skill.component';
 import { InventoryScreenComponent } from './inventory-screen/inventory-screen.component';
+import { FormatInfinityPipe } from './format-infinity.pipe';
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import { InventoryScreenComponent } from './inventory-screen/inventory-screen.co
         BattlefieldComponent,
         CombatScreenComponent,
         SkillComponent,
-        InventoryScreenComponent
+        InventoryScreenComponent,
+        FormatInfinityPipe
     ],
     imports: [
         BrowserModule

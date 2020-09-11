@@ -19,7 +19,7 @@ export class BattlefieldRegion implements Targetable {
         if (this.units.includes(unit)) {
             throw new Error('Unit cannot exist in a region twice');
         }
-        this.units.push(unit);
+        this.units.unshift(unit);
         unit.containingRegion = this;
     }
 
