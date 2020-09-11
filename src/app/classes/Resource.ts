@@ -2,7 +2,7 @@ import { Random } from '../util/Random';
 
 export class Resource {
 
-    public static readonly Aluminite = new Resource('Aluminite', 'Ambiguous metallic alloy. Cheap and ubiquitous');
+    public static readonly Aluminite = new Resource('Aluminite', 'Ambiguous metallic alloy. Cheap and ubiquitous.');
     public static readonly Silicate = new Resource('Silicate', 'Clarified sand. Common computational substrate.');
 
     private constructor(public name: string, public description: string) {}
@@ -20,6 +20,7 @@ export class ResourceInventory {
 
     private readonly _arr: ResourceAmount[];
 
+    // TODO: this should ensure _arr has no duplicate entries
     constructor(_arr: ResourceAmount[] = []) {
         this._arr = _arr.filter(item => item.amount > 0).sort();
     }
@@ -73,6 +74,23 @@ export class ResourceInventory {
             acc = acc.add(item.resource, item.amount);
         }
         return acc;
+    }
+
+    removeAll(other: ResourceInventory): ResourceInventory {
+        let acc: ResourceInventory = this;
+        for (let item of other._arr) {
+            acc = acc.remove(item.resource, item.amount);
+        }
+        return acc;
+    }
+
+    canAfford(other: ResourceInventory): boolean {
+        for (let item of other._arr) {
+            if (this.getAmount(item.resource) < item.amount) {
+                return false;
+            }
+        }
+        return true;
     }
 
     toString(): string {
