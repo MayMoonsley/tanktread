@@ -31,12 +31,13 @@ export namespace Game {
     function init(): void {
         const regionNames = ['Plains', 'Island', 'Swamp', 'Mountain', 'Forest'];
         const tank = UnitSpecies.Tank.instantiate();
+        const enemySpecies = [UnitSpecies.Rat, UnitSpecies.Wyrm];
         const battlefield = new Battlefield([]);
         let tempNum = 1;
         for (const name of regionNames) {
             const region = new BattlefieldRegion(name);
             for (let i = 0; i < 1; i++) {
-                region.addUnit(UnitSpecies.Wyrm.instantiate());
+                region.addUnit(Random.fromArray(enemySpecies).instantiate());
                 tempNum++;
             }
             battlefield.regions.push(region);

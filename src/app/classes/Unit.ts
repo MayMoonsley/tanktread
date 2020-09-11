@@ -108,6 +108,7 @@ export class UnitSpecies {
     public static readonly Tank = new UnitSpecies('Tank', UnitFaction.Player, Infinity, 1, [Skill.Move], []);
 
     // Creatures
+    public static readonly Rat = new UnitSpecies('Rat', UnitFaction.Creature, 1, 1, [Skill.Move, Skill.Prod], []);
     public static readonly Wyrm = new UnitSpecies('Wyrm', UnitFaction.Creature, 1, 3, [Skill.Burrow, Skill.Burn], []);
 
     private constructor(public name: string, public faction: UnitFaction, public health: number,
