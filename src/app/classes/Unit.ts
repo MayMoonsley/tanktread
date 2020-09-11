@@ -3,7 +3,7 @@ import { Skill } from './Skill';
 import { Status } from './Status';
 import { Targetable } from '../interfaces/Targetable';
 import { Arrays } from '../util/Arrays';
-import { ResourceDrop, resourceDropToAmount } from './Resource';
+import { ResourceDrop, resourceDropToAmount, ResourceInventory } from './Resource';
 
 export enum UnitFaction {
     Tank = '👤', Drone = '🤖', Creature = '🐛'
@@ -33,6 +33,14 @@ export class Unit implements Targetable {
         this.drops = drops;
         this.actionsPerTurn = actionsPerTurn;
         this.actionsLeft = actionsPerTurn;
+    }
+
+    get playerControlled(): boolean {
+        return this.faction === UnitFaction.Drone || this.faction === UnitFaction.Tank;
+    }
+
+    get buildCost(): ResourceInventory {
+        return new ResourceInventory(this.drops.map(item => { return {resource: item.resource, amount: item.max}}));
     }
 
     wound(x: number): void {
@@ -73,10 +81,6 @@ export class Unit implements Targetable {
         skill.applyEffects(user, this);
     }
 
-    playerControlled(): boolean {
-        return this.faction === UnitFaction.Drone || this.faction === UnitFaction.Tank;
-    }
-
     canAct(): boolean {
         return this.actionsLeft > 0 || this.statuses.includes(Status.Advantage);
     }
@@ -109,7 +113,7 @@ export class Unit implements Targetable {
 export class UnitSpecies {
 
     // The Tank
-    public static readonly Tank = new UnitSpecies('Tank', UnitFaction.Tank, Infinity, 2, [Skill.Move], []);
+    public static readonly Tank = new UnitSpecies('Tank', UnitFaction.Tank, Infinity, 2, [Skill.Move, Skill.Collect], []);
 
     // Drones
     public static readonly Scuttledrone = new UnitSpecies('Scuttledrone', UnitFaction.Drone, 1, 1, [Skill.Move, Skill.Prod, Skill.Collect], []);
