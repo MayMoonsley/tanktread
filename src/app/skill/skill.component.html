@@ -1,2 +1,3 @@
-<button (click)="use($event)" [disabled]="!unit!.canAct()">{{skill!.name}}</button>
+<button (click)="use($event)" [disabled]="!unit!.canAct()" *ngIf="unit!.faction === 'player'">{{skill!.name}}</button>
+<p *ngIf="unit!.faction !== 'player'"><strong>{{skill!.name}}</strong></p>
 <p *ngFor="let item of description">{{item}}</p>

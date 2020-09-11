@@ -6,7 +6,7 @@ import { Arrays } from '../util/Arrays';
 import { ResourceDrop, resourceDropToAmount } from './Resource';
 
 export enum UnitFaction {
-    Player, Creature
+    Player = 'player', Creature = 'creature'
 }
 
 export class Unit implements Targetable {
