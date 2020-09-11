@@ -1,7 +1,7 @@
 import { Battlefield } from './classes/Battlefield';
 import { InventoryState } from './state-trackers/InventoryState';
 import { CombatState } from './state-trackers/CombatState';
-import { Unit } from './classes/Unit';
+import { Unit, UnitSpecies } from './classes/Unit';
 import { BattlefieldRegion } from './classes/BattlefieldRegion';
 import { Random } from './util/Random';
 import { Generators } from './util/Generators';
@@ -30,13 +30,13 @@ export namespace Game {
 
     function init(): void {
         const regionNames = ['Plains', 'Island', 'Swamp', 'Mountain', 'Forest'];
-        const tank = new Unit('Tank', Infinity, 1, [Skill.Move]);
+        const tank = UnitSpecies.Tank.instantiate();
         const battlefield = new Battlefield([]);
         let tempNum = 1;
         for (const name of regionNames) {
             const region = new BattlefieldRegion(name);
-            for (let i = 0; i < 3; i++) {
-                region.addUnit(new Unit(`Temp${tempNum}`, 2, 2, [Skill.Move, Skill.Prod], [{resource: Resource.Aluminite, min: 2, max: 5}]));
+            for (let i = 0; i < 1; i++) {
+                region.addUnit(UnitSpecies.Wyrm.instantiate());
                 tempNum++;
             }
             battlefield.regions.push(region);

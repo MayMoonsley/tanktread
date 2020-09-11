@@ -5,6 +5,10 @@ import { Targetable } from '../interfaces/Targetable';
 import { Arrays } from '../util/Arrays';
 import { ResourceDrop, resourceDropToAmount } from './Resource';
 
+export enum UnitFaction {
+    Player, Creature
+}
+
 export class Unit implements Targetable {
 
     name: string;
@@ -17,9 +21,11 @@ export class Unit implements Targetable {
     actionsLeft: number;
     actionsPerTurn: number;
     alive: boolean = true;
+    faction: UnitFaction;
 
-    constructor(name: string, health: number, actionsPerTurn: number, skills: Skill[] = [], drops: ResourceDrop[] = []) {
+    constructor(name: string, faction: UnitFaction, health: number, actionsPerTurn: number, skills: Skill[] = [], drops: ResourceDrop[] = []) {
         this.name = name;
+        this.faction = faction;
         this.health = health;
         this.maxHealth = health;
         this.skills = skills;
@@ -92,6 +98,23 @@ export class Unit implements Targetable {
         if (this.statuses.includes(Status.Fire)) {
             this.wound(1);
         }
+    }
+
+}
+
+export class UnitSpecies {
+
+    // The Tank
+    public static readonly Tank = new UnitSpecies('Tank', UnitFaction.Player, Infinity, 1, [Skill.Move], []);
+
+    // Creatures
+    public static readonly Wyrm = new UnitSpecies('Wyrm', UnitFaction.Creature, 1, 3, [Skill.Burrow, Skill.Burn], []);
+
+    private constructor(public name: string, public faction: UnitFaction, public health: number,
+        public actionsPerTurn: number, public skills: Skill[], public drops: ResourceDrop[]) {}
+
+    public instantiate(): Unit {
+        return new Unit(this.name, this.faction, this.health, this.actionsPerTurn, this.skills, this.drops);
     }
 
 }

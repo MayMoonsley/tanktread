@@ -1,5 +1,6 @@
 import { Unit } from './Unit';
 import { Effect, applyEffect, effectToString } from './Effect';
+import { Status } from './Status';
 
 export enum SkillTargetingMode {
     Self, // can only target the user
@@ -18,8 +19,15 @@ export class Skill {
     targetingMode: SkillTargetingMode;
     effects: Effect[];
 
+    // Movement Skills
     public static readonly Move = new Skill('Move', SkillTargetingMode.RegionAdjacent, [{type: 'moveTo'}]);
+    public static readonly Burrow = new Skill('Burrow', SkillTargetingMode.RegionRanged, [{type: 'moveTo'}]);
+
+    // Basic Attacks
     public static readonly Prod = new Skill('Prod', SkillTargetingMode.UnitMelee, [{type: 'damageTarget', amount: 1}]);
+
+    // Fire Skills
+    public static readonly Burn = new Skill('Burning', SkillTargetingMode.UnitMelee, [{type: 'statusTarget', status: Status.Fire}]);
 
     private constructor(name: string, targetingMode: SkillTargetingMode, effects: Effect[]) {
         this.name = name;
