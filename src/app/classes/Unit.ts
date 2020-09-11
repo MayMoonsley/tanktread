@@ -3,7 +3,7 @@ import { Skill } from './Skill';
 import { Status } from './Status';
 import { Targetable } from '../interfaces/Targetable';
 import { Arrays } from '../util/Arrays';
-import { ResourceDrop, resourceDropToAmount, ResourceInventory } from './Resource';
+import { ResourceDrop, resourceDropToAmount, ResourceInventory, Resource } from './Resource';
 
 export enum UnitFaction {
     Tank = '👤', Drone = '🤖', Creature = '🐛'
@@ -119,8 +119,11 @@ export class UnitSpecies {
     public static readonly Scuttledrone = new UnitSpecies('Scuttledrone', UnitFaction.Drone, 1, 1, [Skill.Move, Skill.Prod, Skill.Collect], []);
 
     // Creatures
-    public static readonly Rat = new UnitSpecies('Rat', UnitFaction.Creature, 1, 1, [Skill.Move, Skill.Prod], []);
-    public static readonly Wyrm = new UnitSpecies('Wyrm', UnitFaction.Creature, 1, 3, [Skill.Burrow, Skill.Burn], []);
+    public static readonly Rat = new UnitSpecies('Rat', UnitFaction.Creature,
+        1, 1, [Skill.Move, Skill.Prod], [{resource: Resource.Hide, min: 1, max: 2}]);
+
+    public static readonly Wyrm = new UnitSpecies('Wyrm', UnitFaction.Creature,
+        1, 3, [Skill.Burrow, Skill.Burn], [{resource: Resource.Petranol, min: 3, max: 4}]);
 
     private constructor(public name: string, public faction: UnitFaction, public health: number,
         public actionsPerTurn: number, public skills: Skill[], public drops: ResourceDrop[]) {}

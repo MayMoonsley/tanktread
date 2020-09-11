@@ -4,6 +4,8 @@ export class Resource {
 
     public static readonly Aluminite = new Resource('Aluminite', 'Ambiguous metallic alloy. Cheap and ubiquitous.');
     public static readonly Silicate = new Resource('Silicate', 'Clarified sand. Common computational substrate.');
+    public static readonly Petranol = new Resource('Petranol', 'Odorous liquid. Clean-burning fuel.');
+    public static readonly Hide = new Resource('Hide', 'Miscellaneous creature dermis. Usable after processing.');
 
     private constructor(public name: string, public description: string) {}
 
