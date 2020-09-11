@@ -84,6 +84,14 @@ export namespace Game {
         currentCombatState.advanceTurn();
     }
 
+    export function build(species: UnitSpecies): void {
+        console.log(`Building ${species.name}`);
+        const region = currentCombatState.tank.containingRegion;
+        if (region !== undefined) {
+            region.addUnit(species.instantiate());
+        }
+    }
+
     init();
 
 }
