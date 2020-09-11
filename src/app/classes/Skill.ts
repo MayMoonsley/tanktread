@@ -23,6 +23,9 @@ export class Skill {
     public static readonly Move = new Skill('Move', SkillTargetingMode.RegionAdjacent, [{type: 'moveTo'}]);
     public static readonly Burrow = new Skill('Burrow', SkillTargetingMode.RegionRanged, [{type: 'moveTo'}]);
 
+    // Utility Skills
+    public static readonly Collect = new Skill('Collect', SkillTargetingMode.RegionMelee, [{type: 'collect'}]);
+
     // Basic Attacks
     public static readonly Prod = new Skill('Prod', SkillTargetingMode.UnitMelee, [{type: 'damageTarget', amount: 1}]);
 

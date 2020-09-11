@@ -6,7 +6,7 @@ import { Arrays } from '../util/Arrays';
 import { ResourceDrop, resourceDropToAmount } from './Resource';
 
 export enum UnitFaction {
-    Player = 'player', Creature = 'creature'
+    Tank = '👤', Drone = '🤖', Creature = '🐛'
 }
 
 export class Unit implements Targetable {
@@ -73,6 +73,10 @@ export class Unit implements Targetable {
         skill.applyEffects(user, this);
     }
 
+    playerControlled(): boolean {
+        return this.faction === UnitFaction.Drone || this.faction === UnitFaction.Tank;
+    }
+
     canAct(): boolean {
         return this.actionsLeft > 0 || this.statuses.includes(Status.Advantage);
     }
@@ -105,7 +109,10 @@ export class Unit implements Targetable {
 export class UnitSpecies {
 
     // The Tank
-    public static readonly Tank = new UnitSpecies('Tank', UnitFaction.Player, Infinity, 1, [Skill.Move], []);
+    public static readonly Tank = new UnitSpecies('Tank', UnitFaction.Tank, Infinity, 2, [Skill.Move], []);
+
+    // Drones
+    public static readonly Scuttledrone = new UnitSpecies('Scuttledrone', UnitFaction.Drone, 1, 1, [Skill.Move, Skill.Prod, Skill.Collect], []);
 
     // Creatures
     public static readonly Rat = new UnitSpecies('Rat', UnitFaction.Creature, 1, 1, [Skill.Move, Skill.Prod], []);
