@@ -30,8 +30,16 @@ export class InventoryState {
         this.resources = this.resources.remove(resource, amount);
     }
 
+    canAfford(resources: ResourceInventory): boolean {
+        return this.resources.canAfford(resources);
+    }
+
     addResourceInventory(resources: ResourceInventory): void {
         this.resources = this.resources.combine(resources);
+    }
+
+    removeResourceInventory(resources: ResourceInventory): void {
+        this.resources = this.resources.removeAll(resources);
     }
 
     addSchematic(species: UnitSpecies): void {
