@@ -94,7 +94,7 @@ export class ResourceInventory {
     }
 
     toString(): string {
-        return this._arr.map(item => `${item.resource.name} (${item.amount})`).join('\n');
+        return this._arr.map(item => `${item.resource.name} ×${item.amount}`).join('\n');
     }
 
 }
