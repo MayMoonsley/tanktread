@@ -54,6 +54,9 @@ export class Unit implements Targetable {
         if (!this.alive) {
             return;
         }
+        if (this.health === Infinity) {
+            return;
+        }
         if (this.containingRegion !== undefined) {
             for (let drop of this.drops) {
                 this.containingRegion.addResource(drop.resource, resourceDropToAmount(drop));
