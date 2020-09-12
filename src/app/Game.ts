@@ -4,11 +4,8 @@ import { CombatState } from './state-trackers/CombatState';
 import { Unit, UnitSpecies } from './classes/Unit';
 import { BattlefieldRegion } from './classes/BattlefieldRegion';
 import { Random } from './util/Random';
-import { Generators } from './util/Generators';
-import { Skill, SkillTargetingMode } from './classes/Skill';
+import { Skill } from './classes/Skill';
 import { Targetable } from './interfaces/Targetable';
-import { Status } from './classes/Status';
-import { Resource } from './classes/Resource';
 
 interface TargetingState {
     active: boolean;
@@ -33,12 +30,10 @@ export namespace Game {
         const tank = UnitSpecies.Tank.instantiate();
         const enemySpecies = [UnitSpecies.Rat, UnitSpecies.Wyrm];
         const battlefield = new Battlefield([]);
-        let tempNum = 1;
         for (const name of regionNames) {
             const region = new BattlefieldRegion(name);
             for (let i = 0; i < 1; i++) {
                 region.addUnit(Random.fromArray(enemySpecies).instantiate());
-                tempNum++;
             }
             battlefield.regions.push(region);
         }
