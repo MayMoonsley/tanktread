@@ -116,7 +116,10 @@ export class UnitSpecies {
     public static readonly Tank = new UnitSpecies('Tank', UnitFaction.Tank, Infinity, 2, [Skill.Move, Skill.Collect], []);
 
     // Drones
-    public static readonly Scuttledrone = new UnitSpecies('Scuttledrone', UnitFaction.Drone, 1, 1, [Skill.Move, Skill.Prod, Skill.Collect], []);
+    public static readonly Stinger = new UnitSpecies('Stinger', UnitFaction.Drone, 1, 2, [Skill.Move, Skill.Sting, Skill.Collect], []);
+
+    public static readonly Detonator = new UnitSpecies('Detonator', UnitFaction.Drone,
+        1, 2, [Skill.Move, Skill.Detonate], [{resource: Resource.Petranol, min: 1, max: 3}]);
 
     // Creatures
     public static readonly Rat = new UnitSpecies('Rat', UnitFaction.Creature,
@@ -127,6 +130,10 @@ export class UnitSpecies {
 
     private constructor(public name: string, public faction: UnitFaction, public health: number,
         public actionsPerTurn: number, public skills: Skill[], public drops: ResourceDrop[]) {}
+
+    get buildCost(): ResourceInventory {
+        return new ResourceInventory(this.drops.map(item => { return {resource: item.resource, amount: item.max}}));
+    }
 
     public instantiate(): Unit {
         return new Unit(this.name, this.faction, this.health, this.actionsPerTurn, this.skills, this.drops);

@@ -27,10 +27,12 @@ export class Skill {
     public static readonly Collect = new Skill('Collect', SkillTargetingMode.RegionMelee, [{type: 'collect'}]);
 
     // Basic Attacks
+    public static readonly Sting = new Skill('Sting', SkillTargetingMode.UnitMelee, [{type: 'damageTarget', amount: 1}, {type: 'killUser'}]);
     public static readonly Prod = new Skill('Prod', SkillTargetingMode.UnitMelee, [{type: 'damageTarget', amount: 1}]);
+    public static readonly Detonate = new Skill('Detonate', SkillTargetingMode.UnitMelee, [{type: 'killTarget'}, {type: 'killUser'}]);
 
     // Fire Skills
-    public static readonly Burn = new Skill('Burning', SkillTargetingMode.UnitMelee, [{type: 'statusTarget', status: Status.Fire}]);
+    public static readonly Burn = new Skill('Burn', SkillTargetingMode.UnitMelee, [{type: 'statusTarget', status: Status.Fire}]);
 
     private constructor(name: string, targetingMode: SkillTargetingMode, effects: Effect[]) {
         this.name = name;

@@ -90,6 +90,7 @@ export namespace Game {
         if (region !== undefined) {
             region.addUnit(species.instantiate());
         }
+        currentInventory.removeResourceInventory(species.buildCost);
     }
 
     init();
