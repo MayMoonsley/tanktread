@@ -11,6 +11,7 @@ import { SkillComponent } from './skill/skill.component';
 import { InventoryScreenComponent } from './inventory-screen/inventory-screen.component';
 import { FormatInfinityPipe } from './format-infinity.pipe';
 import { UnitBuildScreenComponent } from './unit-build-screen/unit-build-screen.component';
+import { DefaultMessagePipe } from './default-message.pipe';
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import { UnitBuildScreenComponent } from './unit-build-screen/unit-build-screen.
         SkillComponent,
         InventoryScreenComponent,
         FormatInfinityPipe,
-        UnitBuildScreenComponent
+        UnitBuildScreenComponent,
+        DefaultMessagePipe
     ],
     imports: [
         BrowserModule
