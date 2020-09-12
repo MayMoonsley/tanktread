@@ -40,7 +40,7 @@ export class Unit implements Targetable {
     }
 
     get buildCost(): ResourceInventory {
-        return new ResourceInventory(this.drops.map(item => { return {resource: item.resource, amount: item.max}}));
+        return new ResourceInventory(this.drops.map(item => { return { resource: item.resource, amount: item.max }; }));
     }
 
     wound(x: number): void {
@@ -58,7 +58,7 @@ export class Unit implements Targetable {
             return;
         }
         if (this.containingRegion !== undefined) {
-            for (let drop of this.drops) {
+            for (const drop of this.drops) {
                 this.containingRegion.addResource(drop.resource, resourceDropToAmount(drop));
             }
             this.containingRegion.removeUnit(this);
@@ -122,20 +122,20 @@ export class UnitSpecies {
     public static readonly Stinger = new UnitSpecies('Stinger', UnitFaction.Drone, 1, 2, [Skill.Move, Skill.Sting, Skill.Collect], []);
 
     public static readonly Detonator = new UnitSpecies('Detonator', UnitFaction.Drone,
-        1, 2, [Skill.Move, Skill.Detonate], [{resource: Resource.Petranol, min: 1, max: 3}]);
+        1, 2, [Skill.Move, Skill.Detonate], [{ resource: Resource.Petranol, min: 1, max: 3 }]);
 
     // Creatures
     public static readonly Rat = new UnitSpecies('Rat', UnitFaction.Creature,
-        1, 1, [Skill.Move, Skill.Prod], [{resource: Resource.Hide, min: 1, max: 2}]);
+        1, 1, [Skill.Move, Skill.Prod], [{ resource: Resource.Hide, min: 1, max: 2 }]);
 
     public static readonly Wyrm = new UnitSpecies('Wyrm', UnitFaction.Creature,
-        1, 3, [Skill.Burrow, Skill.Burn], [{resource: Resource.Petranol, min: 3, max: 4}]);
+        1, 3, [Skill.Burrow, Skill.Burn], [{ resource: Resource.Petranol, min: 3, max: 4 }]);
 
     private constructor(public name: string, public faction: UnitFaction, public health: number,
         public actionsPerTurn: number, public skills: Skill[], public drops: ResourceDrop[]) {}
 
     get buildCost(): ResourceInventory {
-        return new ResourceInventory(this.drops.map(item => { return {resource: item.resource, amount: item.max}}));
+        return new ResourceInventory(this.drops.map(item => { return { resource: item.resource, amount: item.max }; }));
     }
 
     public instantiate(): Unit {

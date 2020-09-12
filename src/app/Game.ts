@@ -26,7 +26,7 @@ export namespace Game {
         targetables: []
     };
     let currentCombatState: CombatState;
-    let currentInventory: InventoryState = new InventoryState();
+    const currentInventory: InventoryState = new InventoryState();
 
     function init(): void {
         const regionNames = ['Plains', 'Island', 'Swamp', 'Mountain', 'Forest'];

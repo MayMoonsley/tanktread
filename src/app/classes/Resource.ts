@@ -11,8 +11,8 @@ export class Resource {
 
 }
 
-export type ResourceAmount = {resource: Resource, amount: number};
-export type ResourceDrop = {resource: Resource, min: number, max: number};
+export type ResourceAmount = {resource: Resource; amount: number;};
+export type ResourceDrop = {resource: Resource; min: number; max: number;};
 
 export function resourceDropToAmount(drop: ResourceDrop): number {
     return Random.int(drop.min, drop.max + 1);
@@ -32,7 +32,7 @@ export class ResourceInventory {
     }
 
     getAmount(resource: Resource): number {
-        for (let item of this._arr) {
+        for (const item of this._arr) {
             if (item.resource === resource) {
                 return item.amount;
             }
@@ -43,27 +43,27 @@ export class ResourceInventory {
     add(resource: Resource, amount: number): ResourceInventory {
         const newArr: ResourceAmount[] = [];
         let resourceAdded: boolean = false;
-        for (let item of this._arr) {
+        for (const item of this._arr) {
             if (item.resource === resource) {
                 resourceAdded = true;
-                newArr.push({resource: item.resource, amount: amount + item.amount});
+                newArr.push({ resource: item.resource, amount: amount + item.amount });
             } else {
-                newArr.push({resource: item.resource, amount: item.amount});
+                newArr.push({ resource: item.resource, amount: item.amount });
             }
         }
         if (!resourceAdded) {
-            newArr.push({resource, amount});
+            newArr.push({ resource, amount });
         }
         return new ResourceInventory(newArr);
     }
 
     remove(resource: Resource, amount: number): ResourceInventory {
         const newArr: ResourceAmount[] = [];
-        for (let item of this._arr) {
+        for (const item of this._arr) {
             if (item.resource === resource) {
-                newArr.push({resource: item.resource, amount: Math.max(amount + item.amount, 0)});
+                newArr.push({ resource: item.resource, amount: Math.max(amount + item.amount, 0) });
             } else {
-                newArr.push({resource: item.resource, amount: item.amount});
+                newArr.push({ resource: item.resource, amount: item.amount });
             }
         }
         return new ResourceInventory(newArr);
@@ -72,7 +72,7 @@ export class ResourceInventory {
     // TODO: make this more efficient
     combine(other: ResourceInventory): ResourceInventory {
         let acc: ResourceInventory = this;
-        for (let item of other._arr) {
+        for (const item of other._arr) {
             acc = acc.add(item.resource, item.amount);
         }
         return acc;
@@ -80,14 +80,14 @@ export class ResourceInventory {
 
     removeAll(other: ResourceInventory): ResourceInventory {
         let acc: ResourceInventory = this;
-        for (let item of other._arr) {
+        for (const item of other._arr) {
             acc = acc.remove(item.resource, item.amount);
         }
         return acc;
     }
 
     canAfford(other: ResourceInventory): boolean {
-        for (let item of other._arr) {
+        for (const item of other._arr) {
             if (this.getAmount(item.resource) < item.amount) {
                 return false;
             }

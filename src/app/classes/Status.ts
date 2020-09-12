@@ -5,18 +5,18 @@ export enum Status{
 
 export function getStatusName(status: Status): string {
     switch (status) {
-        case Status.Fire:
-            return 'Fire';
-        case Status.Advantage:
-            return 'Advantage';
+    case Status.Fire:
+        return 'Fire';
+    case Status.Advantage:
+        return 'Advantage';
     }
 }
 
 export function getStatusEmoji(status: Status): string {
     switch (status) {
-        case Status.Fire:
-            return '🔥';
-        case Status.Advantage:
-            return '⏩';
+    case Status.Fire:
+        return '🔥';
+    case Status.Advantage:
+        return '⏩';
     }
 }

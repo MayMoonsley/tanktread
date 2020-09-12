@@ -5,11 +5,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FormatInfinityPipe implements PipeTransform {
 
-transform(value: unknown, ...args: unknown[]): unknown {
-    if (value === Infinity) {
-        return '∞';
+    transform(value: unknown, ...args: unknown[]): unknown {
+        if (value === Infinity) {
+            return '∞';
+        }
+        return value;
     }
-    return value;
-}
 
 }

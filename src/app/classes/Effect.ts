@@ -6,7 +6,7 @@ import { Types } from '../util/Types';
 export type Effect
     = {type: 'damageTarget'; amount: number;}
     | {type: 'healTarget'; amount: number;}
-    | {type: 'statusTarget'; status: Status}
+    | {type: 'statusTarget'; status: Status;}
     | {type: 'killTarget';}
     | {type: 'damageUser'; amount: number;}
     | {type: 'healUser'; amount: number;}
@@ -73,7 +73,7 @@ export function effectToString(effect: Effect): string {
     case 'statusUser':
         return `Gain ${getStatusName(effect.status)}.`;
     case 'killUser':
-        return 'Self-destruct.'
+        return 'Self-destruct.';
     case 'moveTo':
         return 'Move to target.';
     case 'collect':
