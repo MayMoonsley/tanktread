@@ -1,4 +1,4 @@
-// This code was originally written by Nicole Prindle for Aurora. Used with permission.
+// Some of this code was originally written by Nicole Prindle for Aurora. Used with permission.
 
 export namespace Objects {
     export function safeKeys<T>(x: T): (keyof T)[] {
@@ -32,4 +32,14 @@ export namespace Objects {
             .map(k => cons[k])
             .filter((v): v is T => v instanceof cons);
     }
+
+    export function multitonKey<T>(cons: Function & { prototype: T; }, toFind: T): string {
+        for (let key of Objects.safeKeys(cons)) {
+            if (cons[key] === toFind) {
+                return key;
+            }
+        }
+        throw new Error('Invalid multiton passed into multitonKey');
+    }
+
 }
