@@ -2,12 +2,12 @@
   "name": "tanktread",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
+    "ng": "npx ng",
+    "start": "npx ng serve",
+    "build": "npx ng build",
+    "test": "npx ng test",
     "lint": "npx eslint src --ext .ts",
-    "e2e": "ng e2e"
+    "e2e": "npx ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -44,5 +44,12 @@
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "typescript": "~3.9.5"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MayMoonsley/tanktread.git"
+  },
+  "author": "May Lawver",
+  "license": "MIT",
+  "homepage": "https://github.com/MayMoonsley/tanktread#readme"
 }

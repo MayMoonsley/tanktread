@@ -1,12 +1,11 @@
 import { Battlefield } from './classes/Battlefield';
-import { CombatState } from './classes/CombatState';
-import { Unit } from './classes/Unit';
+import { InventoryState } from './state-trackers/InventoryState';
+import { CombatState } from './state-trackers/CombatState';
+import { Unit, UnitSpecies } from './classes/Unit';
 import { BattlefieldRegion } from './classes/BattlefieldRegion';
 import { Random } from './util/Random';
-import { Generators } from './util/Generators';
-import { Skill, SkillTargetingMode } from './classes/Skill';
+import { Skill } from './classes/Skill';
 import { Targetable } from './interfaces/Targetable';
-import { Status } from './classes/Status';
 
 interface TargetingState {
     active: boolean;
@@ -24,33 +23,31 @@ export namespace Game {
         targetables: []
     };
     let currentCombatState: CombatState;
+    const currentInventory: InventoryState = new InventoryState();
 
     function init(): void {
         const regionNames = ['Plains', 'Island', 'Swamp', 'Mountain', 'Forest'];
-        const skills = Generators.shuffleCycle([
-            new Skill('Thwack', SkillTargetingMode.UnitMelee, [{ type: 'damageTarget', amount: 3 }]),
-            new Skill('Snipe', SkillTargetingMode.UnitRanged, [{ type: 'damageTarget', amount: 1 }]),
-            new Skill('Comfort', SkillTargetingMode.UnitMelee, [{ type: 'healTarget', amount: 2 }]),
-            new Skill('Blanket', SkillTargetingMode.RegionRanged, [{type: 'damageTarget', amount: 2}]),
-            new Skill('Flying Tackle', SkillTargetingMode.UnitArtillery, [{type: 'damageTarget', amount: 1}, {type: 'moveTo'}]),
-            new Skill('Incinerate', SkillTargetingMode.UnitMelee, [{type: 'statusTarget', status: Status.Fire}])
-        ]);
+        const tank = UnitSpecies.Tank.instantiate();
+        const enemySpecies = [UnitSpecies.Rat, UnitSpecies.Wyrm];
         const battlefield = new Battlefield([]);
-        let tempNum = 1;
         for (const name of regionNames) {
             const region = new BattlefieldRegion(name);
-            for (let i = 0; i < 3; i++) {
-                region.addUnit(new Unit(`Temp${tempNum}`, 10, [skills.next().value]));
-                tempNum++;
+            for (let i = 0; i < 1; i++) {
+                region.addUnit(Random.fromArray(enemySpecies).instantiate());
             }
             battlefield.regions.push(region);
         }
         battlefield.regions = Random.shuffle(battlefield.regions);
-        currentCombatState = new CombatState(battlefield);
+        battlefield.regions[0].addUnit(tank);
+        currentCombatState = new CombatState(tank, battlefield);
     }
 
     export function getBattlefield(): Battlefield {
         return currentCombatState.battlefield;
+    }
+
+    export function getInventoryState(): InventoryState {
+        return currentInventory;
     }
 
     export function getTargetables(): Targetable[] {
@@ -74,12 +71,21 @@ export namespace Game {
             throw new Error('Game.target() called while not targeting, somehow');
         }
         target.applySkill(currentTargetingState.user!, currentTargetingState.skill!);
-        currentTargetingState.user!.actedThisTurn = true;
+        currentTargetingState.user!.spendAction();
         currentTargetingState.active = false;
     }
 
     export function advanceTurn(): void {
         currentCombatState.advanceTurn();
+    }
+
+    export function build(species: UnitSpecies): void {
+        console.log(`Building ${species.name}`);
+        const region = currentCombatState.tank.containingRegion;
+        if (region !== undefined) {
+            region.addUnit(species.instantiate());
+        }
+        currentInventory.removeResourceInventory(species.buildCost);
     }
 
     init();

@@ -1,0 +1,11 @@
+<h2>Build a Unit</h2>
+<div *ngFor="let species of inventory.schematics">
+    <h3>{{species.name}}</h3>
+    <p><strong>Cost:</strong> {{species.buildCost.toString() | defaultMessage:"Free"}}</p>
+    <button (click)="build(species)" [disabled]="!inventory.canAfford(species.buildCost)">Build</button>
+</div>
+<h3>Current Resources</h3>
+<ul>
+    <li *ngIf="inventory.resources.arr.length === 0">Nothing</li>
+    <li *ngFor="let item of inventory.resources.arr">{{item.resource.name}} ×{{item.amount}}</li>
+</ul>

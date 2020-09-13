@@ -8,6 +8,10 @@ import { BattlefieldRegionComponent } from './battlefield-region/battlefield-reg
 import { BattlefieldComponent } from './battlefield/battlefield.component';
 import { CombatScreenComponent } from './combat-screen/combat-screen.component';
 import { SkillComponent } from './skill/skill.component';
+import { InventoryScreenComponent } from './inventory-screen/inventory-screen.component';
+import { FormatInfinityPipe } from './format-infinity.pipe';
+import { UnitBuildScreenComponent } from './unit-build-screen/unit-build-screen.component';
+import { DefaultMessagePipe } from './default-message.pipe';
 
 @NgModule({
     declarations: [
@@ -16,7 +20,11 @@ import { SkillComponent } from './skill/skill.component';
         BattlefieldRegionComponent,
         BattlefieldComponent,
         CombatScreenComponent,
-        SkillComponent
+        SkillComponent,
+        InventoryScreenComponent,
+        FormatInfinityPipe,
+        UnitBuildScreenComponent,
+        DefaultMessagePipe
     ],
     imports: [
         BrowserModule

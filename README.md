@@ -1,4 +1,8 @@
-# Tanktread
+# Tanktread [![Build Status](https://travis-ci.com/maymoonsley/tanktread.svg?branch=master)](https://travis-ci.com/maymoonsley/tanktread)
+
+## Important Links
+
+[Design Doc](https://hackmd.io/@KclmmdkNRFqfxvQD2g4siA/H1VQRWOEv)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.6.
 
