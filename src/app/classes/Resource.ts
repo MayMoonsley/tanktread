@@ -1,4 +1,5 @@
 import { Random } from '../util/Random';
+import { Objects } from '../util/Objects';
 
 export class Resource {
 
@@ -20,75 +21,93 @@ export function resourceDropToAmount(drop: ResourceDrop): number {
 
 export class ResourceInventory {
 
-    private readonly _arr: ResourceAmount[];
+    // TODO: make this type take a multitonKey instead of a string
+    private readonly amounts: Record<string, number>;
 
     // TODO: this should ensure _arr has no duplicate entries
-    constructor(_arr: ResourceAmount[] = []) {
-        this._arr = _arr.filter(item => item.amount > 0).sort();
+    constructor(amounts: Record<string, number> = {}) {
+        this.amounts = amounts;
+    }
+
+    static fromAmounts(amounts: ResourceAmount[]): ResourceInventory {
+        const record: Record<string, number> = {};
+        for (const amount of amounts) {
+            const key = Objects.multitonKey(Resource, amount.resource);
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            if (record[key] === undefined) {
+                record[key] = amount.amount;
+            } else {
+                record[key] += amount.amount;
+            }
+        }
+        return new ResourceInventory(record);
     }
 
     get arr(): ResourceAmount[] {
-        return this._arr;
+        // TODO: replace this with multitonEntries once it's fixed
+        const resourceEntries = Objects.safeEntries(Resource).filter(x => x[1] instanceof Resource);
+        const r: ResourceAmount[] = [];
+        for (const entry of resourceEntries) {
+            const amount = this.getAmount(entry[1]);
+            if (amount > 0) {
+                r.push({ resource: entry[1], amount });
+            }
+        }
+        return r;
     }
 
     getAmount(resource: Resource): number {
-        for (const item of this._arr) {
-            if (item.resource === resource) {
-                return item.amount;
-            }
+        const key = Objects.multitonKey(Resource, resource);
+        const value = this.amounts[key];
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        if (value !== undefined) {
+            return value;
         }
         return 0;
     }
 
     add(resource: Resource, amount: number): ResourceInventory {
-        const newArr: ResourceAmount[] = [];
-        let resourceAdded: boolean = false;
-        for (const item of this._arr) {
-            if (item.resource === resource) {
-                resourceAdded = true;
-                newArr.push({ resource: item.resource, amount: amount + item.amount });
-            } else {
-                newArr.push({ resource: item.resource, amount: item.amount });
-            }
-        }
-        if (!resourceAdded) {
-            newArr.push({ resource, amount });
-        }
-        return new ResourceInventory(newArr);
+        const key = Objects.multitonKey(Resource, resource);
+        const newRecord = { ...this.amounts };
+        newRecord[key] = this.getAmount(resource) + amount;
+        return new ResourceInventory(newRecord);
     }
 
     remove(resource: Resource, amount: number): ResourceInventory {
-        const newArr: ResourceAmount[] = [];
-        for (const item of this._arr) {
-            if (item.resource === resource) {
-                newArr.push({ resource: item.resource, amount: Math.max(amount + item.amount, 0) });
-            } else {
-                newArr.push({ resource: item.resource, amount: item.amount });
-            }
+        const key = Objects.multitonKey(Resource, resource);
+        const newRecord = { ...this.amounts };
+        newRecord[key] = this.getAmount(resource) + amount;
+        if (newRecord[key]! <= 0) {
+            delete newRecord[key];
         }
-        return new ResourceInventory(newArr);
+        return new ResourceInventory(newRecord);
     }
 
-    // TODO: make this more efficient
     combine(other: ResourceInventory): ResourceInventory {
-        let acc: ResourceInventory = this;
-        for (const item of other._arr) {
-            acc = acc.add(item.resource, item.amount);
+        const newRecord: Record<string, number> = {};
+        const resourceEntries = Objects.safeEntries(Resource).filter(x => x[1] instanceof Resource);
+        for (const entry of resourceEntries) {
+            newRecord[entry[0]] = this.getAmount(entry[1]) + other.getAmount(entry[1]);
         }
-        return acc;
+        return new ResourceInventory(newRecord);
     }
 
     removeAll(other: ResourceInventory): ResourceInventory {
-        let acc: ResourceInventory = this;
-        for (const item of other._arr) {
-            acc = acc.remove(item.resource, item.amount);
+        const newRecord: Record<string, number> = {};
+        const resourceEntries = Objects.safeEntries(Resource).filter(x => x[1] instanceof Resource);
+        for (const entry of resourceEntries) {
+            const newAmount = this.getAmount(entry[1]) - other.getAmount(entry[1]);
+            if (newAmount > 0) {
+                newRecord[entry[0]] = newAmount;
+            }
         }
-        return acc;
+        return new ResourceInventory(newRecord);
     }
 
     canAfford(other: ResourceInventory): boolean {
-        for (const item of other._arr) {
-            if (this.getAmount(item.resource) < item.amount) {
+        const resourceEntries = Objects.safeEntries(Resource).filter(x => x[1] instanceof Resource);
+        for (const entry of resourceEntries) {
+            if (other.getAmount(entry[1]) > this.getAmount(entry[1])) {
                 return false;
             }
         }
@@ -96,7 +115,7 @@ export class ResourceInventory {
     }
 
     toString(): string {
-        return this._arr.map(item => `${item.resource.name} ×${item.amount}`).join('\n');
+        return this.arr.map(item => `${item.resource.name} ×${item.amount}`).join('\n');
     }
 
 }

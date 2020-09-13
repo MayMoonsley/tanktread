@@ -34,7 +34,7 @@ export namespace Objects {
     }
 
     export function multitonKey<T>(cons: Function & { prototype: T; }, toFind: T): string {
-        for (let key of Objects.safeKeys(cons)) {
+        for (const key of Objects.safeKeys(cons)) {
             if (cons[key] === toFind) {
                 return key;
             }

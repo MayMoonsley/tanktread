@@ -40,7 +40,7 @@ export class Unit implements Targetable {
     }
 
     get buildCost(): ResourceInventory {
-        return new ResourceInventory(this.drops.map(item => { return { resource: item.resource, amount: item.max }; }));
+        return ResourceInventory.fromAmounts(this.drops.map(item => { return { resource: item.resource, amount: item.max }; }));
     }
 
     wound(x: number): void {
@@ -135,7 +135,7 @@ export class UnitSpecies {
         public actionsPerTurn: number, public skills: Skill[], public drops: ResourceDrop[]) {}
 
     get buildCost(): ResourceInventory {
-        return new ResourceInventory(this.drops.map(item => { return { resource: item.resource, amount: item.max }; }));
+        return ResourceInventory.fromAmounts(this.drops.map(item => { return { resource: item.resource, amount: item.max }; }));
     }
 
     public instantiate(): Unit {

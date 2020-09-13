@@ -41,10 +41,10 @@ export class Battlefield {
         case SkillTargetingMode.RegionMelee:
             return [user.containingRegion!];
         case SkillTargetingMode.RegionAdjacent:
-            {
-                const index = this.regions.indexOf(user.containingRegion!);
-                return this.regions.filter((_, i) => Math.abs(i - index) === 1);
-            }
+        {
+            const index = this.regions.indexOf(user.containingRegion!);
+            return this.regions.filter((_, i) => Math.abs(i - index) === 1);
+        }
         case SkillTargetingMode.RegionArtillery:
             return this.regions.filter(region => region !== user.containingRegion);
         case SkillTargetingMode.RegionRanged:
