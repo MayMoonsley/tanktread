@@ -29,10 +29,14 @@ export class Skill {
     // Basic Attacks
     public static readonly Sting = new Skill('Sting', SkillTargetingMode.UnitMelee, [{ type: 'damageTarget', amount: 1 }, { type: 'killUser' }]);
     public static readonly Prod = new Skill('Prod', SkillTargetingMode.UnitMelee, [{ type: 'damageTarget', amount: 1 }]);
-    public static readonly Detonate = new Skill('Detonate', SkillTargetingMode.UnitMelee, [{ type: 'killTarget' }, { type: 'killUser' }]);
 
     // Fire Skills
     public static readonly Burn = new Skill('Burn', SkillTargetingMode.UnitMelee, [{ type: 'statusTarget', status: Status.Fire }]);
+    public static readonly Detonate = new Skill('Detonate', SkillTargetingMode.UnitMelee, [{ type: 'killTarget' }, { type: 'killUser' }]);
+
+    // Mind Control Skills
+    public static readonly Hypnotize = new Skill('Hypnotize', SkillTargetingMode.UnitMelee,
+        [{ type: 'statusTarget', status: Status.MindControl }, { type: 'killUser' }]);
 
     private constructor(name: string, targetingMode: SkillTargetingMode, effects: Effect[]) {
         this.name = name;

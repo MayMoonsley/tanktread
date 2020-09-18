@@ -10,7 +10,7 @@ export class InventoryState {
     constructor() {
         this.credits = 0;
         this.resources = new ResourceInventory();
-        this.schematics = [UnitSpecies.Stinger, UnitSpecies.Detonator];
+        this.schematics = [UnitSpecies.Stinger, UnitSpecies.Detonator, UnitSpecies.Controller];
     }
 
     addCredits(amount: number): void {

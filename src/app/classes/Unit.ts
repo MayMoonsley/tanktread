@@ -36,7 +36,11 @@ export class Unit implements Targetable {
     }
 
     get playerControlled(): boolean {
-        return this.faction === UnitFaction.Drone || this.faction === UnitFaction.Tank;
+        const usuallyPlayerControlled = this.faction === UnitFaction.Drone || this.faction === UnitFaction.Tank;
+        if (this.statuses.includes(Status.MindControl)) {
+            return !usuallyPlayerControlled;
+        }
+        return usuallyPlayerControlled;
     }
 
     get buildCost(): ResourceInventory {
@@ -123,6 +127,9 @@ export class UnitSpecies {
 
     public static readonly Detonator = new UnitSpecies('Detonator', UnitFaction.Drone,
         1, 2, [Skill.Move, Skill.Detonate], [{ resource: Resource.Petranol, min: 1, max: 3, chance: 0 }]);
+
+    public static readonly Controller = new UnitSpecies('Controller', UnitFaction.Drone,
+        1, 2, [Skill.Move, Skill.Hypnotize], [{resource: Resource.Cordylith, min: 1, max: 1, chance: 0}]);
 
     // Creatures
     public static readonly Rat = new UnitSpecies('Rat', UnitFaction.Creature, 1, 1, [Skill.Move, Skill.Prod],
