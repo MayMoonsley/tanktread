@@ -1,2 +1,2 @@
-<p>{{inventory.credits}}&curren;</p>
-<p *ngFor="let item of inventory.resources.arr">{{item.resource.name}} &times;{{item.amount}}</p>
+<p>{{inventory.credits | formatInfinity}}&curren;</p>
+<p *ngFor="let item of inventory.resources.arr">{{item.resource.name}} &times;{{item.amount | formatInfinity}}</p>

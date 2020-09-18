@@ -6,6 +6,7 @@ import { BattlefieldRegion } from './classes/BattlefieldRegion';
 import { Random } from './util/Random';
 import { Skill } from './classes/Skill';
 import { Targetable } from './interfaces/Targetable';
+import { ResourceInventory } from './classes/Resource';
 
 interface TargetingState {
     active: boolean;
@@ -15,6 +16,20 @@ interface TargetingState {
 }
 
 export namespace Game {
+
+    export namespace Debug {
+
+        // give player infinite resources
+        export function eliminateScarcity(): void {
+            Game.getInventoryState().addResourceInventory(ResourceInventory.fromAmount(Infinity));
+        }
+
+        // give player infinite credits
+        export function receiveMassiveInheritance(): void {
+            Game.getInventoryState().addCredits(Infinity);
+        }
+
+    }
 
     let currentTargetingState: TargetingState = {
         active: false,

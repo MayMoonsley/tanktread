@@ -1,2 +1,6 @@
 <h1>{{title}}</h1>
+<div *ngIf="debugMode()" id="debugMenu">
+    <button (click)="eliminateScarcity()">Eliminate Scarcity</button>
+    <button (click)="receiveMassiveInheritance()">Receive Massive Inheritance</button>
+</div>
 <app-combat-screen></app-combat-screen>

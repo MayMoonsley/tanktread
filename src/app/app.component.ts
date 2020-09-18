@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, isDevMode } from '@angular/core';
+import { Game } from './Game';
 
 @Component({
     selector: 'app-root',
@@ -6,5 +7,18 @@ import { Component } from '@angular/core';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'tanktread';
+    title = 'tanktread';
+
+    debugMode(): boolean {
+        return isDevMode();
+    }
+
+    eliminateScarcity(): void {
+        Game.Debug.eliminateScarcity();
+    }
+
+    receiveMassiveInheritance(): void {
+        Game.Debug.receiveMassiveInheritance();
+    }
+
 }

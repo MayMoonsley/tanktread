@@ -49,6 +49,16 @@ export class ResourceInventory {
         return new ResourceInventory(record);
     }
 
+    static fromAmount(amount: number): ResourceInventory {
+        const amts: ResourceAmount[] = [];
+        for (let key of Objects.safeKeys(Resource)) {
+            if (Resource[key] instanceof Resource) {
+                amts.push({resource: Resource[key], amount: amount});
+            }
+        }
+        return this.fromAmounts(amts);
+    }
+
     get arr(): ResourceAmount[] {
         // TODO: replace this with multitonEntries once it's fixed
         const resourceEntries = Objects.safeEntries(Resource).filter(x => x[1] instanceof Resource);

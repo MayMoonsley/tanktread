@@ -5,3 +5,16 @@ h1 {
 :host {
     font-family: monospace;
 }
+
+#debugMenu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: space-around;
+    justify-content: center;
+}
+
+#debugMenu button {
+    display: block;
+    margin: 10px;
+}
