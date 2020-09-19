@@ -65,6 +65,10 @@ export namespace Game {
         return currentInventory;
     }
 
+    export function getCombatState(): CombatState {
+        return currentCombatState;
+    }
+
     export function getTargetables(): Targetable[] {
         if (currentTargetingState.active) {
             return currentTargetingState.targetables;
@@ -99,8 +103,9 @@ export namespace Game {
         const region = currentCombatState.tank.containingRegion;
         if (region !== undefined) {
             region.addUnit(species.instantiate());
+            currentInventory.removeResourceInventory(species.buildCost);
+            currentCombatState.tank.spendAction();
         }
-        currentInventory.removeResourceInventory(species.buildCost);
     }
 
     init();
