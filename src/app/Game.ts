@@ -3,6 +3,7 @@ import { InventoryState } from './state-trackers/InventoryState';
 import { CombatState } from './state-trackers/CombatState';
 import { Unit, UnitSpecies } from './classes/Unit';
 import { BattlefieldRegion } from './classes/BattlefieldRegion';
+import { Objects } from './util/Objects';
 import { Random } from './util/Random';
 import { Skill } from './classes/Skill';
 import { Targetable } from './interfaces/Targetable';
@@ -27,6 +28,16 @@ export namespace Game {
         // give player infinite credits
         export function receiveMassiveInheritance(): void {
             Game.getInventoryState().addCredits(Infinity);
+        }
+
+        // give player every schematic
+        export function inventEverything(): void {
+            const keys = Objects.safeKeys(UnitSpecies);
+            for (let key of keys) {
+                if (UnitSpecies[key] instanceof UnitSpecies) {
+                    Game.getInventoryState().addSchematic(UnitSpecies[key]);
+                }
+            }
         }
 
     }

@@ -17,6 +17,10 @@ export class AppComponent {
         Game.Debug.eliminateScarcity();
     }
 
+    inventEverything(): void {
+        Game.Debug.inventEverything();
+    }
+
     receiveMassiveInheritance(): void {
         Game.Debug.receiveMassiveInheritance();
     }
