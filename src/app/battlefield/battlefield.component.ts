@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Battlefield } from '../classes/Battlefield';
 import { BattlefieldRegion } from '../classes/BattlefieldRegion';
-import { BattlefieldService } from '../battlefield.service';
+import { CombatStateService } from '../combat-state.service';
 import { Game } from '../Game';
 import { Targetable } from '../interfaces/Targetable';
 
@@ -15,11 +15,11 @@ export class BattlefieldComponent implements OnInit {
   battlefield?: Battlefield;
   targetables?: Targetable[];
 
-  constructor(private battlefieldService: BattlefieldService) {}
+  constructor(private combatState: CombatStateService) {}
 
   ngOnInit(): void {
-      this.battlefield = this.battlefieldService.getBattlefield();
-      this.targetables = this.battlefieldService.getTargetables();
+      this.battlefield = this.combatState.getBattlefield();
+      this.targetables = this.combatState.getTargetables();
   }
 
   isTargetable(region: BattlefieldRegion): boolean {
