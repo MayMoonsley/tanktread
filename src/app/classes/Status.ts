@@ -1,7 +1,8 @@
 export enum Status{
     Fire, // take one damage at the end of every turn
     Advantage, // extra free action
-    MindControl // make enemy controllable by the player
+    MindControl, // make enemy controllable by the player
+    Armored // take one less damage from every attack
 }
 
 export function getStatusName(status: Status): string {
@@ -12,6 +13,8 @@ export function getStatusName(status: Status): string {
         return 'Advantage';
     case Status.MindControl:
         return 'Hypnotized';
+    case Status.Armored:
+        return 'Armored';
     }
 }
 
@@ -23,5 +26,7 @@ export function getStatusEmoji(status: Status): string {
         return '⏩';
     case Status.MindControl:
         return '🎮';
+    case Status.Armored:
+        return '🛡️';
     }
 }
