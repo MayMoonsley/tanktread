@@ -1,5 +1,5 @@
 import { Unit } from './Unit';
-import { Status, getStatusName } from './Status';
+import { Status, getStatusName, getStatusEmoji } from './Status';
 import { Game } from '../Game';
 import { Types } from '../util/Types';
 
@@ -63,7 +63,7 @@ export function effectToString(effect: Effect): string {
     case 'healTarget':
         return `Heal ${effect.amount} health.`;
     case 'statusTarget':
-        return `Give target ${getStatusName(effect.status)}.`;
+        return `Give target ${getStatusEmoji(effect.status)} ${getStatusName(effect.status)}.`;
     case 'killTarget':
         return 'Kill target.';
     case 'damageUser':
@@ -71,7 +71,7 @@ export function effectToString(effect: Effect): string {
     case 'healUser':
         return `Heal self for ${effect.amount} health.`;
     case 'statusUser':
-        return `Gain ${getStatusName(effect.status)}.`;
+        return `Gain ${getStatusEmoji(effect.status)} ${getStatusName(effect.status)}.`;
     case 'killUser':
         return 'Self-destruct.';
     case 'moveTo':
