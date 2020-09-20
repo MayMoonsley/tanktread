@@ -1,32 +1,14 @@
-export enum Status{
-    Fire, // take one damage at the end of every turn
-    Advantage, // extra free action
-    MindControl, // make enemy controllable by the player
-    Armored // take one less damage from every attack
-}
+export class Status {
 
-export function getStatusName(status: Status): string {
-    switch (status) {
-    case Status.Fire:
-        return 'Fire';
-    case Status.Advantage:
-        return 'Advantage';
-    case Status.MindControl:
-        return 'Hypnotized';
-    case Status.Armored:
-        return 'Armored';
-    }
-}
+    public static readonly Fire = new Status('Fire', '🔥', 'Take one damage at the start of every turn.');
+    public static readonly Advantage = new Status('Advantage', '⏩', 'Extra free action.');
+    public static readonly MindControl = new Status('Hypnotized', '🎮', 'Under enemy control.');
+    public static readonly Armored = new Status('Armored', '🛡️', 'Take one less damage from attacks.');
 
-export function getStatusEmoji(status: Status): string {
-    switch (status) {
-    case Status.Fire:
-        return '🔥';
-    case Status.Advantage:
-        return '⏩';
-    case Status.MindControl:
-        return '🎮';
-    case Status.Armored:
-        return '🛡️';
-    }
+    private constructor(
+        public readonly name: string,
+        public readonly emoji: string,
+        public readonly desc: string
+    ) {};
+
 }
