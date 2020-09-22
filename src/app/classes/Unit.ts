@@ -34,7 +34,7 @@ export class Unit implements Targetable {
         this.actionsPerTurn = actionsPerTurn;
         this.actionsLeft = actionsPerTurn;
         // add each status (effectively cloning input array)
-        for (let status of statuses) {
+        for (const status of statuses) {
             this.addStatus(status);
         }
     }
@@ -136,17 +136,17 @@ export class UnitSpecies {
         1, 2, [Skill.Move, Skill.Detonate], [{ resource: Resource.Petranol, min: 1, max: 3, chance: 0 }]);
 
     public static readonly Controller = new UnitSpecies('Controller', UnitFaction.Drone,
-        1, 2, [Skill.Move, Skill.Hypnotize], [{resource: Resource.Cordylith, min: 1, max: 1, chance: 0}]);
+        1, 2, [Skill.Move, Skill.Hypnotize], [{ resource: Resource.Cordylith, min: 1, max: 1, chance: 0 }]);
 
     // Creatures
     public static readonly Rat = new UnitSpecies('Rat', UnitFaction.Creature, 1, 1, [Skill.Move, Skill.Prod],
-        [{ resource: Resource.Hide, min: 0, max: 1}, {resource: Resource.Gristle, min: 0, max: 1}]);
+        [{ resource: Resource.Hide, min: 0, max: 1 }, { resource: Resource.Gristle, min: 0, max: 1 }]);
 
     public static readonly Wyrm = new UnitSpecies('Wyrm', UnitFaction.Creature, 1, 3, [Skill.Burrow, Skill.Burn],
-        [{ resource: Resource.Petranol, min: 1, max: 3, chance: 0.75 }, { resource: Resource.Gristle, min: 1, max: 2, chance: 0.75}]);
+        [{ resource: Resource.Petranol, min: 1, max: 3, chance: 0.75 }, { resource: Resource.Gristle, min: 1, max: 2, chance: 0.75 }]);
 
     public static readonly Isopod = new UnitSpecies('Isopod', UnitFaction.Creature, 2, 1, [Skill.Move, Skill.Prod],
-        [{resource: Resource.Aluminite, min: 1, max: 3, chance: 0.75}, {resource: Resource.Hide, min: 2, max: 4, chance: 0.75}], [Status.Armored])
+        [{ resource: Resource.Aluminite, min: 1, max: 3, chance: 0.75 }, { resource: Resource.Hide, min: 2, max: 4, chance: 0.75 }], [Status.Armored]);
 
     private constructor(public name: string, public faction: UnitFaction, public health: number,
         public actionsPerTurn: number, public skills: Skill[], public drops: ResourceDrop[], public statuses: Status[] = []) {}

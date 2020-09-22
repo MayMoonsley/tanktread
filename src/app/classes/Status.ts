@@ -9,6 +9,6 @@ export class Status {
         public readonly name: string,
         public readonly emoji: string,
         public readonly desc: string
-    ) {};
+    ) {}
 
 }

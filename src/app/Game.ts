@@ -33,7 +33,7 @@ export namespace Game {
         // give player every schematic
         export function inventEverything(): void {
             const keys = Objects.safeKeys(UnitSpecies);
-            for (let key of keys) {
+            for (const key of keys) {
                 if (UnitSpecies[key] instanceof UnitSpecies) {
                     Game.getInventoryState().addSchematic(UnitSpecies[key]);
                 }

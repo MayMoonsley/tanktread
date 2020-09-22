@@ -51,9 +51,9 @@ export class ResourceInventory {
 
     static fromAmount(amount: number): ResourceInventory {
         const amts: ResourceAmount[] = [];
-        for (let key of Objects.safeKeys(Resource)) {
+        for (const key of Objects.safeKeys(Resource)) {
             if (Resource[key] instanceof Resource) {
-                amts.push({resource: Resource[key], amount: amount});
+                amts.push({ resource: Resource[key], amount: amount });
             }
         }
         return this.fromAmounts(amts);
