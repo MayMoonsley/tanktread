@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { InventoryService } from '../inventory.service';
+import { Game } from '../Game';
 import { InventoryState } from '../state-trackers/InventoryState';
 
 @Component({
@@ -11,10 +11,10 @@ export class InventoryScreenComponent implements OnInit {
 
     inventory: InventoryState = new InventoryState();
 
-    constructor(private inventoryService: InventoryService) { }
+    constructor() { }
 
     ngOnInit(): void {
-        this.inventory = this.inventoryService.getInventory();
+        this.inventory = Game.getInventoryState();
     }
 
 }
