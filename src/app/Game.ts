@@ -49,7 +49,6 @@ export namespace Game {
         skill: undefined,
         targetables: []
     };
-    const currentState = new GameState(initialCombatState(), new InventoryState());
 
     function initialCombatState(): CombatState {
         const regionNames = ['Plains', 'Island', 'Swamp', 'Mountain', 'Forest'];
@@ -67,6 +66,8 @@ export namespace Game {
         battlefield.regions[0].addUnit(tank);
         return new CombatState(tank, battlefield);
     }
+
+    const currentState = new GameState(initialCombatState(), new InventoryState());
 
     export function getBattlefield(): Battlefield {
         return currentState.combat.battlefield;
