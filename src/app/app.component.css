@@ -14,7 +14,7 @@ h1 {
     justify-content: center;
 }
 
-#debugMenu button {
+#debugMenu p-button {
     display: block;
-    margin: 10px;
+    margin: 2px;
 }
