@@ -1,4 +1,4 @@
-<p-button (click)="use($event)" [disabled]="!unit!.canAct()" *ngIf="unit!.playerControlled"
+<p-button (onClick)="use($event)" [disabled]="!unit!.canAct()" *ngIf="unit!.playerControlled"
     styleClass="p-button-secondary p-button-sm p-button-raised p-button-text">{{skill!.name}}</p-button>
 <p *ngIf="!unit!.playerControlled"><strong>{{skill!.name}}</strong></p>
 <p *ngFor="let item of description">{{item}}</p>
