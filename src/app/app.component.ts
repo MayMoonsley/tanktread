@@ -1,5 +1,5 @@
 import { Component, isDevMode } from '@angular/core';
-import { Game } from './Game';
+import { Debug } from './Debug';
 
 @Component({
     selector: 'app-root',
@@ -14,15 +14,15 @@ export class AppComponent {
     }
 
     eliminateScarcity(): void {
-        Game.Debug.eliminateScarcity();
+        Debug.eliminateScarcity();
     }
 
     inventEverything(): void {
-        Game.Debug.inventEverything();
+        Debug.inventEverything();
     }
 
     receiveMassiveInheritance(): void {
-        Game.Debug.receiveMassiveInheritance();
+        Debug.receiveMassiveInheritance();
     }
 
 }
