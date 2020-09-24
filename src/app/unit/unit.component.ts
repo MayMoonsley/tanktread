@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Unit } from '../classes/Unit';
 import { Game } from '../Game';
-import { getStatusEmoji } from '../classes/Status';
 
 @Component({
     selector: 'app-unit',
@@ -25,7 +24,7 @@ export class UnitComponent implements OnInit {
 
     ngOnChanges(): void {
         if (this.unit !== undefined) {
-            this.statusEmoji = this.unit.statuses.map(status => getStatusEmoji(status));
+            this.statusEmoji = this.unit.statuses.map(status => status.emoji);
         }
     }
 

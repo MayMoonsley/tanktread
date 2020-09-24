@@ -1,4 +1,5 @@
 import { Battlefield } from './classes/Battlefield';
+import { GameState } from './state-trackers/GameState';
 import { InventoryState } from './state-trackers/InventoryState';
 import { CombatState } from './state-trackers/CombatState';
 import { Unit, UnitSpecies } from './classes/Unit';
@@ -22,10 +23,8 @@ export namespace Game {
         skill: undefined,
         targetables: []
     };
-    let currentCombatState: CombatState;
-    const currentInventory: InventoryState = new InventoryState();
 
-    function init(): void {
+    function initialCombatState(): CombatState {
         const regionNames = ['Plains', 'Island', 'Swamp', 'Mountain', 'Forest'];
         const tank = UnitSpecies.Tank.instantiate();
         const enemySpecies = [UnitSpecies.Rat, UnitSpecies.Wyrm];
@@ -39,15 +38,21 @@ export namespace Game {
         }
         battlefield.regions = Random.shuffle(battlefield.regions);
         battlefield.regions[0].addUnit(tank);
-        currentCombatState = new CombatState(tank, battlefield);
+        return new CombatState(tank, battlefield);
     }
 
+    const currentState = new GameState(initialCombatState(), new InventoryState());
+
     export function getBattlefield(): Battlefield {
-        return currentCombatState.battlefield;
+        return currentState.combat.battlefield;
     }
 
     export function getInventoryState(): InventoryState {
-        return currentInventory;
+        return currentState.inventory;
+    }
+
+    export function getCombatState(): CombatState {
+        return currentState.combat;
     }
 
     export function getTargetables(): Targetable[] {
@@ -62,7 +67,7 @@ export namespace Game {
             active: true,
             user,
             skill,
-            targetables: currentCombatState.battlefield.getTargetables(user, skill.targetingMode)
+            targetables: currentState.combat.battlefield.getTargetables(user, skill.targetingMode)
         };
     }
 
@@ -76,18 +81,17 @@ export namespace Game {
     }
 
     export function advanceTurn(): void {
-        currentCombatState.advanceTurn();
+        currentState.combat.advanceTurn();
     }
 
     export function build(species: UnitSpecies): void {
         console.log(`Building ${species.name}`);
-        const region = currentCombatState.tank.containingRegion;
+        const region = currentState.combat.tank.containingRegion;
         if (region !== undefined) {
             region.addUnit(species.instantiate());
+            currentState.inventory.removeResourceInventory(species.buildCost);
+            currentState.combat.tank.spendAction();
         }
-        currentInventory.removeResourceInventory(species.buildCost);
     }
-
-    init();
 
 }

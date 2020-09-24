@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, isDevMode } from '@angular/core';
+import { Debug } from './Debug';
 
 @Component({
     selector: 'app-root',
@@ -6,5 +7,22 @@ import { Component } from '@angular/core';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'tanktread';
+    title = 'tanktread';
+
+    debugMode(): boolean {
+        return isDevMode();
+    }
+
+    eliminateScarcity(): void {
+        Debug.eliminateScarcity();
+    }
+
+    inventEverything(): void {
+        Debug.inventEverything();
+    }
+
+    receiveMassiveInheritance(): void {
+        Debug.receiveMassiveInheritance();
+    }
+
 }

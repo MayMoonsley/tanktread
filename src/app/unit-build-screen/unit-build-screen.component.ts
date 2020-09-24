@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { InventoryService } from '../inventory.service';
 import { InventoryState } from '../state-trackers/InventoryState';
 import { UnitSpecies } from '../classes/Unit';
 import { Game } from '../Game';
+import { CombatState } from '../state-trackers/CombatState';
 
 @Component({
     selector: 'app-unit-build-screen',
@@ -12,11 +12,13 @@ import { Game } from '../Game';
 export class UnitBuildScreenComponent implements OnInit {
 
     inventory: InventoryState = new InventoryState();
+    combat: CombatState = Game.getCombatState();
 
-    constructor(private inventoryService: InventoryService) { }
+    constructor() { }
 
     ngOnInit(): void {
-        this.inventory = this.inventoryService.getInventory();
+        this.inventory = Game.getInventoryState();
+        this.combat = Game.getCombatState();
     }
 
     build(species: UnitSpecies): void {
