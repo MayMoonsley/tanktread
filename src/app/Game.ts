@@ -4,11 +4,9 @@ import { InventoryState } from './state-trackers/InventoryState';
 import { CombatState } from './state-trackers/CombatState';
 import { Unit, UnitSpecies } from './classes/Unit';
 import { BattlefieldRegion } from './classes/BattlefieldRegion';
-import { Objects } from './util/Objects';
 import { Random } from './util/Random';
 import { Skill } from './classes/Skill';
 import { Targetable } from './interfaces/Targetable';
-import { ResourceInventory } from './classes/Resource';
 
 interface TargetingState {
     active: boolean;
