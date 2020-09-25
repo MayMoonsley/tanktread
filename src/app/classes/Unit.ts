@@ -47,12 +47,8 @@ export class Unit implements Targetable {
         return r;
     }
 
-    get verboseFormattedName(): string {
-        let r: string = `${this.faction} ${this.name} ❤️${this.health}/${this.maxHealth} ⚡${this.actionsLeft}/${this.actionsPerTurn}`;
-        if (this.statuses.length > 0) {
-            r += ` ${this.statuses.map(status => status.emoji).join('')}`;
-        }
-        return r;
+    get statString(): string {
+        return `❤️ ${this.health}/${this.maxHealth} ⚡ ${this.actionsLeft}/${this.actionsPerTurn}`;
     }
 
     get playerControlled(): boolean {
