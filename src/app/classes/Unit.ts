@@ -4,7 +4,6 @@ import { Status } from './Status';
 import { Targetable } from '../interfaces/Targetable';
 import { Arrays } from '../util/Arrays';
 import { ResourceDrop, resourceDropToAmount, ResourceInventory, Resource } from './Resource';
-import { ɵbypassSanitizationTrustResourceUrl } from '@angular/core';
 
 export enum UnitFaction {
     Tank = '👤', Drone = '🤖', Creature = '🐛'
@@ -42,6 +41,14 @@ export class Unit implements Targetable {
 
     get formattedName(): string {
         let r: string = `${this.faction} ${this.name}`;
+        if (this.statuses.length > 0) {
+            r += ` ${this.statuses.map(status => status.emoji).join('')}`;
+        }
+        return r;
+    }
+
+    get verboseFormattedName(): string {
+        let r: string = `${this.faction} ${this.name} ❤️${this.health}/${this.maxHealth} ⚡${this.actionsLeft}/${this.actionsPerTurn}`;
         if (this.statuses.length > 0) {
             r += ` ${this.statuses.map(status => status.emoji).join('')}`;
         }

@@ -1,4 +1,4 @@
-<h3 *ngIf="showHeader">{{ formattedName() }}</h3>
+<h3 *ngIf="showHeader === true">{{ formattedName() }}</h3>
 <p>Health: {{unit!.health | formatInfinity}}/{{unit!.maxHealth | formatInfinity}}</p>
 <p>Actions: {{unit!.actionsLeft}}/{{unit!.actionsPerTurn}}</p>
 <div id="skills">
