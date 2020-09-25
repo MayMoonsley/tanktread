@@ -1,8 +1,6 @@
-<h3>{{unit!.faction}} {{unit!.name}}<span *ngIf="statusEmoji.length > 0">(<span *ngFor="let emoji of statusEmoji">{{emoji}}</span>)</span></h3>
-<div id="stats">
-    <p>Health: {{unit!.health | formatInfinity}}/{{unit!.maxHealth | formatInfinity}}</p>
-    <p>Actions: {{unit!.actionsLeft}}/{{unit!.actionsPerTurn}}</p>
-</div>
+<h3 *ngIf="showHeader">{{ formattedName() }}</h3>
+<p>Health: {{unit!.health | formatInfinity}}/{{unit!.maxHealth | formatInfinity}}</p>
+<p>Actions: {{unit!.actionsLeft}}/{{unit!.actionsPerTurn}}</p>
 <div id="skills">
     <app-skill *ngFor="let skill of unit!.skills" [skill]="skill" [unit]="unit"></app-skill>
 </div>

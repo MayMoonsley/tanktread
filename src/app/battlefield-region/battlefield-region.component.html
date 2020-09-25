@@ -1,7 +1,9 @@
 <h2>{{ region!.name }}</h2>
-<div id="units">
-    <app-unit *ngFor="let unit of region!.units" [unit]="unit" [targetable]='isTargetable(unit)'></app-unit>
-</div>
+<p-accordion multiple="true">
+    <p-accordionTab *ngFor="let unit of region!.units" [header]="unit.formattedName">
+        <app-unit [unit]="unit" [targetable]='isTargetable(unit)' showHeader="false"></app-unit>
+    </p-accordionTab>
+</p-accordion>
 <div id="resources" *ngIf="region!.resources.arr.length > 0">
     <p *ngFor="let item of region!.resources.arr"><strong>{{item.resource.name}}</strong> &times;{{item.amount}}</p>
 </div>

@@ -12,7 +12,10 @@ import { InventoryScreenComponent } from './inventory-screen/inventory-screen.co
 import { FormatInfinityPipe } from './format-infinity.pipe';
 import { UnitBuildScreenComponent } from './unit-build-screen/unit-build-screen.component';
 import { DefaultMessagePipe } from './default-message.pipe';
-import {ButtonModule} from 'primeng/button';
+import { ButtonModule } from 'primeng/button';
+import { AccordionModule } from 'primeng/accordion';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
     declarations: [
@@ -30,6 +33,8 @@ import {ButtonModule} from 'primeng/button';
     imports: [
         BrowserModule,
         ButtonModule,
+        AccordionModule,
+        BrowserAnimationsModule
     ],
     providers: [],
     bootstrap: [AppComponent]
