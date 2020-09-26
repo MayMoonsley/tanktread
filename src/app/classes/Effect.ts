@@ -3,6 +3,7 @@ import { BattlefieldRegion } from './BattlefieldRegion';
 import { Status } from './Status';
 import { Types } from '../util/Types';
 import { Targetable } from '../interfaces/Targetable';
+import { InventoryState } from '../state-trackers/InventoryState';
 
 export class EffectType {
 
@@ -47,8 +48,9 @@ export class EffectType {
         user.moveTo(target);
     });
 
-    public static readonly Collect = EffectType.fromRegionFunction((user: Unit, target: BattlefieldRegion) => {
-        // TODO: implement this
+    public static readonly Collect = EffectType.fromRegionFunction((user: Unit,
+        target: BattlefieldRegion, inventory: InventoryState) => {
+        inventory.addResourceInventory(target.collectResources());
     });
 
     public applyToUnit(user: Unit, target: Unit, ...args: any[]): void {
@@ -77,7 +79,7 @@ export type Effect = {focus: 'target' | 'user';} & ({type: 'Damage'; amount: num
 | {type: 'MoveTo';}
 | {type: 'Collect';});
 
-export function applyEffect(effect: Effect, user: Unit, target: Targetable): void {
+export function applyEffect(effect: Effect, user: Unit, target: Targetable, inventory: InventoryState): void {
     let focus: Targetable;
     if (effect.focus === 'target') {
         focus = target;
@@ -101,7 +103,7 @@ export function applyEffect(effect: Effect, user: Unit, target: Targetable): voi
         EffectType.MoveTo.applyToTargetable(user, focus);
         return;
     case 'Collect':
-        EffectType.Collect.applyToTargetable(user, focus);
+        EffectType.Collect.applyToTargetable(user, focus, inventory);
         return;
     default:
         return Types.impossible(effect);

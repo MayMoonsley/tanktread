@@ -77,7 +77,7 @@ export namespace Game {
             throw new Error('Game.target() called while not targeting, somehow');
         }
         for (const effect of currentTargetingState.skill!.effects) {
-            applyEffect(effect, currentTargetingState.user!, target);
+            applyEffect(effect, currentTargetingState.user!, target, currentState.inventory);
         }
         currentTargetingState.user!.spendAction();
         currentTargetingState.active = false;
