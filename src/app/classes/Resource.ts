@@ -3,20 +3,26 @@ import { Objects } from '../util/Objects';
 
 export class Resource {
 
-    public static readonly Aluminite = new Resource('Aluminite', 'Ambiguous metallic alloy. Cheap and ubiquitous.');
-    public static readonly Silicate = new Resource('Silicate', 'Clarified sand. Common computational substrate.');
-    public static readonly Petranol = new Resource('Petranol', 'Odorous liquid. Clean-burning fuel.');
-    public static readonly Hide = new Resource('Hide', 'Miscellaneous creature dermis. Usable after processing.');
+    public static readonly Aluminite = new Resource('Aluminite', 'Ambiguous metallic alloy. Cheap and ubiquitous.', 3);
+    public static readonly Silicate = new Resource('Silicate', 'Clarified sand. Common computational substrate.', 3);
+    public static readonly Petranol = new Resource('Petranol', 'Odorous liquid. Clean-burning fuel.', 2);
+    public static readonly Cordylith = new Resource('Cordylith', 'Crystalline fungus mesh. Mood regulator in low doses.', 20);
+    public static readonly Hide = new Resource('Hide', 'Miscellaneous creature dermis. Usable after processing.', 1);
+    public static readonly Gristle = new Resource('Gristle', 'Low-quality creature flesh. Technically edible.', 1);
+    public static readonly Nodule = new Resource('Nodule', 'Sucrose storage organ. Calorie dense.', 10);
 
-    private constructor(public name: string, public description: string) {}
+    private constructor(public readonly name: string, public readonly description: string, public readonly value: number) {}
 
 }
 
 export type ResourceAmount = {resource: Resource; amount: number;};
-export type ResourceDrop = {resource: Resource; min: number; max: number;};
+export type ResourceDrop = {resource: Resource; min: number; max: number; chance?: number;};
 
 export function resourceDropToAmount(drop: ResourceDrop): number {
-    return Random.int(drop.min, drop.max + 1);
+    if (drop.chance === undefined || Random.boolean(drop.chance)) {
+        return Random.int(drop.min, drop.max + 1);
+    }
+    return 0;
 }
 
 export class ResourceInventory {
@@ -41,6 +47,16 @@ export class ResourceInventory {
             }
         }
         return new ResourceInventory(record);
+    }
+
+    static fromAmount(amount: number): ResourceInventory {
+        const amts: ResourceAmount[] = [];
+        for (const key of Objects.safeKeys(Resource)) {
+            if (Resource[key] instanceof Resource) {
+                amts.push({ resource: Resource[key], amount: amount });
+            }
+        }
+        return this.fromAmounts(amts);
     }
 
     get arr(): ResourceAmount[] {
