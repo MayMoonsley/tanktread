@@ -5,10 +5,6 @@ import { Arrays } from '../util/Arrays';
 import { ResourceDrop, resourceDropToAmount, ResourceInventory, Resource } from './Resource';
 import * as Interfaces from '../interfaces/Unit';
 
-export enum UnitFaction {
-    Tank = '👤', Drone = '🤖', Creature = '🐛'
-}
-
 export class Unit implements Interfaces.Unit {
 
     targetable: true = true;
@@ -23,9 +19,9 @@ export class Unit implements Interfaces.Unit {
     actionsLeft: number;
     actionsPerTurn: number;
     alive: boolean = true;
-    faction: UnitFaction;
+    faction: Interfaces.UnitFaction;
 
-    constructor(name: string, faction: UnitFaction, health: number, actionsPerTurn: number, skills: Skill[] = [], drops: ResourceDrop[] = [], statuses: Status[] = []) {
+    constructor(name: string, faction: Interfaces.UnitFaction, health: number, actionsPerTurn: number, skills: Skill[] = [], drops: ResourceDrop[] = [], statuses: Status[] = []) {
         this.name = name;
         this.faction = faction;
         this.health = health;
@@ -54,7 +50,7 @@ export class Unit implements Interfaces.Unit {
     }
 
     get playerControlled(): boolean {
-        const usuallyPlayerControlled = this.faction === UnitFaction.Drone || this.faction === UnitFaction.Tank;
+        const usuallyPlayerControlled = this.faction === Interfaces.UnitFaction.Drone || this.faction === Interfaces.UnitFaction.Tank;
         if (this.statuses.includes(Status.MindControl)) {
             return !usuallyPlayerControlled;
         }
@@ -139,29 +135,29 @@ export class Unit implements Interfaces.Unit {
 export class UnitSpecies {
 
     // The Tank
-    public static readonly Tank = new UnitSpecies('Tank', UnitFaction.Tank, Infinity, 2,
+    public static readonly Tank = new UnitSpecies('Tank', Interfaces.UnitFaction.Tank, Infinity, 2,
         [Skill.Move, Skill.Collect, Skill.Deconstruct], []);
 
     // Drones
-    public static readonly Stinger = new UnitSpecies('Stinger', UnitFaction.Drone, 1, 2, [Skill.Move, Skill.Sting, Skill.Collect], []);
+    public static readonly Stinger = new UnitSpecies('Stinger', Interfaces.UnitFaction.Drone, 1, 2, [Skill.Move, Skill.Sting, Skill.Collect], []);
 
-    public static readonly Detonator = new UnitSpecies('Detonator', UnitFaction.Drone,
+    public static readonly Detonator = new UnitSpecies('Detonator', Interfaces.UnitFaction.Drone,
         1, 2, [Skill.Move, Skill.Detonate], [{ resource: Resource.Petranol, min: 1, max: 3, chance: 0 }]);
 
-    public static readonly Controller = new UnitSpecies('Controller', UnitFaction.Drone,
+    public static readonly Controller = new UnitSpecies('Controller', Interfaces.UnitFaction.Drone,
         1, 2, [Skill.Move, Skill.Hypnotize], [{ resource: Resource.Cordylith, min: 1, max: 1, chance: 0 }]);
 
     // Creatures
-    public static readonly Rat = new UnitSpecies('Rat', UnitFaction.Creature, 1, 1, [Skill.Move, Skill.Prod],
+    public static readonly Rat = new UnitSpecies('Rat', Interfaces.UnitFaction.Creature, 1, 1, [Skill.Move, Skill.Prod],
         [{ resource: Resource.Hide, min: 0, max: 1 }, { resource: Resource.Gristle, min: 0, max: 1 }]);
 
-    public static readonly Wyrm = new UnitSpecies('Wyrm', UnitFaction.Creature, 1, 3, [Skill.Burrow, Skill.Burn],
+    public static readonly Wyrm = new UnitSpecies('Wyrm', Interfaces.UnitFaction.Creature, 1, 3, [Skill.Burrow, Skill.Burn],
         [{ resource: Resource.Petranol, min: 1, max: 3, chance: 0.75 }, { resource: Resource.Gristle, min: 1, max: 2, chance: 0.75 }]);
 
-    public static readonly Isopod = new UnitSpecies('Isopod', UnitFaction.Creature, 2, 1, [Skill.Move, Skill.Prod],
+    public static readonly Isopod = new UnitSpecies('Isopod', Interfaces.UnitFaction.Creature, 2, 1, [Skill.Move, Skill.Prod],
         [{ resource: Resource.Aluminite, min: 1, max: 3, chance: 0.75 }, { resource: Resource.Hide, min: 2, max: 4, chance: 0.75 }], [Status.Armored]);
 
-    private constructor(public name: string, public faction: UnitFaction, public health: number,
+    private constructor(public name: string, public faction: Interfaces.UnitFaction, public health: number,
         public actionsPerTurn: number, public skills: Skill[], public drops: ResourceDrop[], public statuses: Status[] = []) {}
 
     get buildCost(): ResourceInventory {
