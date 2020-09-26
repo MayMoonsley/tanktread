@@ -1,15 +1,18 @@
 import { BattlefieldRegion } from './BattlefieldRegion';
 import { Skill } from './Skill';
+import { applyEffect } from './Effect';
 import { Status } from './Status';
-import { Targetable } from '../interfaces/Targetable';
 import { Arrays } from '../util/Arrays';
 import { ResourceDrop, resourceDropToAmount, ResourceInventory, Resource } from './Resource';
+import * as Interfaces from '../interfaces/Unit';
 
 export enum UnitFaction {
     Tank = '👤', Drone = '🤖', Creature = '🐛'
 }
 
-export class Unit implements Targetable {
+export class Unit implements Interfaces.Unit {
+
+    targetable: true = true;
 
     name: string;
     health: number;
@@ -101,10 +104,6 @@ export class Unit implements Targetable {
             this.containingRegion.removeUnit(this);
         }
         region.addUnit(this);
-    }
-
-    applySkill(user: Unit, skill: Skill): void {
-        skill.applyEffects(user, this);
     }
 
     canAct(): boolean {

@@ -1,5 +1,4 @@
-import { Unit } from './Unit';
-import { Effect, applyEffect, effectToString } from './Effect';
+import { Effect, effectToString } from './Effect';
 import { Status } from './Status';
 
 export enum SkillTargetingMode {
@@ -20,23 +19,23 @@ export class Skill {
     effects: Effect[];
 
     // Movement Skills
-    public static readonly Move = new Skill('Move', SkillTargetingMode.RegionAdjacent, [{ type: 'moveTo' }]);
-    public static readonly Burrow = new Skill('Burrow', SkillTargetingMode.RegionRanged, [{ type: 'moveTo' }]);
+    public static readonly Move = new Skill('Move', SkillTargetingMode.RegionAdjacent, [{ type: 'MoveTo', focus: 'target' }]);
+    public static readonly Burrow = new Skill('Burrow', SkillTargetingMode.RegionRanged, [{ type: 'MoveTo', focus: 'target' }]);
 
     // Utility Skills
-    public static readonly Collect = new Skill('Collect', SkillTargetingMode.RegionMelee, [{ type: 'collect' }]);
+    public static readonly Collect = new Skill('Collect', SkillTargetingMode.RegionMelee, [{ type: 'Collect', focus: 'user' }]);
 
     // Basic Attacks
-    public static readonly Sting = new Skill('Sting', SkillTargetingMode.UnitMelee, [{ type: 'damageTarget', amount: 1 }, { type: 'killUser' }]);
-    public static readonly Prod = new Skill('Prod', SkillTargetingMode.UnitMelee, [{ type: 'damageTarget', amount: 1 }]);
+    public static readonly Sting = new Skill('Sting', SkillTargetingMode.UnitMelee, [{ type: 'Damage', focus: 'target', amount: 1 }, { type: 'Kill', focus: 'user' }]);
+    public static readonly Prod = new Skill('Prod', SkillTargetingMode.UnitMelee, [{ type: 'Damage', focus: 'target', amount: 1 }]);
 
     // Fire Skills
-    public static readonly Burn = new Skill('Burn', SkillTargetingMode.UnitMelee, [{ type: 'statusTarget', status: Status.Fire }]);
-    public static readonly Detonate = new Skill('Detonate', SkillTargetingMode.UnitMelee, [{ type: 'killTarget' }, { type: 'killUser' }]);
+    public static readonly Burn = new Skill('Burn', SkillTargetingMode.UnitMelee, [{ type: 'Status', focus: 'target', status: Status.Fire }]);
+    public static readonly Detonate = new Skill('Detonate', SkillTargetingMode.UnitMelee, [{ type: 'Kill', focus: 'target' }, { type: 'Kill', focus: 'user' }]);
 
     // Mind Control Skills
     public static readonly Hypnotize = new Skill('Hypnotize', SkillTargetingMode.UnitMelee,
-        [{ type: 'statusTarget', status: Status.MindControl }, { type: 'killUser' }]);
+        [{ type: 'Status', focus: 'target', status: Status.MindControl }, { type: 'Kill', focus: 'user' }]);
 
     private constructor(name: string, targetingMode: SkillTargetingMode, effects: Effect[]) {
         this.name = name;
@@ -46,12 +45,6 @@ export class Skill {
 
     get description(): string {
         return this.effects.map(effectToString).join('\n');
-    }
-
-    applyEffects(user: Unit, target: Unit): void {
-        for (const effect of this.effects) {
-            applyEffect(effect, user, target);
-        }
     }
 
 }

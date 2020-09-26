@@ -1,55 +1,107 @@
-import { Unit } from './Unit';
+import { Unit } from '../interfaces/Unit';
+import { BattlefieldRegion } from './BattlefieldRegion';
 import { Status } from './Status';
-import { Game } from '../Game';
 import { Types } from '../util/Types';
+import { Targetable } from '../interfaces/Targetable';
 
-export type Effect
-    = {type: 'damageTarget'; amount: number;}
-    | {type: 'healTarget'; amount: number;}
-    | {type: 'statusTarget'; status: Status;}
-    | {type: 'killTarget';}
-    | {type: 'damageUser'; amount: number;}
-    | {type: 'healUser'; amount: number;}
-    | {type: 'statusUser'; status: Status;}
-    | {type: 'killUser';}
-    | {type: 'moveTo';}
-    | {type: 'collect';};
+export class EffectType {
 
-export function applyEffect(effect: Effect, user: Unit, target: Unit): void {
-    switch (effect.type) {
-    case 'damageTarget':
-        target.wound(effect.amount);
-        return;
-    case 'healTarget':
-        target.heal(effect.amount);
-        return;
-    case 'statusTarget':
-        target.addStatus(effect.status);
-        return;
-    case 'killTarget':
+    private constructor(private unitFunc: (user: Unit, target: Unit, ...args: any[]) => void,
+        private regionFunc: (user: Unit, target: BattlefieldRegion, ...args: any[]) => void) {};
+
+    private static fromUnitFunction(toUnit: (user: Unit, target: Unit, ...args: any[]) => void): EffectType {
+        const toRegion = (user: Unit, target: BattlefieldRegion, ...args: any[]) => {
+            for (let unit of target.units) {
+                toUnit(user, unit, ...args);
+            }
+        };
+        return new EffectType(toUnit, toRegion);
+    }
+
+    private static fromRegionFunction(toRegion: (user: Unit, target: BattlefieldRegion, ...args: any[]) => void): EffectType {
+        const toUnit = (user: Unit, target: Unit, ...args: any[]) => {
+            if (target.containingRegion !== undefined) {
+                toRegion(user, target.containingRegion, ...args);
+            }
+        }
+        return new EffectType(toUnit, toRegion);
+    }
+
+    public static readonly Damage = EffectType.fromUnitFunction((user: Unit, target: Unit, damage: number) => {
+        target.wound(damage);
+    });
+
+    public static readonly Heal = EffectType.fromUnitFunction((user: Unit, target: Unit, amount: number) => {
+        target.heal(amount);
+    });
+
+    public static readonly Status = EffectType.fromUnitFunction((user: Unit, target: Unit, status: Status) => {
+        target.addStatus(status);
+    });
+
+    public static readonly Kill = EffectType.fromUnitFunction((user: Unit, target: Unit) => {
         target.die();
-        return;
-    case 'damageUser':
-        user.wound(effect.amount);
-        return;
-    case 'healUser':
-        user.heal(effect.amount);
-        return;
-    case 'statusUser':
-        user.addStatus(effect.status);
-        return;
-    case 'killUser':
-        user.die();
-        return;
-    case 'moveTo':
-        if (user.containingRegion !== target.containingRegion && target.containingRegion !== undefined) {
-            user.moveTo(target.containingRegion);
+    });
+
+    public static readonly MoveTo = EffectType.fromRegionFunction((user: Unit, target: BattlefieldRegion) => {
+        user.moveTo(target);
+    });
+
+    public static readonly Collect = EffectType.fromRegionFunction((user: Unit, target: BattlefieldRegion) => {
+       // TODO: implement this
+    });
+
+    public applyToUnit(user: Unit, target: Unit, ...args: any[]): void {
+        this.unitFunc(user, target, ...args);
+    }
+
+    public applyToRegion(user: Unit, target: BattlefieldRegion, ...args: any[]): void {
+        this.regionFunc(user, target, ...args);
+    }
+
+    public applyToTargetable(user: Unit, target: Targetable, ...args: any[]): void {
+        if (target instanceof BattlefieldRegion) {
+            this.applyToRegion(user, target, ...args);
+        } else {
+            // safe unless we add more targetable things
+            this.applyToUnit(user, target as Unit, ...args);
         }
+    }
+
+}
+
+export type Effect = {focus: 'target' | 'user'} & ({type: 'Damage', amount: number}
+    | {type: 'Heal', amount: number}
+    | {type: 'Status', status: Status}
+    | {type: 'Kill'}
+    | {type: 'MoveTo'}
+    | {type: 'Collect'});
+
+export function applyEffect(effect: Effect, user: Unit, target: Targetable): void {
+    let focus: Targetable;
+    if (effect.focus === 'target') {
+        focus = target;
+    } else {
+        focus = user;
+    }
+    switch (effect.type) {
+    case 'Damage':
+        EffectType.Damage.applyToTargetable(user, focus, effect.amount);
         return;
-    case 'collect':
-        if (user.containingRegion !== undefined) {
-            Game.getInventoryState().addResourceInventory(user.containingRegion.collectResources());
-        }
+    case 'Heal':
+        EffectType.Heal.applyToTargetable(user, focus, effect.amount);
+        return;
+    case 'Status':
+        EffectType.Status.applyToTargetable(user, focus, effect.status);
+        return;
+    case 'Kill':
+        EffectType.Kill.applyToTargetable(user, focus);
+        return;
+    case 'MoveTo':
+        EffectType.MoveTo.applyToTargetable(user, focus);
+        return;
+    case 'Collect':
+        EffectType.Collect.applyToTargetable(user, focus);
         return;
     default:
         return Types.impossible(effect);
@@ -58,25 +110,17 @@ export function applyEffect(effect: Effect, user: Unit, target: Unit): void {
 
 export function effectToString(effect: Effect): string {
     switch (effect.type) {
-    case 'damageTarget':
-        return `Deal ${effect.amount} damage.`;
-    case 'healTarget':
-        return `Heal ${effect.amount} health.`;
-    case 'statusTarget':
-        return `Give target ${effect.status.emoji} ${effect.status.name}.`;
-    case 'killTarget':
-        return 'Kill target.';
-    case 'damageUser':
-        return `Take ${effect.amount} damage.`;
-    case 'healUser':
-        return `Heal self for ${effect.amount} health.`;
-    case 'statusUser':
-        return `Gain ${effect.status.emoji} ${effect.status.name}.`;
-    case 'killUser':
-        return 'Self-destruct.';
-    case 'moveTo':
-        return 'Move to target.';
-    case 'collect':
-        return 'Collect resources.';
+    case 'Damage':
+        return `Deal ${effect.amount} damage to ${effect.focus}.`;
+    case 'Heal':
+        return `Heal ${effect.focus} for ${effect.amount}.`;
+    case 'Status':
+        return `Give ${effect.focus} ${effect.status.emoji} ${effect.status.name}.`;
+    case 'Kill':
+        return `Kill ${effect.focus}.`;
+    case 'MoveTo':
+        return `Move to ${effect.focus}.`;
+    case 'Collect':
+        return `Collect resources at ${effect.focus}.`;
     }
 }
