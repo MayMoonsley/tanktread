@@ -1,7 +1,5 @@
 import { Unit } from './Unit';
 import { Targetable } from '../interfaces/Targetable';
-import { Skill } from './Skill';
-import { Effect, applyEffect } from './Effect';
 import { ResourceInventory, Resource } from './Resource';
 
 export class BattlefieldRegion implements Targetable {

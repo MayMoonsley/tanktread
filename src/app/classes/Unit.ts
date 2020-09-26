@@ -1,6 +1,5 @@
 import { BattlefieldRegion } from './BattlefieldRegion';
 import { Skill } from './Skill';
-import { applyEffect } from './Effect';
 import { Status } from './Status';
 import { Arrays } from '../util/Arrays';
 import { ResourceDrop, resourceDropToAmount, ResourceInventory, Resource } from './Resource';

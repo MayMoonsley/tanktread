@@ -7,11 +7,11 @@ import { Targetable } from '../interfaces/Targetable';
 export class EffectType {
 
     private constructor(private unitFunc: (user: Unit, target: Unit, ...args: any[]) => void,
-        private regionFunc: (user: Unit, target: BattlefieldRegion, ...args: any[]) => void) {};
+        private regionFunc: (user: Unit, target: BattlefieldRegion, ...args: any[]) => void) {}
 
     private static fromUnitFunction(toUnit: (user: Unit, target: Unit, ...args: any[]) => void): EffectType {
-        const toRegion = (user: Unit, target: BattlefieldRegion, ...args: any[]) => {
-            for (let unit of target.units) {
+        const toRegion = (user: Unit, target: BattlefieldRegion, ...args: any[]): void => {
+            for (const unit of target.units) {
                 toUnit(user, unit, ...args);
             }
         };
@@ -19,11 +19,11 @@ export class EffectType {
     }
 
     private static fromRegionFunction(toRegion: (user: Unit, target: BattlefieldRegion, ...args: any[]) => void): EffectType {
-        const toUnit = (user: Unit, target: Unit, ...args: any[]) => {
+        const toUnit = (user: Unit, target: Unit, ...args: any[]): void => {
             if (target.containingRegion !== undefined) {
                 toRegion(user, target.containingRegion, ...args);
             }
-        }
+        };
         return new EffectType(toUnit, toRegion);
     }
 
@@ -48,7 +48,7 @@ export class EffectType {
     });
 
     public static readonly Collect = EffectType.fromRegionFunction((user: Unit, target: BattlefieldRegion) => {
-       // TODO: implement this
+        // TODO: implement this
     });
 
     public applyToUnit(user: Unit, target: Unit, ...args: any[]): void {
@@ -70,12 +70,12 @@ export class EffectType {
 
 }
 
-export type Effect = {focus: 'target' | 'user'} & ({type: 'Damage', amount: number}
-    | {type: 'Heal', amount: number}
-    | {type: 'Status', status: Status}
-    | {type: 'Kill'}
-    | {type: 'MoveTo'}
-    | {type: 'Collect'});
+export type Effect = {focus: 'target' | 'user';} & ({type: 'Damage'; amount: number;}
+| {type: 'Heal'; amount: number;}
+| {type: 'Status'; status: Status;}
+| {type: 'Kill';}
+| {type: 'MoveTo';}
+| {type: 'Collect';});
 
 export function applyEffect(effect: Effect, user: Unit, target: Targetable): void {
     let focus: Targetable;

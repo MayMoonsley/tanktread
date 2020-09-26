@@ -76,7 +76,7 @@ export namespace Game {
         if (!currentTargetingState.active || !currentTargetingState.targetables.includes(target)) {
             throw new Error('Game.target() called while not targeting, somehow');
         }
-        for (let effect of currentTargetingState.skill!.effects) {
+        for (const effect of currentTargetingState.skill!.effects) {
             applyEffect(effect, currentTargetingState.user!, target);
         }
         currentTargetingState.user!.spendAction();
