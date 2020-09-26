@@ -53,6 +53,11 @@ export class EffectType {
         inventory.addResourceInventory(target.collectResources());
     });
 
+    public static readonly Harvest = EffectType.fromUnitFunction((user: Unit, target: Unit, inventory: InventoryState) => {
+        inventory.addResourceInventory(target.buildCost);
+        target.die(false);
+    });
+
     public applyToUnit(user: Unit, target: Unit, ...args: any[]): void {
         this.unitFunc(user, target, ...args);
     }
@@ -77,7 +82,8 @@ export type Effect = {focus: 'target' | 'user';} & ({type: 'Damage'; amount: num
 | {type: 'Status'; status: Status;}
 | {type: 'Kill';}
 | {type: 'MoveTo';}
-| {type: 'Collect';});
+| {type: 'Collect';}
+| {type: 'Harvest';});
 
 export function applyEffect(effect: Effect, user: Unit, target: Targetable, inventory: InventoryState): void {
     let focus: Targetable;
@@ -105,6 +111,9 @@ export function applyEffect(effect: Effect, user: Unit, target: Targetable, inve
     case 'Collect':
         EffectType.Collect.applyToTargetable(user, focus, inventory);
         return;
+    case 'Harvest':
+        EffectType.Harvest.applyToTargetable(user, focus, inventory);
+        return;
     default:
         return Types.impossible(effect);
     }
@@ -124,5 +133,7 @@ export function effectToString(effect: Effect): string {
         return `Move to ${effect.focus}.`;
     case 'Collect':
         return `Collect resources at ${effect.focus}.`;
+    case 'Harvest':
+        return `Harvest ${effect.focus}.`;
     }
 }

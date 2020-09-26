@@ -75,7 +75,7 @@ export class Unit implements Interfaces.Unit {
         }
     }
 
-    die(): void {
+    die(dropItems: boolean = true): void {
         if (!this.alive) {
             return;
         }
@@ -83,8 +83,10 @@ export class Unit implements Interfaces.Unit {
             return;
         }
         if (this.containingRegion !== undefined) {
-            for (const drop of this.drops) {
-                this.containingRegion.addResource(drop.resource, resourceDropToAmount(drop));
+            if (dropItems) {
+                for (const drop of this.drops) {
+                    this.containingRegion.addResource(drop.resource, resourceDropToAmount(drop));
+                }
             }
             this.containingRegion.removeUnit(this);
         }
@@ -137,7 +139,8 @@ export class Unit implements Interfaces.Unit {
 export class UnitSpecies {
 
     // The Tank
-    public static readonly Tank = new UnitSpecies('Tank', UnitFaction.Tank, Infinity, 2, [Skill.Move, Skill.Collect], []);
+    public static readonly Tank = new UnitSpecies('Tank', UnitFaction.Tank, Infinity, 2,
+        [Skill.Move, Skill.Collect, Skill.Deconstruct], []);
 
     // Drones
     public static readonly Stinger = new UnitSpecies('Stinger', UnitFaction.Drone, 1, 2, [Skill.Move, Skill.Sting, Skill.Collect], []);
