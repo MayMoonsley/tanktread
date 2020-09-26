@@ -77,6 +77,19 @@ export class EffectType {
 
 }
 
+/**
+ * focus: Whether the Effect should be applied to the Unit using the skill, or the thing it's targeting.
+ * type: What kind of Effect it is.
+ * Effect types:
+ * -Damage: deals (amount) damage to focus.
+ * -Heal: heals focus for (amount) health.
+ * -Status: gives focus (status).
+ * -Kill: kills focus
+ * -MoveTo: moves user to focus
+ * -Collect: collect resources at focus
+ * -Harvest: kills focus + gives player its build cost
+ */
+
 export type Effect = {focus: 'target' | 'user';} & ({type: 'Damage'; amount: number;}
 | {type: 'Heal'; amount: number;}
 | {type: 'Status'; status: Status;}
