@@ -1,15 +1,17 @@
 import { BattlefieldRegion } from './BattlefieldRegion';
 import { Skill } from './Skill';
 import { Status } from './Status';
-import { Targetable } from '../interfaces/Targetable';
 import { Arrays } from '../util/Arrays';
 import { ResourceDrop, resourceDropToAmount, ResourceInventory, Resource } from './Resource';
+import * as Interfaces from '../interfaces/Unit';
 
 export enum UnitFaction {
     Tank = '👤', Drone = '🤖', Creature = '🐛'
 }
 
-export class Unit implements Targetable {
+export class Unit implements Interfaces.Unit {
+
+    targetable: true = true;
 
     name: string;
     health: number;
@@ -73,7 +75,7 @@ export class Unit implements Targetable {
         }
     }
 
-    die(): void {
+    die(dropItems: boolean = true): void {
         if (!this.alive) {
             return;
         }
@@ -81,8 +83,10 @@ export class Unit implements Targetable {
             return;
         }
         if (this.containingRegion !== undefined) {
-            for (const drop of this.drops) {
-                this.containingRegion.addResource(drop.resource, resourceDropToAmount(drop));
+            if (dropItems) {
+                for (const drop of this.drops) {
+                    this.containingRegion.addResource(drop.resource, resourceDropToAmount(drop));
+                }
             }
             this.containingRegion.removeUnit(this);
         }
@@ -101,10 +105,6 @@ export class Unit implements Targetable {
             this.containingRegion.removeUnit(this);
         }
         region.addUnit(this);
-    }
-
-    applySkill(user: Unit, skill: Skill): void {
-        skill.applyEffects(user, this);
     }
 
     canAct(): boolean {
@@ -139,7 +139,8 @@ export class Unit implements Targetable {
 export class UnitSpecies {
 
     // The Tank
-    public static readonly Tank = new UnitSpecies('Tank', UnitFaction.Tank, Infinity, 2, [Skill.Move, Skill.Collect], []);
+    public static readonly Tank = new UnitSpecies('Tank', UnitFaction.Tank, Infinity, 2,
+        [Skill.Move, Skill.Collect, Skill.Deconstruct], []);
 
     // Drones
     public static readonly Stinger = new UnitSpecies('Stinger', UnitFaction.Drone, 1, 2, [Skill.Move, Skill.Sting, Skill.Collect], []);
