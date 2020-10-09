@@ -1,9 +1,10 @@
 import { Unit } from './Unit';
 import { Targetable } from '../interfaces/Targetable';
-import { Skill } from './Skill';
 import { ResourceInventory, Resource } from './Resource';
 
 export class BattlefieldRegion implements Targetable {
+
+    targetable: true = true;
 
     name: string;
     units: Unit[];
@@ -29,13 +30,6 @@ export class BattlefieldRegion implements Targetable {
         }
         this.units.splice(this.units.indexOf(unit), 1);
         unit.containingRegion = undefined;
-    }
-
-    applySkill(user: Unit, skill: Skill): void {
-        const tempUnits = this.units.map(x => x);
-        for (const target of tempUnits) {
-            target.applySkill(user, skill);
-        }
     }
 
     addResource(resource: Resource, amount: number): void {

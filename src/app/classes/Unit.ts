@@ -1,15 +1,13 @@
 import { BattlefieldRegion } from './BattlefieldRegion';
 import { Skill } from './Skill';
 import { Status } from './Status';
-import { Targetable } from '../interfaces/Targetable';
 import { Arrays } from '../util/Arrays';
 import { ResourceDrop, resourceDropToAmount, ResourceInventory, Resource } from './Resource';
+import * as Interfaces from '../interfaces/Unit';
 
-export enum UnitFaction {
-    Tank = '👤', Drone = '🤖', Creature = '🐛'
-}
+export class Unit implements Interfaces.Unit {
 
-export class Unit implements Targetable {
+    targetable: true = true;
 
     name: string;
     health: number;
@@ -21,9 +19,9 @@ export class Unit implements Targetable {
     actionsLeft: number;
     actionsPerTurn: number;
     alive: boolean = true;
-    faction: UnitFaction;
+    faction: Interfaces.UnitFaction;
 
-    constructor(name: string, faction: UnitFaction, health: number, actionsPerTurn: number, skills: Skill[] = [], drops: ResourceDrop[] = [], statuses: Status[] = []) {
+    constructor(name: string, faction: Interfaces.UnitFaction, health: number, actionsPerTurn: number, skills: Skill[] = [], drops: ResourceDrop[] = [], statuses: Status[] = []) {
         this.name = name;
         this.faction = faction;
         this.health = health;
@@ -39,8 +37,20 @@ export class Unit implements Targetable {
         }
     }
 
+    get formattedName(): string {
+        let r: string = `${this.faction} ${this.name}`;
+        if (this.statuses.length > 0) {
+            r += ` ${this.statuses.map(status => status.emoji).join('')}`;
+        }
+        return r;
+    }
+
+    get statString(): string {
+        return `❤️ ${this.health}/${this.maxHealth} ⚡ ${this.actionsLeft}/${this.actionsPerTurn}`;
+    }
+
     get playerControlled(): boolean {
-        const usuallyPlayerControlled = this.faction === UnitFaction.Drone || this.faction === UnitFaction.Tank;
+        const usuallyPlayerControlled = this.faction === Interfaces.UnitFaction.Drone || this.faction === Interfaces.UnitFaction.Tank;
         if (this.statuses.includes(Status.MindControl)) {
             return !usuallyPlayerControlled;
         }
@@ -61,7 +71,7 @@ export class Unit implements Targetable {
         }
     }
 
-    die(): void {
+    die(dropItems: boolean = true): void {
         if (!this.alive) {
             return;
         }
@@ -69,8 +79,10 @@ export class Unit implements Targetable {
             return;
         }
         if (this.containingRegion !== undefined) {
-            for (const drop of this.drops) {
-                this.containingRegion.addResource(drop.resource, resourceDropToAmount(drop));
+            if (dropItems) {
+                for (const drop of this.drops) {
+                    this.containingRegion.addResource(drop.resource, resourceDropToAmount(drop));
+                }
             }
             this.containingRegion.removeUnit(this);
         }
@@ -89,10 +101,6 @@ export class Unit implements Targetable {
             this.containingRegion.removeUnit(this);
         }
         region.addUnit(this);
-    }
-
-    applySkill(user: Unit, skill: Skill): void {
-        skill.applyEffects(user, this);
     }
 
     canAct(): boolean {
@@ -127,28 +135,29 @@ export class Unit implements Targetable {
 export class UnitSpecies {
 
     // The Tank
-    public static readonly Tank = new UnitSpecies('Tank', UnitFaction.Tank, Infinity, 2, [Skill.Move, Skill.Collect], []);
+    public static readonly Tank = new UnitSpecies('Tank', Interfaces.UnitFaction.Tank, Infinity, 2,
+        [Skill.Move, Skill.Collect, Skill.Deconstruct], []);
 
     // Drones
-    public static readonly Stinger = new UnitSpecies('Stinger', UnitFaction.Drone, 1, 2, [Skill.Move, Skill.Sting, Skill.Collect], []);
+    public static readonly Stinger = new UnitSpecies('Stinger', Interfaces.UnitFaction.Drone, 1, 2, [Skill.Move, Skill.Sting, Skill.Collect], []);
 
-    public static readonly Detonator = new UnitSpecies('Detonator', UnitFaction.Drone,
+    public static readonly Detonator = new UnitSpecies('Detonator', Interfaces.UnitFaction.Drone,
         1, 2, [Skill.Move, Skill.Detonate], [{ resource: Resource.Petranol, min: 1, max: 3, chance: 0 }]);
 
-    public static readonly Controller = new UnitSpecies('Controller', UnitFaction.Drone,
+    public static readonly Controller = new UnitSpecies('Controller', Interfaces.UnitFaction.Drone,
         1, 2, [Skill.Move, Skill.Hypnotize], [{ resource: Resource.Cordylith, min: 1, max: 1, chance: 0 }]);
 
     // Creatures
-    public static readonly Rat = new UnitSpecies('Rat', UnitFaction.Creature, 1, 1, [Skill.Move, Skill.Prod],
+    public static readonly Rat = new UnitSpecies('Rat', Interfaces.UnitFaction.Creature, 1, 1, [Skill.Move, Skill.Prod],
         [{ resource: Resource.Hide, min: 0, max: 1 }, { resource: Resource.Gristle, min: 0, max: 1 }]);
 
-    public static readonly Wyrm = new UnitSpecies('Wyrm', UnitFaction.Creature, 1, 3, [Skill.Burrow, Skill.Burn],
+    public static readonly Wyrm = new UnitSpecies('Wyrm', Interfaces.UnitFaction.Creature, 1, 3, [Skill.Burrow, Skill.Burn],
         [{ resource: Resource.Petranol, min: 1, max: 3, chance: 0.75 }, { resource: Resource.Gristle, min: 1, max: 2, chance: 0.75 }]);
 
-    public static readonly Isopod = new UnitSpecies('Isopod', UnitFaction.Creature, 2, 1, [Skill.Move, Skill.Prod],
+    public static readonly Isopod = new UnitSpecies('Isopod', Interfaces.UnitFaction.Creature, 2, 1, [Skill.Move, Skill.Prod],
         [{ resource: Resource.Aluminite, min: 1, max: 3, chance: 0.75 }, { resource: Resource.Hide, min: 2, max: 4, chance: 0.75 }], [Status.Armored]);
 
-    private constructor(public name: string, public faction: UnitFaction, public health: number,
+    private constructor(public name: string, public faction: Interfaces.UnitFaction, public health: number,
         public actionsPerTurn: number, public skills: Skill[], public drops: ResourceDrop[], public statuses: Status[] = []) {}
 
     get buildCost(): ResourceInventory {

@@ -7,6 +7,7 @@ import { BattlefieldRegion } from './classes/BattlefieldRegion';
 import { Random } from './util/Random';
 import { Skill } from './classes/Skill';
 import { Targetable } from './interfaces/Targetable';
+import { applyEffect } from './classes/Effect';
 
 interface TargetingState {
     active: boolean;
@@ -75,7 +76,9 @@ export namespace Game {
         if (!currentTargetingState.active || !currentTargetingState.targetables.includes(target)) {
             throw new Error('Game.target() called while not targeting, somehow');
         }
-        target.applySkill(currentTargetingState.user!, currentTargetingState.skill!);
+        for (const effect of currentTargetingState.skill!.effects) {
+            applyEffect(effect, currentTargetingState.user!, target, currentState.inventory);
+        }
         currentTargetingState.user!.spendAction();
         currentTargetingState.active = false;
     }

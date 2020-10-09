@@ -15,6 +15,7 @@ export class UnitComponent implements OnInit {
 
     @Input() unit?: Unit = undefined;
     @Input() targetable: boolean = false;
+    @Input() showHeader: boolean = true;
     statusEmoji: string[] = [];
 
     constructor() { }
@@ -26,6 +27,13 @@ export class UnitComponent implements OnInit {
         if (this.unit !== undefined) {
             this.statusEmoji = this.unit.statuses.map(status => status.emoji);
         }
+    }
+
+    formattedName(): string {
+        if (this.unit !== undefined) {
+            return this.unit.formattedName;
+        }
+        return 'Undefined Unit';
     }
 
     target(event: MouseEvent): void {
