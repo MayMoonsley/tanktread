@@ -12,6 +12,7 @@ export interface Unit extends Targetable {
     containingRegion?: BattlefieldRegion;
     faction: UnitFaction;
     buildCost: ResourceInventory;
+    statuses: Status[];
 
     wound(amount: number): void;
 
