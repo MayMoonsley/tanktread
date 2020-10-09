@@ -42,4 +42,13 @@ export namespace Objects {
         throw new Error('Invalid multiton passed into multitonKey');
     }
 
+    export function enumKey(obj: Object, value: any): string {
+        for (const key of Objects.safeKeys(obj)) {
+            if (obj[key] === value) {
+                return key;
+            }
+        }
+        throw new Error('invalid enum passed into enumKey');
+    }
+
 }
