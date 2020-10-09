@@ -131,7 +131,7 @@ export class EffectType {
  * -Harvest: kills focus + gives player its build cost
  */
 
-export type Effect = {focus: 'target' | 'user'; predicate?: EffectPredicate} & ({type: 'Damage'; amount: number;}
+export type Effect = {focus: 'target' | 'user'; predicate?: EffectPredicate;} & ({type: 'Damage'; amount: number;}
 | {type: 'Heal'; amount: number;}
 | {type: 'Status'; status: Status;}
 | {type: 'Kill';}
@@ -145,7 +145,7 @@ export function applyEffect(effect: Effect, user: Unit, target: Targetable, inve
         EffectType.Damage.applyToTargetable(user, target, effect.focus, effect.predicate, effect.amount);
         return;
     case 'Heal':
-        EffectType.Heal.applyToTargetable(user, target, effect.focus,effect.predicate, effect.amount);
+        EffectType.Heal.applyToTargetable(user, target, effect.focus, effect.predicate, effect.amount);
         return;
     case 'Status':
         EffectType.Status.applyToTargetable(user, target, effect.focus, effect.predicate, effect.status);

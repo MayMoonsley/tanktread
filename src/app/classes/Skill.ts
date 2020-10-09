@@ -25,7 +25,7 @@ export class Skill {
 
     // Utility Skills
     public static readonly Collect = new Skill('Collect', SkillTargetingMode.RegionMelee, [{ type: 'Collect', focus: 'user' }]);
-    public static readonly Deconstruct = new Skill('Deconstruct', SkillTargetingMode.UnitMelee, [{type: 'Harvest', focus: 'target', predicate: {type: 'IsFaction', faction: UnitFaction.Drone, focus: 'target'}}]);
+    public static readonly Deconstruct = new Skill('Deconstruct', SkillTargetingMode.UnitMelee, [{ type: 'Harvest', focus: 'target', predicate: { type: 'IsFaction', faction: UnitFaction.Drone, focus: 'target' } }]);
 
     // Basic Attacks
     public static readonly Sting = new Skill('Sting', SkillTargetingMode.UnitMelee, [{ type: 'Damage', focus: 'target', amount: 1 }, { type: 'Kill', focus: 'user' }]);
