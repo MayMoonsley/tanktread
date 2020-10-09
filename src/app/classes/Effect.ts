@@ -1,5 +1,6 @@
 import { Unit } from '../interfaces/Unit';
 import { BattlefieldRegion } from './BattlefieldRegion';
+import { EffectPredicate, testEffectPredicate, effectPredicateToString } from './EffectPredicate';
 import { Status } from './Status';
 import { Types } from '../util/Types';
 import { Targetable } from '../interfaces/Targetable';
@@ -7,71 +8,111 @@ import { InventoryState } from '../state-trackers/InventoryState';
 
 export class EffectType {
 
-    private constructor(private unitFunc: (user: Unit, target: Unit, ...args: any[]) => void,
-        private regionFunc: (user: Unit, target: BattlefieldRegion, ...args: any[]) => void) {}
+    private constructor(private unitFunc: (user: Unit, target: Unit, focus: 'target' | 'user', ...args: any[]) => void,
+        private regionFunc: (user: Unit, target: BattlefieldRegion, focus: 'target' | 'user', ...args: any[]) => void) {}
 
-    private static fromUnitFunction(toUnit: (user: Unit, target: Unit, ...args: any[]) => void): EffectType {
-        const toRegion = (user: Unit, target: BattlefieldRegion, ...args: any[]): void => {
+    private static fromUnitFunction(toUnit: (user: Unit, target: Unit, focus: 'target' | 'user', ...args: any[]) => void): EffectType {
+        const toRegion = (user: Unit, target: BattlefieldRegion, focus: 'target' | 'user', ...args: any[]): void => {
             for (const unit of target.units) {
-                toUnit(user, unit, ...args);
+                toUnit(user, unit, focus, ...args);
             }
         };
         return new EffectType(toUnit, toRegion);
     }
 
-    private static fromRegionFunction(toRegion: (user: Unit, target: BattlefieldRegion, ...args: any[]) => void): EffectType {
-        const toUnit = (user: Unit, target: Unit, ...args: any[]): void => {
+    private static fromRegionFunction(toRegion: (user: Unit, target: BattlefieldRegion, focus: 'target' | 'user', ...args: any[]) => void): EffectType {
+        const toUnit = (user: Unit, target: Unit, focus: 'target' | 'user', ...args: any[]): void => {
             if (target.containingRegion !== undefined) {
-                toRegion(user, target.containingRegion, ...args);
+                toRegion(user, target.containingRegion, focus, ...args);
             }
         };
         return new EffectType(toUnit, toRegion);
     }
 
-    public static readonly Damage = EffectType.fromUnitFunction((user: Unit, target: Unit, damage: number) => {
-        target.wound(damage);
+    public static readonly Damage = EffectType.fromUnitFunction((user: Unit, target: Unit, focus: 'target' | 'user', damage: number) => {
+        let effectFocus: Unit;
+        if (focus === 'target') {
+            effectFocus = target;
+        } else {
+            effectFocus = user;
+        }
+        effectFocus.wound(damage);
     });
 
-    public static readonly Heal = EffectType.fromUnitFunction((user: Unit, target: Unit, amount: number) => {
-        target.heal(amount);
+    public static readonly Heal = EffectType.fromUnitFunction((user: Unit, target: Unit, focus: 'target' | 'user', amount: number) => {
+        let effectFocus: Unit;
+        if (focus === 'target') {
+            effectFocus = target;
+        } else {
+            effectFocus = user;
+        }
+        effectFocus.heal(amount);
     });
 
-    public static readonly Status = EffectType.fromUnitFunction((user: Unit, target: Unit, status: Status) => {
-        target.addStatus(status);
+    public static readonly Status = EffectType.fromUnitFunction((user: Unit, target: Unit, focus: 'target' | 'user', status: Status) => {
+        let effectFocus: Unit;
+        if (focus === 'target') {
+            effectFocus = target;
+        } else {
+            effectFocus = user;
+        }
+        effectFocus.addStatus(status);
     });
 
-    public static readonly Kill = EffectType.fromUnitFunction((user: Unit, target: Unit) => {
-        target.die();
+    public static readonly Kill = EffectType.fromUnitFunction((user: Unit, target: Unit, focus: 'target' | 'user',) => {
+        let effectFocus: Unit;
+        if (focus === 'target') {
+            effectFocus = target;
+        } else {
+            effectFocus = user;
+        }
+        effectFocus.die();
     });
 
-    public static readonly MoveTo = EffectType.fromRegionFunction((user: Unit, target: BattlefieldRegion) => {
+    public static readonly MoveTo = EffectType.fromRegionFunction((user: Unit, target: BattlefieldRegion, focus: 'target' | 'user') => {
+        // TODO: how should focus work with this?
         user.moveTo(target);
     });
 
     public static readonly Collect = EffectType.fromRegionFunction((user: Unit,
-        target: BattlefieldRegion, inventory: InventoryState) => {
-        inventory.addResourceInventory(target.collectResources());
+        target: BattlefieldRegion, focus: 'target' | 'user', inventory: InventoryState) => {
+        let effectFocus: BattlefieldRegion;
+        if (focus === 'target') {
+            effectFocus = target;
+        } else {
+            effectFocus = user.containingRegion!;
+        }
+        inventory.addResourceInventory(effectFocus.collectResources());
     });
 
-    public static readonly Harvest = EffectType.fromUnitFunction((user: Unit, target: Unit, inventory: InventoryState) => {
-        inventory.addResourceInventory(target.buildCost);
-        target.die(false);
+    public static readonly Harvest = EffectType.fromUnitFunction((user: Unit, target: Unit, focus: 'target' | 'user', inventory: InventoryState) => {
+        let effectFocus: Unit;
+        if (focus === 'target') {
+            effectFocus = target;
+        } else {
+            effectFocus = user;
+        }
+        inventory.addResourceInventory(effectFocus.buildCost);
+        effectFocus.die(false);
     });
 
-    public applyToUnit(user: Unit, target: Unit, ...args: any[]): void {
-        this.unitFunc(user, target, ...args);
+    public applyToUnit(user: Unit, target: Unit, focus: 'target' | 'user', predicate?: EffectPredicate, ...args: any[]): void {
+        if (predicate !== undefined && !testEffectPredicate(user, target, predicate)) {
+            return;
+        }
+        this.unitFunc(user, target, focus, ...args);
     }
 
-    public applyToRegion(user: Unit, target: BattlefieldRegion, ...args: any[]): void {
-        this.regionFunc(user, target, ...args);
+    public applyToRegion(user: Unit, target: BattlefieldRegion, focus: 'target' | 'user', predicate?: EffectPredicate, ...args: any[]): void {
+        this.regionFunc(user, target, focus, ...args);
     }
 
-    public applyToTargetable(user: Unit, target: Targetable, ...args: any[]): void {
+    public applyToTargetable(user: Unit, target: Targetable, focus: 'target' | 'user', predicate?: EffectPredicate, ...args: any[]): void {
         if (target instanceof BattlefieldRegion) {
-            this.applyToRegion(user, target, ...args);
+            this.applyToRegion(user, target, focus, predicate, ...args);
         } else {
             // safe unless we add more targetable things
-            this.applyToUnit(user, target as Unit, ...args);
+            this.applyToUnit(user, target as Unit, focus, predicate, ...args);
         }
     }
 
@@ -90,7 +131,7 @@ export class EffectType {
  * -Harvest: kills focus + gives player its build cost
  */
 
-export type Effect = {focus: 'target' | 'user';} & ({type: 'Damage'; amount: number;}
+export type Effect = {focus: 'target' | 'user'; predicate?: EffectPredicate} & ({type: 'Damage'; amount: number;}
 | {type: 'Heal'; amount: number;}
 | {type: 'Status'; status: Status;}
 | {type: 'Kill';}
@@ -99,33 +140,27 @@ export type Effect = {focus: 'target' | 'user';} & ({type: 'Damage'; amount: num
 | {type: 'Harvest';});
 
 export function applyEffect(effect: Effect, user: Unit, target: Targetable, inventory: InventoryState): void {
-    let focus: Targetable;
-    if (effect.focus === 'target') {
-        focus = target;
-    } else {
-        focus = user;
-    }
     switch (effect.type) {
     case 'Damage':
-        EffectType.Damage.applyToTargetable(user, focus, effect.amount);
+        EffectType.Damage.applyToTargetable(user, target, effect.focus, effect.predicate, effect.amount);
         return;
     case 'Heal':
-        EffectType.Heal.applyToTargetable(user, focus, effect.amount);
+        EffectType.Heal.applyToTargetable(user, target, effect.focus,effect.predicate, effect.amount);
         return;
     case 'Status':
-        EffectType.Status.applyToTargetable(user, focus, effect.status);
+        EffectType.Status.applyToTargetable(user, target, effect.focus, effect.predicate, effect.status);
         return;
     case 'Kill':
-        EffectType.Kill.applyToTargetable(user, focus);
+        EffectType.Kill.applyToTargetable(user, target, effect.focus, effect.predicate);
         return;
     case 'MoveTo':
-        EffectType.MoveTo.applyToTargetable(user, focus);
+        EffectType.MoveTo.applyToTargetable(user, target, effect.focus, effect.predicate);
         return;
     case 'Collect':
-        EffectType.Collect.applyToTargetable(user, focus, inventory);
+        EffectType.Collect.applyToTargetable(user, target, effect.focus, effect.predicate, inventory);
         return;
     case 'Harvest':
-        EffectType.Harvest.applyToTargetable(user, focus, inventory);
+        EffectType.Harvest.applyToTargetable(user, target, effect.focus, effect.predicate, inventory);
         return;
     default:
         return Types.impossible(effect);
@@ -133,6 +168,14 @@ export function applyEffect(effect: Effect, user: Unit, target: Targetable, inve
 }
 
 export function effectToString(effect: Effect): string {
+    if (effect.predicate !== undefined) {
+        return `If ${effectPredicateToString(effect.predicate)}: ${subEffectToString(effect)}`;
+    } else {
+        return subEffectToString(effect);
+    }
+}
+
+function subEffectToString(effect: Effect): string {
     switch (effect.type) {
     case 'Damage':
         return `Deal ${effect.amount} damage to ${effect.focus}.`;
