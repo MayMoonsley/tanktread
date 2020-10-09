@@ -1,5 +1,4 @@
 import { Effect, effectToString } from './Effect';
-import { EffectPredicate } from './EffectPredicate';
 import { Status } from './Status';
 import { UnitFaction } from '../interfaces/Unit';
 

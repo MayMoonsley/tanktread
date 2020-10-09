@@ -167,14 +167,6 @@ export function applyEffect(effect: Effect, user: Unit, target: Targetable, inve
     }
 }
 
-export function effectToString(effect: Effect): string {
-    if (effect.predicate !== undefined) {
-        return `If ${effectPredicateToString(effect.predicate)}: ${subEffectToString(effect)}`;
-    } else {
-        return subEffectToString(effect);
-    }
-}
-
 function subEffectToString(effect: Effect): string {
     switch (effect.type) {
     case 'Damage':
@@ -191,5 +183,13 @@ function subEffectToString(effect: Effect): string {
         return `Collect resources at ${effect.focus}.`;
     case 'Harvest':
         return `Harvest ${effect.focus}.`;
+    }
+}
+
+export function effectToString(effect: Effect): string {
+    if (effect.predicate !== undefined) {
+        return `If ${effectPredicateToString(effect.predicate)}: ${subEffectToString(effect)}`;
+    } else {
+        return subEffectToString(effect);
     }
 }
