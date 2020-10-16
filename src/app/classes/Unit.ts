@@ -65,6 +65,9 @@ export class Unit implements Interfaces.Unit {
         if (this.statuses.includes(Status.Armored) && !piercing) {
             x = Math.max(0, x - 1);
         }
+        if (this.statuses.includes(Status.Corroded)) {
+            x += 1;
+        }
         this.health -= x;
         if (this.health <= 0) {
             this.die();
