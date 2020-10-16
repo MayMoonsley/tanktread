@@ -85,6 +85,16 @@ export class EffectType {
         inventory.addResourceInventory(effectFocus.collectResources());
     });
 
+    public static readonly Refresh = EffectType.fromUnitFunction((user: Unit, target: Unit, focus: 'target' | 'user', amount: number) => {
+        let effectFocus: Unit;
+        if (focus === 'target') {
+            effectFocus = target;
+        } else {
+            effectFocus = user;
+        }
+        effectFocus.addActions(amount);
+    });
+
     public static readonly Harvest = EffectType.fromUnitFunction((user: Unit, target: Unit, focus: 'target' | 'user', inventory: InventoryState) => {
         let effectFocus: Unit;
         if (focus === 'target') {
@@ -137,7 +147,8 @@ export type Effect = {focus: 'target' | 'user'; predicate?: EffectPredicate;} & 
 | {type: 'Kill';}
 | {type: 'MoveTo';}
 | {type: 'Collect';}
-| {type: 'Harvest';});
+| {type: 'Harvest';}
+| {type: 'Refresh'; amount: number;});
 
 export function applyEffect(effect: Effect, user: Unit, target: Targetable, inventory: InventoryState): void {
     switch (effect.type) {
@@ -162,6 +173,9 @@ export function applyEffect(effect: Effect, user: Unit, target: Targetable, inve
     case 'Harvest':
         EffectType.Harvest.applyToTargetable(user, target, effect.focus, effect.predicate, inventory);
         return;
+    case 'Refresh':
+        EffectType.Harvest.applyToTargetable(user, target, effect.focus, effect.predicate, effect.amount);
+        return;
     default:
         return Types.impossible(effect);
     }
@@ -183,6 +197,8 @@ function subEffectToString(effect: Effect): string {
         return `Collect resources at ${effect.focus}.`;
     case 'Harvest':
         return `Harvest ${effect.focus}.`;
+    case 'Refresh':
+        return `Increase ${effect.focus}'s actions by ${effect.amount}.`;
     }
 }
 

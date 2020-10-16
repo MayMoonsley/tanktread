@@ -13,6 +13,7 @@ export interface Unit extends Targetable {
     faction: UnitFaction;
     buildCost: ResourceInventory;
     statuses: Status[];
+    alive: boolean;
 
     wound(amount: number): void;
 
@@ -23,5 +24,7 @@ export interface Unit extends Targetable {
     moveTo(region: BattlefieldRegion): void;
 
     die(dropItems?: boolean): void;
+
+    addActions(amount: number): void;
 
 }

@@ -107,6 +107,10 @@ export class Unit implements Interfaces.Unit {
         return this.actionsLeft > 0 || this.statuses.includes(Status.Advantage);
     }
 
+    addActions(amount: number): void {
+        this.actionsLeft = Math.min(this.actionsLeft + amount, this.actionsPerTurn);
+    }
+
     spendAction(): void {
         if (this.actionsLeft > 0) {
             this.actionsLeft--;
@@ -148,8 +152,11 @@ export class UnitSpecies {
         1, 2, [Skill.Move, Skill.Hypnotize], [{ resource: Resource.Cordylith, min: 1, max: 1, chance: 0 }]);
 
     // Creatures
-    public static readonly Rat = new UnitSpecies('Rat', Interfaces.UnitFaction.Creature, 1, 1, [Skill.Move, Skill.Prod],
+    public static readonly Rat = new UnitSpecies('Rat', Interfaces.UnitFaction.Creature, 1, 1, [Skill.Move, Skill.Gnaw],
         [{ resource: Resource.Hide, min: 0, max: 1 }, { resource: Resource.Gristle, min: 0, max: 1 }]);
+
+        public static readonly Tyger = new UnitSpecies('Tyger', Interfaces.UnitFaction.Creature, 3, 1, [Skill.Move, Skill.Maul],
+        [{ resource: Resource.Hide, min: 3, max: 4 }, { resource: Resource.Gristle, min: 3, max: 4 }]);
 
     public static readonly Wyrm = new UnitSpecies('Wyrm', Interfaces.UnitFaction.Creature, 1, 3, [Skill.Burrow, Skill.Burn],
         [{ resource: Resource.Petranol, min: 1, max: 3, chance: 0.75 }, { resource: Resource.Gristle, min: 1, max: 2, chance: 0.75 }]);
