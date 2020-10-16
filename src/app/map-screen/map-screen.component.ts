@@ -30,4 +30,8 @@ export class MapScreenComponent implements OnInit {
         return Game.getMapState().moveTank(dx, dy);
     }
 
+    enter(tile: MapTile): void {
+        Game.enterMapTile(tile);
+    }
+
 }

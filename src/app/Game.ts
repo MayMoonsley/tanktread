@@ -1,5 +1,5 @@
 import { Battlefield } from './classes/Battlefield';
-import { GameState } from './state-trackers/GameState';
+import { GameMode, GameState } from './state-trackers/GameState';
 import { InventoryState } from './state-trackers/InventoryState';
 import { CombatState } from './state-trackers/CombatState';
 import { MapState } from './state-trackers/MapState';
@@ -9,6 +9,7 @@ import { Random } from './util/Random';
 import { Skill } from './classes/Skill';
 import { Targetable } from './interfaces/Targetable';
 import { applyEffect } from './classes/Effect';
+import { MapTile } from './classes/MapTile';
 
 interface TargetingState {
     active: boolean;
@@ -43,7 +44,11 @@ export namespace Game {
         return new CombatState(tank, battlefield);
     }
 
-    const currentState = new GameState(initialCombatState(), new InventoryState(), new MapState());
+    const currentState = new GameState(GameMode.Map, initialCombatState(), new InventoryState(), new MapState());
+
+    export function getMode(): GameMode {
+        return currentState.mode;
+    }
 
     export function getBattlefield(): Battlefield {
         return currentState.combat.battlefield;
@@ -66,6 +71,21 @@ export namespace Game {
             return currentTargetingState.targetables;
         }
         return [];
+    }
+
+    export function enterMapTile(tile: MapTile): void {
+        if (tile.cityName !== undefined) {
+            // TODO: commerce
+        } else {
+            enterCombat(tile.biome.generateBattlefield());
+        }
+    }
+
+    export function enterCombat(battlefield: Battlefield): void {
+        const tank = UnitSpecies.Tank.instantiate();
+        battlefield.regions[0].addUnit(tank);
+        currentState.combat = new CombatState(tank, battlefield);
+        currentState.mode = GameMode.Battle;
     }
 
     export function beginTargeting(user: Unit, skill: Skill): void {

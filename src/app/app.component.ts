@@ -1,5 +1,7 @@
 import { Component, isDevMode } from '@angular/core';
 import { Debug } from './Debug';
+import { Game } from './Game';
+import { GameMode } from './state-trackers/GameState';
 
 @Component({
     selector: 'app-root',
@@ -11,6 +13,10 @@ export class AppComponent {
 
     debugMode(): boolean {
         return isDevMode();
+    }
+
+    gameMode(): GameMode {
+        return Game.getMode();
     }
 
     eliminateScarcity(): void {
