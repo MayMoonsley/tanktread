@@ -1,0 +1,9 @@
+<table>
+    <tr *ngFor="let row of tiles()">
+        <td *ngFor="let tile of row" [pTooltip]="tile.name" [escape]="false" tooltipPosition="top">{{ tile.symbol }}</td>
+    </tr>
+</table>
+<button (click)="moveTank(0, -1)">↑</button>
+<button (click)="moveTank(0, 1)">↓</button>
+<button (click)="moveTank(-1, 0)">←</button>
+<button (click)="moveTank(1, 0)">→</button>

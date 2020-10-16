@@ -2,6 +2,7 @@ import { Battlefield } from './classes/Battlefield';
 import { GameState } from './state-trackers/GameState';
 import { InventoryState } from './state-trackers/InventoryState';
 import { CombatState } from './state-trackers/CombatState';
+import { MapState } from './state-trackers/MapState';
 import { Unit, UnitSpecies } from './classes/Unit';
 import { BattlefieldRegion } from './classes/BattlefieldRegion';
 import { Random } from './util/Random';
@@ -42,7 +43,7 @@ export namespace Game {
         return new CombatState(tank, battlefield);
     }
 
-    const currentState = new GameState(initialCombatState(), new InventoryState());
+    const currentState = new GameState(initialCombatState(), new InventoryState(), new MapState());
 
     export function getBattlefield(): Battlefield {
         return currentState.combat.battlefield;
@@ -54,6 +55,10 @@ export namespace Game {
 
     export function getCombatState(): CombatState {
         return currentState.combat;
+    }
+
+    export function getMapState(): MapState {
+        return currentState.map;
     }
 
     export function getTargetables(): Targetable[] {
