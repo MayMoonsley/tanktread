@@ -1,4 +1,3 @@
-import { ThrowStmt } from '@angular/compiler';
 import { Biome, MapTile } from '../classes/MapTile';
 import { Random } from '../util/Random';
 import { Numbers } from '../util/Numbers';
@@ -26,7 +25,7 @@ export class MapState {
         return this.tiles.map(arr => arr.map(tile => tile.symbol));
     }
 
-    public moveTank(dx: number, dy: number) {
+    public moveTank(dx: number, dy: number): void {
         this.tankX = Numbers.clamp(this.tankX + dx, 0, this.width - 1);
         this.tankY = Numbers.clamp(this.tankY + dy, 0, this.height - 1);
         this.updateLocation();
@@ -43,7 +42,7 @@ export class MapState {
         return r;
     }
 
-    private updateLocation() {
+    private updateLocation(): void {
         for (let y = 0; y < this.tiles.length; y++) {
             for (let x = 0; x < this.tiles[y].length; x++) {
                 this.tiles[y][x].tankHere = (x === this.tankX && y === this.tankY);
