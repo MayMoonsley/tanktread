@@ -2,6 +2,7 @@ import { UnitSpecies } from './Unit';
 import { BattlefieldRegion } from './BattlefieldRegion';
 import { Random } from '../util/Random';
 import { Battlefield } from './Battlefield';
+import { City } from './City';
 
 export class Biome {
 
@@ -49,10 +50,10 @@ export class MapTile {
 
     public tankHere: boolean = false;
 
-    public constructor(public biome: Biome, public cityName?: string) {};
+    public constructor(public biome: Biome, public city?: City) {};
 
     get symbol(): string {
-        if (this.cityName !== undefined) {
+        if (this.city !== undefined) {
             return '🏙️';
         }
         return this.biome.symbol;
@@ -66,8 +67,8 @@ export class MapTile {
     }
 
     get name(): string {
-        if (this.cityName !== undefined) {
-            return `The City of ${this.cityName}`;
+        if (this.city !== undefined) {
+            return `The City of ${this.city.name}`;
         } else {
             return this.biome.name;
         }

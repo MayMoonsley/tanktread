@@ -74,7 +74,7 @@ export namespace Game {
     }
 
     export function enterMapTile(tile: MapTile): void {
-        if (tile.cityName !== undefined) {
+        if (tile.city !== undefined) {
             // TODO: commerce
         } else {
             enterCombat(tile.biome.generateBattlefield());
