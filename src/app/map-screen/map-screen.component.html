@@ -3,7 +3,11 @@
         <td *ngFor="let tile of row" [pTooltip]="tile.name" [escape]="false" tooltipPosition="top">{{ tile.symbol }}</td>
     </tr>
 </table>
-<button (click)="moveTank(0, -1)">↑</button>
-<button (click)="moveTank(0, 1)">↓</button>
-<button (click)="moveTank(-1, 0)">←</button>
-<button (click)="moveTank(1, 0)">→</button>
+<div id="d-pad">
+    <p-button (onClick)="moveTank(0, -1)">🡑</p-button>
+    <div>
+        <p-button (onClick)="moveTank(-1, 0)">🡐</p-button>
+        <p-button (onClick)="moveTank(1, 0)">🡒</p-button>
+    </div>
+    <p-button (onClick)="moveTank(0, 1)">🡓</p-button>
+</div>
