@@ -4,6 +4,7 @@ export class Status {
     public static readonly Advantage = new Status('Advantage', '⏩', 'Extra free action.');
     public static readonly MindControl = new Status('Hypnotized', '🎮', 'Under enemy control.');
     public static readonly Armored = new Status('Armored', '🛡️', 'Take one less damage from attacks.');
+    public static readonly Corroded = new Status('Corroded', '🧪', 'Take one more damage from attacks.');
 
     private constructor(
         public readonly name: string,

@@ -6,13 +6,13 @@ import { Battlefield } from './Battlefield';
 export class Biome {
 
     public static readonly Desert = new Biome('Desert', '🏜️', ['Dune', 'Oasis', 'Flats'],
-        [[UnitSpecies.Rat, 1]]);
+        [[UnitSpecies.Crab, 3], [UnitSpecies.Lobster, 1]]);
     public static readonly Forest = new Biome('Forest', '🌳', ['Clearing', 'Thicket', 'Creek'],
-        [[UnitSpecies.Rat, 1]]);
+        [[UnitSpecies.Rat, 3], [UnitSpecies.Tyger, 1]]);
     public static readonly Mountain = new Biome('Mountain', '⛰️', ['Plateau', 'Peak', 'Valley'],
-        [[UnitSpecies.Wyrm, 1]]);
+        [[UnitSpecies.Wyrm, 3], [UnitSpecies.Drake, 1]]);
     public static readonly Ocean = new Biome('Ocean', '🌊', ['Sandbar', 'Shallows', 'Tide Pool'],
-        [[UnitSpecies.Isopod, 1]]);
+        [[UnitSpecies.Isopod, 3], [UnitSpecies.Barracuda, 1]]);
 
     private constructor(private _name: string,
         private _symbol: string,

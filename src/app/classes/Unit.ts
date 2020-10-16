@@ -152,17 +152,32 @@ export class UnitSpecies {
         1, 2, [Skill.Move, Skill.Hypnotize], [{ resource: Resource.Cordylith, min: 1, max: 1, chance: 0 }]);
 
     // Creatures
+
+    // Kill-Combo Series
     public static readonly Rat = new UnitSpecies('Rat', Interfaces.UnitFaction.Creature, 1, 1, [Skill.Move, Skill.Gnaw],
         [{ resource: Resource.Hide, min: 0, max: 1 }, { resource: Resource.Gristle, min: 0, max: 1 }]);
 
-        public static readonly Tyger = new UnitSpecies('Tyger', Interfaces.UnitFaction.Creature, 3, 1, [Skill.Move, Skill.Maul],
+    public static readonly Tyger = new UnitSpecies('Tyger', Interfaces.UnitFaction.Creature, 3, 1, [Skill.Move, Skill.Maul],
         [{ resource: Resource.Hide, min: 3, max: 4 }, { resource: Resource.Gristle, min: 3, max: 4 }]);
 
+    // Fire Series
     public static readonly Wyrm = new UnitSpecies('Wyrm', Interfaces.UnitFaction.Creature, 1, 3, [Skill.Burrow, Skill.Burn],
         [{ resource: Resource.Petranol, min: 1, max: 3, chance: 0.75 }, { resource: Resource.Gristle, min: 1, max: 2, chance: 0.75 }]);
 
+    public static readonly Drake = new UnitSpecies('Drake', Interfaces.UnitFaction.Creature, 3, 3, [Skill.FlamingWings, Skill.Burn],
+        [{ resource: Resource.Petranol, min: 4, max: 6, chance: 0.75 }, { resource: Resource.Gristle, min: 3, max: 5, chance: 0.75 }, { resource: Resource.Cordylith, min: 0, max: 1, chance: 0.01}])
+
+    // Armor Series
     public static readonly Isopod = new UnitSpecies('Isopod', Interfaces.UnitFaction.Creature, 2, 1, [Skill.Move, Skill.Prod],
         [{ resource: Resource.Aluminite, min: 1, max: 3, chance: 0.75 }, { resource: Resource.Hide, min: 2, max: 4, chance: 0.75 }], [Status.Armored]);
+
+    public static readonly Barracuda = new UnitSpecies('Barracuda', Interfaces.UnitFaction.Creature, 2, 1, [Skill.Move, Skill.Slash],
+        [{ resource: Resource.Aluminite, min: 4, max: 5, chance: 0.75 }, { resource: Resource.Hide, min: 4, max: 6, chance: 0.75 }], [Status.Armored]);
+
+    // Corrosion Series
+    public static readonly Crab = new UnitSpecies('Crab', Interfaces.UnitFaction.Creature, 2, 1, [Skill.Move, Skill.Corrode], [{ resource: Resource.Nodule, min: 0, max: 1, chance: 0.2 }, {resource: Resource.Silicate, min: 1, max: 2, chance: 0.75}]);
+
+    public static readonly Lobster = new UnitSpecies('Lobster', Interfaces.UnitFaction.Creature, 2, 1, [Skill.Move, Skill.PhlegmaticShriek], [{ resource: Resource.Nodule, min: 0, max: 2, chance: 0.3 }, {resource: Resource.Silicate, min: 3, max: 5, chance: 0.75}]);
 
     private constructor(public name: string, public faction: Interfaces.UnitFaction, public health: number,
         public actionsPerTurn: number, public skills: Skill[], public drops: ResourceDrop[], public statuses: Status[] = []) {}
