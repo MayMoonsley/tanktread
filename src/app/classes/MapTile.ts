@@ -5,14 +5,19 @@ import { Battlefield } from './Battlefield';
 
 export class Biome {
 
-    public static readonly Desert = new Biome('Desert', '🏜️', ['Dune', 'Oasis', 'Flats']);
-    public static readonly Forest = new Biome('Forest', '🌳', ['Clearing', 'Thicket', 'Creek']);
-    public static readonly Mountain = new Biome('Mountain', '⛰️', ['Plateau', 'Peak', 'Valley']);
-    public static readonly Ocean = new Biome('Ocean', '🌊', ['Sandbar', 'Shallows', 'Tide Pool']);
+    public static readonly Desert = new Biome('Desert', '🏜️', ['Dune', 'Oasis', 'Flats'],
+        [[UnitSpecies.Rat, 1]]);
+    public static readonly Forest = new Biome('Forest', '🌳', ['Clearing', 'Thicket', 'Creek'],
+        [[UnitSpecies.Rat, 1]]);
+    public static readonly Mountain = new Biome('Mountain', '⛰️', ['Plateau', 'Peak', 'Valley'],
+        [[UnitSpecies.Wyrm, 1]]);
+    public static readonly Ocean = new Biome('Ocean', '🌊', ['Sandbar', 'Shallows', 'Tide Pool'],
+        [[UnitSpecies.Isopod, 1]]);
 
     private constructor(private _name: string,
         private _symbol: string,
-        private regionNames: string[]) {};
+        private regionNames: string[],
+        private species: [UnitSpecies, number][]) {};
 
     get name(): string {
         return this._name;
@@ -25,8 +30,15 @@ export class Biome {
     generateBattlefield(): Battlefield {
         const numRegions = Random.int(2, 5);
         const regions: BattlefieldRegion[] = [];
+        const weightedRegions: [BattlefieldRegion, number][] = [];
         for (let i = 0; i < numRegions; i++) {
-            regions.push(new BattlefieldRegion(Random.fromArray(this.regionNames)));
+            const curr = new BattlefieldRegion(Random.fromArray(this.regionNames));
+            regions.push(curr);
+            weightedRegions.push([curr, i + 1]);
+        }
+        const numUnits = Random.int(numRegions * 2, numRegions * 3);
+        for (let i = 0; i < numUnits; i++) {
+            Random.weightedRandom(weightedRegions).addUnit(Random.weightedRandom(this.species).instantiate());
         }
         return new Battlefield(regions);
     }
