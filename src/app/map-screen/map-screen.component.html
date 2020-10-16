@@ -1,13 +1,19 @@
 <table>
     <tr *ngFor="let row of tiles()">
-        <td *ngFor="let tile of row" [pTooltip]="tile.name" [escape]="false" tooltipPosition="top">{{ tile.symbol }}</td>
+        <td *ngFor="let tile of row" [pTooltip]="tile.name" [escape]="false" tooltipPosition="top">{{ tile.tankedSymbol }}</td>
     </tr>
 </table>
-<div id="d-pad">
-    <p-button (onClick)="moveTank(0, -1)">🡑</p-button>
-    <div>
-        <p-button (onClick)="moveTank(-1, 0)">🡐</p-button>
-        <p-button (onClick)="moveTank(1, 0)">🡒</p-button>
+<div id="sidebar">
+    <div id="areaInfo">
+        <h2>{{ playerLocation().name }}</h2>
+        <p-button>Enter</p-button>
     </div>
-    <p-button (onClick)="moveTank(0, 1)">🡓</p-button>
+    <div id="d-pad">
+        <p-button (onClick)="moveTank(0, -1)">🡑</p-button>
+        <div>
+            <p-button (onClick)="moveTank(-1, 0)">🡐</p-button>
+            <p-button (onClick)="moveTank(1, 0)">🡒</p-button>
+        </div>
+        <p-button (onClick)="moveTank(0, 1)">🡓</p-button>
+    </div>
 </div>

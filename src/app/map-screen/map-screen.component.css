@@ -1,5 +1,7 @@
 :host {
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 table {
@@ -14,4 +16,19 @@ table {
 
 #d-pad p-button {
     margin: 8px;
+}
+
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#areaInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+#areaInfo h2 {
+    text-align: center;
 }

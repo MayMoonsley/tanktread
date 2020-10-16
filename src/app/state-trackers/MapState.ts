@@ -7,6 +7,7 @@ export class MapState {
     tiles: MapTile[][];
     private width: number;
     private height: number;
+    private _playerLocation!: MapTile;
 
     public constructor(tiles?: MapTile[][], public tankX: number = 0, public tankY: number = 0) {
         if (tiles !== undefined) {
@@ -23,6 +24,10 @@ export class MapState {
 
     get symbols(): string[][] {
         return this.tiles.map(arr => arr.map(tile => tile.symbol));
+    }
+
+    get playerLocation(): MapTile {
+        return this._playerLocation;
     }
 
     public moveTank(dx: number, dy: number): void {
@@ -46,6 +51,9 @@ export class MapState {
         for (let y = 0; y < this.tiles.length; y++) {
             for (let x = 0; x < this.tiles[y].length; x++) {
                 this.tiles[y][x].tankHere = (x === this.tankX && y === this.tankY);
+                if (this.tiles[y][x].tankHere) {
+                    this._playerLocation = this.tiles[y][x];
+                }
             }
         }
     }

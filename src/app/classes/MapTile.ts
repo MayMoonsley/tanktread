@@ -24,26 +24,25 @@ export class MapTile {
     public constructor(public biome: Biome, public cityName?: string) {};
 
     get symbol(): string {
-        if (this.tankHere) {
-            return '🚗';
-        }
         if (this.cityName !== undefined) {
             return '🏙️';
         }
         return this.biome.symbol;
     }
 
-    get name(): string {
-        let r: string = '';
-        if (this.cityName !== undefined) {
-            r = `The City of ${this.cityName}`;
-        } else {
-            r = this.biome.name;
-        }
+    get tankedSymbol(): string {
         if (this.tankHere) {
-            return `${r} (You Are Here)`;
+            return '🚗';
         }
-        return r;
+        return this.symbol;
+    }
+
+    get name(): string {
+        if (this.cityName !== undefined) {
+            return `The City of ${this.cityName}`;
+        } else {
+            return this.biome.name;
+        }
     }
 
 }

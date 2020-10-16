@@ -22,6 +22,10 @@ export class MapScreenComponent implements OnInit {
         return Game.getMapState().symbols;
     }
 
+    playerLocation(): MapTile {
+        return Game.getMapState().playerLocation;
+    }
+
     moveTank(dx: number, dy: number): void {
         return Game.getMapState().moveTank(dx, dy);
     }
