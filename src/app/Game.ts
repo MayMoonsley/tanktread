@@ -10,6 +10,7 @@ import { Skill } from './classes/Skill';
 import { Targetable } from './interfaces/Targetable';
 import { applyEffect } from './classes/Effect';
 import { MapTile } from './classes/MapTile';
+import { UnitFaction } from './interfaces/Unit';
 
 interface TargetingState {
     active: boolean;
@@ -90,6 +91,17 @@ export namespace Game {
 
     export function returnToMap(): void {
         currentState.mode = GameMode.Map;
+    }
+
+    export function packUp(): void {
+        const drones = currentState.combat.battlefield.getAllUnitsOfFaction(UnitFaction.Drone);
+        for (let drone of drones) {
+            currentState.inventory.addResourceInventory(drone.buildCost);
+        }
+        for (let region of currentState.combat.battlefield.regions) {
+            currentState.inventory.addResourceInventory(region.collectResources());
+        }
+        returnToMap();
     }
 
     export function beginTargeting(user: Unit, skill: Skill): void {

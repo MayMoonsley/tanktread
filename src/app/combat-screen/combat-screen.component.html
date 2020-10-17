@@ -1,5 +1,6 @@
 <app-battlefield></app-battlefield>
 <div class="buttons">
     <p-button (click)="retreat()" pTooltip="Retreat, leaving drones behind. Only possible from the leftmost region." styleClass="p-button-raised" [disabled]="!canRetreat()">Retreat</p-button>
+    <p-button (click)="packUp()" pTooltip="Deconstruct all drones, collect all dropped resources, and leave. Only possible when all creatures are slain." styleClass="p-button-raised" [disabled]="!canPackUp()">Pack Up</p-button>
     <p-button (click)="advanceTurn()" styleClass="p-button-raised">Advance Turn</p-button>
 </div>

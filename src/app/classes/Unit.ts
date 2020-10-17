@@ -154,6 +154,9 @@ export class UnitSpecies {
     public static readonly Controller = new UnitSpecies('Controller', Interfaces.UnitFaction.Drone,
         1, 2, [Skill.Move, Skill.Hypnotize], [{ resource: Resource.Cordylith, min: 1, max: 1, chance: 0 }]);
 
+    public static readonly Debug = new UnitSpecies('Troubleshooter', Interfaces.UnitFaction.Drone, Infinity, Infinity, [Skill.Move,
+        Skill.Decapitate, Skill.Meteor], []);
+
     // Creatures
 
     // Kill-Combo Series

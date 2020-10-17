@@ -4,6 +4,7 @@ import { BattlefieldRegion } from './BattlefieldRegion';
 import { SkillTargetingMode } from './Skill';
 import { Unit } from './Unit';
 import { Targetable } from '../interfaces/Targetable';
+import { UnitFaction } from '../interfaces/Unit';
 
 export class Battlefield {
 
@@ -26,6 +27,10 @@ export class Battlefield {
 
     getAllUnits(): Unit[] {
         return Arrays.flatten(this.regions.map(region => region.units));
+    }
+
+    getAllUnitsOfFaction(faction: UnitFaction): Unit[] {
+        return this.getAllUnits().filter(unit => unit.faction === faction);
     }
 
     getTargetables(user: Unit, mode: SkillTargetingMode): Targetable[] {

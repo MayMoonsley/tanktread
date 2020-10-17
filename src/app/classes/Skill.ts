@@ -51,6 +51,13 @@ export class Skill {
     public static readonly Hypnotize = new Skill('Hypnotize', SkillTargetingMode.UnitMelee,
         [{ type: 'Status', focus: 'target', status: Status.MindControl }, { type: 'Kill', focus: 'user' }]);
 
+    // Debug Skills
+    public static readonly Decapitate = new Skill('Decapitate', SkillTargetingMode.UnitMelee,
+        [{type: 'Kill', focus: 'target'}]);
+
+    public static readonly Meteor = new Skill('Meteor', SkillTargetingMode.RegionRanged,
+        [{type: 'Kill', focus: 'target'}]);
+
     private constructor(name: string, targetingMode: SkillTargetingMode, effects: Effect[]) {
         this.name = name;
         this.targetingMode = targetingMode;

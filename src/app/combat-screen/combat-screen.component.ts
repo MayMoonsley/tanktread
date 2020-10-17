@@ -21,8 +21,16 @@ export class CombatScreenComponent implements OnInit {
         Game.returnToMap();
     }
 
+    packUp(): void {
+        Game.packUp();
+    }
+
     canRetreat(): boolean {
         return Game.getCombatState().canRetreat();
+    }
+
+    canPackUp(): boolean {
+        return Game.getCombatState().canPackUp();
     }
 
 }
