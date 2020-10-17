@@ -1,4 +1,5 @@
 import { Biome, MapTile } from '../classes/MapTile';
+import { City } from '../classes/City';
 import { Random } from '../util/Random';
 import { Numbers } from '../util/Numbers';
 
@@ -43,6 +44,12 @@ export class MapState {
             for (let x = 0; x < width; x++) {
                 r[y][x] = new MapTile(Random.fromArray([Biome.Desert, Biome.Forest, Biome.Mountain, Biome.Ocean]));
             }
+        }
+        const cities: City[] = City.getCities();
+        const points: [number, number][] = Random.points(cities.length, width, height);
+        for (let i = 0; i < cities.length; i++) {
+            const point = points[i];
+            r[point[1]][point[0]].city = cities[i];
         }
         return r;
     }
