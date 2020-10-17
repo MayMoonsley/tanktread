@@ -13,7 +13,8 @@ export class EffectType {
 
     private static fromUnitFunction(toUnit: (user: Unit, target: Unit, focus: 'target' | 'user', ...args: any[]) => void): EffectType {
         const toRegion = (user: Unit, target: BattlefieldRegion, focus: 'target' | 'user', ...args: any[]): void => {
-            for (const unit of target.units) {
+            const dummyArr: Unit[] = [...target.units];
+            for (const unit of dummyArr) {
                 toUnit(user, unit, focus, ...args);
             }
         };
