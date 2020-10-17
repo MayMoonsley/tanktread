@@ -88,6 +88,10 @@ export namespace Game {
         currentState.mode = GameMode.Battle;
     }
 
+    export function returnToMap(): void {
+        currentState.mode = GameMode.Map;
+    }
+
     export function beginTargeting(user: Unit, skill: Skill): void {
         currentTargetingState = {
             active: true,

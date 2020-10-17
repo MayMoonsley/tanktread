@@ -1,2 +1,5 @@
 <app-battlefield></app-battlefield>
-<p-button id="advanceTurn" (click)="advanceTurn()" styleClass="p-button-raised">Advance Turn</p-button>
+<div class="buttons">
+    <p-button (click)="retreat()" pTooltip="Retreat, leaving drones behind. Only possible from the leftmost region." styleClass="p-button-raised" [disabled]="!canRetreat()">Retreat</p-button>
+    <p-button (click)="advanceTurn()" styleClass="p-button-raised">Advance Turn</p-button>
+</div>

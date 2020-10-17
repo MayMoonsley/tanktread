@@ -11,4 +11,8 @@ export class CombatState {
         }
     }
 
+    canRetreat(): boolean {
+        return this.tank.containingRegion === this.battlefield.regions[0];
+    }
+
 }

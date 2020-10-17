@@ -17,4 +17,12 @@ export class CombatScreenComponent implements OnInit {
         Game.advanceTurn();
     }
 
+    retreat(): void {
+        Game.returnToMap();
+    }
+
+    canRetreat(): boolean {
+        return Game.getCombatState().canRetreat();
+    }
+
 }
