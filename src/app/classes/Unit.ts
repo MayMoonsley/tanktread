@@ -148,7 +148,7 @@ export class UnitSpecies {
     // Drones
     public static readonly Stinger = new UnitSpecies('Stinger', Interfaces.UnitFaction.Drone, 1, 2, [Skill.Move, Skill.Sting, Skill.Collect], []);
 
-    public static readonly Detonator = new UnitSpecies('Detonator', Interfaces.UnitFaction.Drone,
+    public static readonly Firebomb = new UnitSpecies('Firebomb', Interfaces.UnitFaction.Drone,
         1, 2, [Skill.Move, Skill.Detonate], [{ resource: Resource.Petranol, min: 1, max: 3, chance: 0 }]);
 
     public static readonly Controller = new UnitSpecies('Controller', Interfaces.UnitFaction.Drone,
