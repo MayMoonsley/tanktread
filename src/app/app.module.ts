@@ -17,6 +17,7 @@ import { AccordionModule } from 'primeng/accordion';
 import {TooltipModule} from 'primeng/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MapScreenComponent } from './map-screen/map-screen.component';
+import { CommerceScreenComponent } from './commerce-screen/commerce-screen.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { MapScreenComponent } from './map-screen/map-screen.component';
         FormatInfinityPipe,
         UnitBuildScreenComponent,
         DefaultMessagePipe,
-        MapScreenComponent
+        MapScreenComponent,
+        CommerceScreenComponent
     ],
     imports: [
         BrowserModule,

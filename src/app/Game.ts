@@ -76,7 +76,7 @@ export namespace Game {
 
     export function enterMapTile(tile: MapTile): void {
         if (tile.city !== undefined) {
-            // TODO: commerce
+            currentState.mode = GameMode.Town;
         } else {
             enterCombat(tile.biome.generateBattlefield());
         }
