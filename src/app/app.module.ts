@@ -18,6 +18,7 @@ import {TooltipModule} from 'primeng/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MapScreenComponent } from './map-screen/map-screen.component';
 import { CommerceScreenComponent } from './commerce-screen/commerce-screen.component';
+import { UnitSpeciesComponent } from './unit-species/unit-species.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { CommerceScreenComponent } from './commerce-screen/commerce-screen.compo
         UnitBuildScreenComponent,
         DefaultMessagePipe,
         MapScreenComponent,
-        CommerceScreenComponent
+        CommerceScreenComponent,
+        UnitSpeciesComponent
     ],
     imports: [
         BrowserModule,

@@ -13,6 +13,7 @@ export class SkillComponent implements OnInit {
     @Input() skill?: Skill;
     @Input() unit?: Unit;
     @Input() canBeUsed: boolean = false;
+    @Input() playerControlled: boolean = false;
     description: String[];
 
     constructor() {

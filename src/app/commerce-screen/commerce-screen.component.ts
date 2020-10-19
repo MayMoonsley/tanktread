@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { City } from '../classes/City';
 import { Resource } from '../classes/Resource';
+import { UnitSpecies } from '../classes/Unit';
 import { Game } from '../Game';
 import { InventoryState } from '../state-trackers/InventoryState';
 import { Objects } from '../util/Objects';
@@ -37,6 +38,15 @@ export class CommerceScreenComponent implements OnInit {
         const price: number = this.city().getBuyPrice(resource) * amount;
         this.inventory().removeCredits(price);
         this.inventory().addResource(resource, amount);
+    }
+
+    canBuySchematic(amount: number): boolean {
+        return this.inventory().credits >= amount;
+    }
+
+    buySchematic(listing: [UnitSpecies, number]): void {
+        this.inventory().removeCredits(listing[1]);
+        this.inventory().addSchematic(listing[0]);
     }
 
     canSell(resource: Resource, amount: number): boolean {
