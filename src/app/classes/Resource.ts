@@ -10,6 +10,7 @@ export class Resource {
     public static readonly Hide = new Resource('Hide', 'Chitinous creature dermis. Usable after processing.', 1);
     public static readonly Gristle = new Resource('Gristle', 'Low-quality creature flesh. Technically edible.', 1);
     public static readonly Nodule = new Resource('Nodule', 'Sucrose storage organ. Calorie dense.', 10);
+    public static readonly Fang = new Resource('Fang', 'Serpentine relic producing constant energy.', 2500, false);
 
     private constructor(public readonly name: string, public readonly description: string, public readonly value: number, public readonly forSale: boolean = true) {}
 

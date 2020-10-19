@@ -1,10 +1,10 @@
 <h1>{{ city().name }}</h1>
 <h2>Money: {{inventory().credits | formatInfinity}}&curren;</h2>
-<div>
+<div class="resources">
     <h2>Resources</h2>
     <div class="resource" *ngFor="let resource of resources()">
         <p><strong>{{ resource.name }}:</strong> {{ resource.description }} (Owned: {{ inventory().resources.getAmount(resource) }})</p>
-        <div class="buy">
+        <div class="buy" *ngIf="resource.forSale">
             <p-button *ngFor="let amount of [1, 10, 100]" (onClick)="buy(resource, amount)" [disabled]="!canBuy(resource, amount)">Buy {{amount}} for {{city().getBuyPrice(resource) * amount}}&curren;.</p-button>
         </div>
         <div class="sell">
@@ -12,7 +12,7 @@
         </div>
     </div>
 </div>
-<div>
+<div class="schematics">
     <h2>Schematics</h2>
     <p *ngIf="city().schematics.length === 0">None</p>
     <div *ngFor="let listing of city().schematics">
