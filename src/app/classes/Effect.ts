@@ -5,29 +5,35 @@ import { Status } from './Status';
 import { Types } from '../util/Types';
 import { Targetable } from '../interfaces/Targetable';
 import { InventoryState } from '../state-trackers/InventoryState';
+import { AIRating } from '../interfaces/AIRating';
+
+type UnitFunction = (user: Unit, target: Unit, focus: 'target' | 'user', ...args: any[]) => void;
+type RegionFunction = (user: Unit, target: BattlefieldRegion, focus: 'target' | 'user', ...args: any[]) => void;
+type RatingFunction = (...args: any[]) => AIRating;
 
 export class EffectType {
 
-    private constructor(private unitFunc: (user: Unit, target: Unit, focus: 'target' | 'user', ...args: any[]) => void,
-        private regionFunc: (user: Unit, target: BattlefieldRegion, focus: 'target' | 'user', ...args: any[]) => void) {}
+    private constructor(private unitFunc: UnitFunction,
+        private regionFunc: RegionFunction,
+        private ratingFunc: RatingFunction) {}
 
-    private static fromUnitFunction(toUnit: (user: Unit, target: Unit, focus: 'target' | 'user', ...args: any[]) => void): EffectType {
+    private static fromUnitFunction(toUnit: UnitFunction, rating: RatingFunction): EffectType {
         const toRegion = (user: Unit, target: BattlefieldRegion, focus: 'target' | 'user', ...args: any[]): void => {
             const dummyArr: Unit[] = [...target.units];
             for (const unit of dummyArr) {
                 toUnit(user, unit, focus, ...args);
             }
         };
-        return new EffectType(toUnit, toRegion);
+        return new EffectType(toUnit, toRegion, rating);
     }
 
-    private static fromRegionFunction(toRegion: (user: Unit, target: BattlefieldRegion, focus: 'target' | 'user', ...args: any[]) => void): EffectType {
+    private static fromRegionFunction(toRegion: RegionFunction, rating: RatingFunction): EffectType {
         const toUnit = (user: Unit, target: Unit, focus: 'target' | 'user', ...args: any[]): void => {
             if (target.containingRegion !== undefined) {
                 toRegion(user, target.containingRegion, focus, ...args);
             }
         };
-        return new EffectType(toUnit, toRegion);
+        return new EffectType(toUnit, toRegion, rating);
     }
 
     public static readonly Damage = EffectType.fromUnitFunction((user: Unit, target: Unit, focus: 'target' | 'user', damage: number) => {
@@ -38,7 +44,7 @@ export class EffectType {
             effectFocus = user;
         }
         effectFocus.wound(damage);
-    });
+    }, () => AIRating.Bad);
 
     public static readonly Heal = EffectType.fromUnitFunction((user: Unit, target: Unit, focus: 'target' | 'user', amount: number) => {
         let effectFocus: Unit;
@@ -48,7 +54,7 @@ export class EffectType {
             effectFocus = user;
         }
         effectFocus.heal(amount);
-    });
+    }, () => AIRating.Good);
 
     public static readonly Status = EffectType.fromUnitFunction((user: Unit, target: Unit, focus: 'target' | 'user', status: Status) => {
         let effectFocus: Unit;
@@ -58,7 +64,7 @@ export class EffectType {
             effectFocus = user;
         }
         effectFocus.addStatus(status);
-    });
+    }, (status: Status) => status.rating);
 
     public static readonly Kill = EffectType.fromUnitFunction((user: Unit, target: Unit, focus: 'target' | 'user',) => {
         let effectFocus: Unit;
@@ -68,12 +74,12 @@ export class EffectType {
             effectFocus = user;
         }
         effectFocus.die();
-    });
+    }, () => AIRating.Bad);
 
     public static readonly MoveTo = EffectType.fromRegionFunction((user: Unit, target: BattlefieldRegion, focus: 'target' | 'user') => {
         // TODO: how should focus work with this?
         user.moveTo(target);
-    });
+    }, () => AIRating.Neutral);
 
     public static readonly Collect = EffectType.fromRegionFunction((user: Unit,
         target: BattlefieldRegion, focus: 'target' | 'user', inventory: InventoryState) => {
@@ -84,7 +90,7 @@ export class EffectType {
             effectFocus = user.containingRegion!;
         }
         inventory.addResourceInventory(effectFocus.collectResources());
-    });
+    }, () => AIRating.Neutral);
 
     public static readonly Refresh = EffectType.fromUnitFunction((user: Unit, target: Unit, focus: 'target' | 'user', amount: number) => {
         let effectFocus: Unit;
@@ -94,7 +100,7 @@ export class EffectType {
             effectFocus = user;
         }
         effectFocus.addActions(amount);
-    });
+    }, () => AIRating.Good);
 
     public static readonly Harvest = EffectType.fromUnitFunction((user: Unit, target: Unit, focus: 'target' | 'user', inventory: InventoryState) => {
         let effectFocus: Unit;
@@ -105,7 +111,7 @@ export class EffectType {
         }
         inventory.addResourceInventory(effectFocus.buildCost);
         effectFocus.die(false);
-    });
+    }, () => AIRating.Good);
 
     public applyToUnit(user: Unit, target: Unit, focus: 'target' | 'user', predicate?: EffectPredicate, ...args: any[]): void {
         if (predicate !== undefined && !testEffectPredicate(user, target, predicate)) {
@@ -125,6 +131,10 @@ export class EffectType {
             // safe unless we add more targetable things
             this.applyToUnit(user, target as Unit, focus, predicate, ...args);
         }
+    }
+
+    public getRating(...args: any[]): AIRating {
+        return this.ratingFunc(...args);
     }
 
 }
@@ -201,6 +211,38 @@ function subEffectToString(effect: Effect): string {
     case 'Refresh':
         return `Increase ${effect.focus}'s actions by ${effect.amount}.`;
     }
+}
+
+function getSubEffectRating(effect: Effect): AIRating {
+    switch (effect.type) {
+        case 'Damage':
+            return EffectType.Damage.getRating(effect.amount);
+        case 'Heal':
+            return EffectType.Heal.getRating(effect.amount);
+        case 'Status':
+            return EffectType.Status.getRating(effect.status);
+        case 'Kill':
+            return EffectType.Kill.getRating();
+        case 'MoveTo':
+            return EffectType.MoveTo.getRating();
+        case 'Collect':
+            return EffectType.Collect.getRating();
+        case 'Harvest':
+            return EffectType.Harvest.getRating();
+        case 'Refresh':
+            return EffectType.Harvest.getRating();
+        default:
+            return Types.impossible(effect);
+        }
+}
+
+export function getEffectRating(effect: Effect): {'user': AIRating, 'target': AIRating} {
+    const r = {
+        user: AIRating.Neutral,
+        target: AIRating.Neutral
+    };
+    r[effect.focus] = getSubEffectRating(effect);
+    return r;
 }
 
 export function effectToString(effect: Effect): string {
