@@ -24,3 +24,12 @@ export function combineRatings(...arr: AIRating[]): AIRating {
 export function invertRating(rating: AIRating): AIRating {
     return rating * -1;
 }
+
+/**
+ * Multiply two AIRatings. Bad * Bad = Good, Good * Bad = Bad, etc.
+ * @param a First AIRating.
+ * @param b Second AIRating.
+ */
+export function multiplyRatings(a: AIRating, b: AIRating): AIRating {
+    return a * b;
+}
