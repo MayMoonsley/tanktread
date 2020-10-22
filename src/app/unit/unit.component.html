@@ -1,5 +1,6 @@
 <h3 *ngIf="showHeader === true">{{ formattedName() }}</h3>
 <p>{{ unit!.statString | formatInfinity }}</p>
+<h4>Skills</h4>
 <div id="skills">
     <app-skill *ngFor="let skill of unit!.skills" [skill]="skill" [unit]="unit" [canBeUsed]="unit!.canAct()" [playerControlled]="unit!.playerControlled"></app-skill>
 </div>
