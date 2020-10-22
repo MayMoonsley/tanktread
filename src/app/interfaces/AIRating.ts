@@ -18,7 +18,7 @@ export function combineRatings(...arr: AIRating[]): AIRating {
         } else {
             return AIRating.Neutral;
         }
-    });
+    }, AIRating.Neutral);
 }
 
 export function invertRating(rating: AIRating): AIRating {
