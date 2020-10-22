@@ -53,22 +53,35 @@ export class CombatState {
             }
             // choose a random unit
             const actor: Unit = Random.fromArray(enemyActors);
-            const possibleActions: AIAction[] = [];
+            const goodActions: AIAction[] = [];
+            const neutralActions: AIAction[] = [];
+            const badActions: AIAction[] = [];
             for (let skill of actor.skills) {
                 let targets = this.battlefield.getTargetables(actor, skill.targetingMode);
-                if (skill.rating.target !== AIRating.Neutral) {
-                    // only choose sensible target combinations (i.e., only do Bad things to Bad units, etc.)
-                    targets = targets.filter(target => multiplyRatings(target.rating, skill.rating.target) === AIRating.Good);
-                }
                 for (let target of targets) {
-                    possibleActions.push({
+                    const action = {
                         user: actor,
-                        skill: skill,
-                        target: target
-                    });
+                        target: target,
+                        skill: skill
+                    };
+                    switch (multiplyRatings(skill.rating.target, target.rating)) {
+                        case AIRating.Good:
+                            goodActions.push(action);
+                            break;
+                        case AIRating.Neutral:
+                            neutralActions.push(action);
+                            break;
+                        case AIRating.Bad:
+                            badActions.push(action);
+                            break;
+                    }
                 }
             }
-            yield Random.fromArray(possibleActions);
+            if (goodActions.length > 0) {
+                yield Random.fromArray(goodActions);
+            } else {
+                yield Random.fromArray(neutralActions);
+            }
         }
     }
 
