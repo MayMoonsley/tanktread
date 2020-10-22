@@ -1,6 +1,7 @@
 import { Unit } from './Unit';
 import { Targetable } from '../interfaces/Targetable';
 import { ResourceInventory, Resource } from './Resource';
+import { AIRating, combineRatings } from '../interfaces/AIRating';
 
 export class BattlefieldRegion implements Targetable {
 
@@ -14,6 +15,10 @@ export class BattlefieldRegion implements Targetable {
         this.name = name;
         this.units = [];
         this.resources = new ResourceInventory();
+    }
+
+    get rating(): AIRating {
+        return combineRatings(...this.units.map(unit => unit.rating));
     }
 
     addUnit(unit: Unit): void {

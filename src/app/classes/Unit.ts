@@ -4,6 +4,7 @@ import { Status } from './Status';
 import { Arrays } from '../util/Arrays';
 import { ResourceDrop, resourceDropToAmount, ResourceInventory, Resource } from './Resource';
 import * as Interfaces from '../interfaces/Unit';
+import { AIRating } from '../interfaces/AIRating';
 
 export class Unit implements Interfaces.Unit {
 
@@ -59,6 +60,10 @@ export class Unit implements Interfaces.Unit {
 
     get buildCost(): ResourceInventory {
         return ResourceInventory.fromAmounts(this.drops.map(item => { return { resource: item.resource, amount: item.max }; }));
+    }
+
+    get rating(): AIRating {
+        return this.playerControlled ? AIRating.Bad : AIRating.Good;
     }
 
     wound(x: number, piercing: boolean = false): void {

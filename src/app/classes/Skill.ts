@@ -1,6 +1,7 @@
-import { Effect, effectToString } from './Effect';
+import { Effect, effectToString, getEffectRating } from './Effect';
 import { Status } from './Status';
 import { UnitFaction } from '../interfaces/Unit';
+import { AIRating, combineRatings } from '../interfaces/AIRating';
 
 export enum SkillTargetingMode {
     Self, // can only target the user
@@ -18,6 +19,7 @@ export class Skill {
     name: string;
     targetingMode: SkillTargetingMode;
     effects: Effect[];
+    private _rating: {target: AIRating, user: AIRating};
 
     // Movement Skills
     public static readonly Move = new Skill('Move', SkillTargetingMode.RegionAdjacent, [{ type: 'MoveTo', focus: 'target' }]);
@@ -62,10 +64,19 @@ export class Skill {
         this.name = name;
         this.targetingMode = targetingMode;
         this.effects = effects;
+        const effectRatings = this.effects.map(effect => getEffectRating(effect));
+        this._rating = {
+            target: combineRatings(...effectRatings.map(rating => rating.target)),
+            user: combineRatings(...effectRatings.map(rating => rating.user))
+        };
     }
 
     get description(): string {
         return this.effects.map(effectToString).join('\n');
+    }
+
+    get rating(): {'user': AIRating, 'target': AIRating} {
+        return this._rating;
     }
 
 }
