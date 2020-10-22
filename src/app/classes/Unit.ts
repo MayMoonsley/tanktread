@@ -60,6 +60,9 @@ export class Unit implements Interfaces.Unit {
     }
 
     get rating(): AIRating {
+        if (this.statuses.includes(Status.Pheromones)) {
+            return AIRating.Good;
+        }
         return this.playerControlled ? AIRating.Bad : AIRating.Good;
     }
 
@@ -155,6 +158,9 @@ export class UnitSpecies {
 
     public static readonly Controller = new UnitSpecies('Controller', Interfaces.UnitFaction.Drone,
         1, 2, [Skill.Move, Skill.Hypnotize], [{ resource: Resource.Cordylith, min: 1, max: 1, chance: 0 }]);
+
+    public static readonly Mister = new UnitSpecies('Mister', Interfaces.UnitFaction.Drone, 1, 2,
+        [Skill.Move, Skill.Mist], [{resource: Resource.Nodule, min: 2, max: 2, chance: 0}, {resource: Resource.Gristle, min: 2, max: 2, chance: 0}]);
 
     public static readonly Debug = new UnitSpecies('Troubleshooter', Interfaces.UnitFaction.Drone, Infinity, Infinity, [Skill.Move,
         Skill.Decapitate, Skill.Meteor], []);

@@ -1,6 +1,7 @@
 import { Battlefield } from '../classes/Battlefield';
 import { applyEffect } from '../classes/Effect';
 import { Skill } from '../classes/Skill';
+import { Status } from '../classes/Status';
 import { Unit } from '../classes/Unit';
 import { AIRating, multiplyRatings } from '../interfaces/AIRating';
 import { Targetable } from '../interfaces/Targetable';
@@ -40,6 +41,7 @@ export class CombatState {
             applyEffect(effect, user, target, inventory);
         }
         user.spendAction();
+        user.removeStatus(Status.Pheromones);
     }
 
     //TODO: There are some issues with this.

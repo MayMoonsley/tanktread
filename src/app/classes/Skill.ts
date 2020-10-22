@@ -53,6 +53,10 @@ export class Skill {
     public static readonly Hypnotize = new Skill('Hypnotize', SkillTargetingMode.UnitMelee,
         [{ type: 'Status', focus: 'target', status: Status.MindControl }, { type: 'Kill', focus: 'user' }]);
 
+    // Pheromones Skills
+    public static readonly Mist = new Skill('Mist', SkillTargetingMode.UnitMelee,
+        [{ type: 'Status', focus: 'target', status: Status.Pheromones }, { type: 'Kill', focus: 'user' }]);
+
     // Debug Skills
     public static readonly Decapitate = new Skill('Decapitate', SkillTargetingMode.UnitMelee,
         [{type: 'Kill', focus: 'target'}]);
