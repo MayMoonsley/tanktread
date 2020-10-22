@@ -33,6 +33,10 @@ export class Battlefield {
         return this.getAllUnits().filter(unit => unit.faction === faction);
     }
 
+    getEnemyActors(): Unit[] {
+        return this.getAllUnits().filter(unit => !unit.playerControlled && unit.canAct());
+    }
+
     getTargetables(user: Unit, mode: SkillTargetingMode): Targetable[] {
         switch (mode) {
         case SkillTargetingMode.Self:
