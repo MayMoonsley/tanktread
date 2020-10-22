@@ -1,7 +1,6 @@
 <h2>Build a Unit</h2>
 <div *ngFor="let species of inventory.schematics">
-    <h3>{{species.name}}</h3>
-    <p><strong>Cost:</strong> {{species.buildCost.toString() | defaultMessage:"Free"}}</p>
+    <app-unit-species [species]="species"></app-unit-species>
     <p-button (onClick)="build(species)"
         [disabled]="!inventory.canAfford(species.buildCost) || combat.tank.actionsLeft == 0"
         styleClass="p-button-secondary p-button-sm p-button-raised p-button-text">Build</p-button>
