@@ -40,9 +40,6 @@ export class Unit implements Interfaces.Unit {
 
     get formattedName(): string {
         let r: string = `${this.faction} ${this.name}`;
-        if (this.statuses.length > 0) {
-            r += ` ${this.statuses.map(status => status.emoji).join('')}`;
-        }
         return r;
     }
 

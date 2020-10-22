@@ -19,6 +19,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MapScreenComponent } from './map-screen/map-screen.component';
 import { CommerceScreenComponent } from './commerce-screen/commerce-screen.component';
 import { UnitSpeciesComponent } from './unit-species/unit-species.component';
+import { StatusEmojiComponent } from './status-emoji/status-emoji.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { UnitSpeciesComponent } from './unit-species/unit-species.component';
         DefaultMessagePipe,
         MapScreenComponent,
         CommerceScreenComponent,
-        UnitSpeciesComponent
+        UnitSpeciesComponent,
+        StatusEmojiComponent
     ],
     imports: [
         BrowserModule,

@@ -1,5 +1,7 @@
 :host {
     display: block;
+    background: #DDDDDD;
+    background-origin: border-box;
 }
 
 :host(.targetable) {
