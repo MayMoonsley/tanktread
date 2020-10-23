@@ -8,6 +8,7 @@ import { Unit } from '../classes/Unit';
     templateUrl: './battlefield-region.component.html',
     host: {
         '[class.targetable]': 'targetable',
+        '[class.targeted]': 'beingTargeted()',
         '(click)': 'target()'
     },
     styleUrls: ['./battlefield-region.component.css']
@@ -30,6 +31,10 @@ export class BattlefieldRegionComponent implements OnInit {
         if (this.targetable && this.region !== undefined) {
             Game.target(this.region);
         }
+    }
+
+    beingTargeted(): boolean {
+        return Game.isCurrentlyBeingTargeted(this.region!);
     }
 
 }

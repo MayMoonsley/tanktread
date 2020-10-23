@@ -76,6 +76,9 @@ export class Skill {
     }
 
     get description(): string {
+        if (this.effects.length === 0) {
+            return 'Do nothing.'
+        }
         return this.effects.map(effectToString).join('\n');
     }
 

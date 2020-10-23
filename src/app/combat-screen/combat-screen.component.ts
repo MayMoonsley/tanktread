@@ -26,11 +26,15 @@ export class CombatScreenComponent implements OnInit {
     }
 
     canRetreat(): boolean {
-        return Game.getCombatState().canRetreat();
+        return Game.getCombatState().canRetreat() && !Game.isEnemyTurn();
     }
 
     canPackUp(): boolean {
-        return Game.getCombatState().canPackUp();
+        return Game.getCombatState().canPackUp() && !Game.isEnemyTurn();
+    }
+
+    canAdvance(): boolean {
+        return !Game.isEnemyTurn();
     }
 
 }

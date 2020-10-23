@@ -44,4 +44,8 @@ export class SkillComponent implements OnInit {
         Game.cancelTargeting();
     }
 
+    disabled(): boolean {
+        return !this.canBeUsed && !Game.isEnemyTurn();
+    }
+
 }

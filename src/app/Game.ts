@@ -11,12 +11,14 @@ import { Targetable } from './interfaces/Targetable';
 import { applyEffect } from './classes/Effect';
 import { MapTile } from './classes/MapTile';
 import { UnitFaction } from './interfaces/Unit';
+import { Promises } from './util/Promises';
 
 interface TargetingState {
     active: boolean;
     user?: Unit;
     skill?: Skill;
     targetables: Targetable[];
+    target?: Targetable;
 }
 
 export namespace Game {
@@ -74,6 +76,10 @@ export namespace Game {
         return [];
     }
 
+    export function isEnemyTurn(): boolean {
+        return currentState.combat.isEnemyTurn;
+    }
+
     export function enterMapTile(tile: MapTile): void {
         if (tile.city !== undefined) {
             currentState.mode = GameMode.Town;
@@ -109,7 +115,8 @@ export namespace Game {
             active: true,
             user,
             skill,
-            targetables: currentState.combat.battlefield.getTargetables(user, skill.targetingMode)
+            targetables: currentState.combat.battlefield.getTargetables(user, skill.targetingMode),
+            target: undefined
         };
     }
 
@@ -135,8 +142,27 @@ export namespace Game {
         return currentTargetingState.user === user && currentTargetingState.skill === skill;
     }
 
-    export function advanceTurn(): void {
+    export function isCurrentlyBeingTargeted(target: Targetable): boolean {
+        return currentTargetingState.active && currentTargetingState.target === target;
+    }
+
+    export async function advanceTurn(): Promise<void> {
+        currentState.combat.isEnemyTurn = true;
+        const actionGenerator = currentState.combat.calculateEnemyActions();
+        for (let action of actionGenerator) {
+            currentTargetingState = {
+                active: true,
+                target: action.target,
+                targetables:currentState.combat.battlefield.getTargetables(action.user, action.skill.targetingMode),
+                user: action.user,
+                skill: action.skill
+            };
+            console.log(action);
+            await Promises.wait(2);
+            target(action.target);
+        }
         currentState.combat.advanceTurn();
+        currentState.combat.isEnemyTurn = false;
     }
 
     export function build(species: UnitSpecies): void {

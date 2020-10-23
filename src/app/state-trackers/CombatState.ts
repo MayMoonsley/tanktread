@@ -17,15 +17,9 @@ export type AIAction = {
 
 export class CombatState {
 
-    constructor(public tank: Unit, public battlefield: Battlefield) {}
+    constructor(public tank: Unit, public battlefield: Battlefield, public isEnemyTurn: boolean = false) {}
 
     advanceTurn(): void {
-        // TODO: this shouldn't be done instantly; skills should be conveyed properly
-        // perform enemy actions
-        const actionGenerator = this.calculateEnemyActions();
-        for (let action of actionGenerator) {
-            this.applyAction(action);
-        }
         // and now the turn's really over, so...
         for (const unit of this.battlefield.getAllUnits()) {
             unit.advanceTurn();
@@ -47,9 +41,11 @@ export class CombatState {
     //TODO: There are some issues with this.
     // - Skills that can target more things are more likely to be used.
     *calculateEnemyActions(): Generator<AIAction, void, void> {
+        // units who've done all they can (prevents errors)
+        let doneActors: Unit[] = [];
         while (true) {
             // continue this process until all enemy units have acted (or are dead, i guess)
-            const enemyActors = this.battlefield.getEnemyActors();
+            const enemyActors = this.battlefield.getEnemyActors().filter(actor => !doneActors.includes(actor));
             if (enemyActors.length === 0) {
                 return;
             }
@@ -81,8 +77,10 @@ export class CombatState {
             }
             if (goodActions.length > 0) {
                 yield Random.fromArray(goodActions);
-            } else {
+            } else if (neutralActions.length > 0) {
                 yield Random.fromArray(neutralActions);
+            } else {
+                doneActors.push(actor);
             }
         }
     }

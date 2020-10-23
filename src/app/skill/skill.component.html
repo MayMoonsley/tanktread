@@ -1,5 +1,5 @@
 <div *ngIf="playerControlled">
-<p-button (onClick)="use($event)" [disabled]="!canBeUsed"
+<p-button (onClick)="use($event)" [disabled]="disabled()"
     styleClass="p-button-secondary p-button-sm p-button-raised p-button-text">
     <strong>{{skill!.name}}:</strong><span *ngFor="let item of description">{{item}} </span>
 </p-button>
