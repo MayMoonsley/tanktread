@@ -113,12 +113,26 @@ export namespace Game {
         };
     }
 
+    export function cancelTargeting(): void {
+        currentTargetingState.active = false;
+    }
+
     export function target(target: Targetable): void {
         if (!currentTargetingState.active || !currentTargetingState.targetables.includes(target)) {
             throw new Error('Game.target() called while not targeting, somehow');
         }
         currentState.combat.useSkill(currentTargetingState.user!, currentTargetingState.skill!, target, currentState.inventory);
         currentTargetingState.active = false;
+    }
+
+    export function isCurrentlyUsing(user: Unit, skill?: Skill): boolean {
+        if (currentTargetingState.active === false) {
+            return false;
+        }
+        if (skill === undefined) {
+            return currentTargetingState.user === user;
+        }
+        return currentTargetingState.user === user && currentTargetingState.skill === skill;
     }
 
     export function advanceTurn(): void {

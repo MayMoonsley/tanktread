@@ -6,6 +6,9 @@ import { Game } from '../Game';
 @Component({
     selector: 'app-skill',
     templateUrl: './skill.component.html',
+    host: {
+        '[class.currentlyUsing]': 'currentlyUsing()'
+    },
     styleUrls: ['./skill.component.css']
 })
 export class SkillComponent implements OnInit {
@@ -31,6 +34,14 @@ export class SkillComponent implements OnInit {
     use(event: MouseEvent): void {
         event.stopPropagation();
         Game.beginTargeting(this.unit!, this.skill!);
+    }
+
+    currentlyUsing(): boolean {
+        return Game.isCurrentlyUsing(this.unit!, this.skill!);
+    }
+
+    cancel(): void {
+        Game.cancelTargeting();
     }
 
 }
