@@ -69,6 +69,10 @@ export class Unit implements Interfaces.Unit {
     }
 
     wound(x: number, piercing: boolean = false, ignoreCorrosion: boolean = false): void {
+        if (!piercing && this.statuses.includes(Status.Shield)) {
+            this.removeStatus(Status.Shield);
+            return;
+        }
         if (this.statuses.includes(Status.Armored) && !piercing) {
             x = Math.max(0, x - 1);
         }
