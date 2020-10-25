@@ -66,11 +66,11 @@ export class Unit implements Interfaces.Unit {
         return this.playerControlled ? AIRating.Bad : AIRating.Good;
     }
 
-    wound(x: number, piercing: boolean = false): void {
+    wound(x: number, piercing: boolean = false, ignoreCorrosion: boolean = false): void {
         if (this.statuses.includes(Status.Armored) && !piercing) {
             x = Math.max(0, x - 1);
         }
-        if (this.statuses.includes(Status.Corroded)) {
+        if (this.statuses.includes(Status.Corroded) && !ignoreCorrosion) {
             x += 1;
         }
         this.health -= x;
@@ -138,7 +138,7 @@ export class Unit implements Interfaces.Unit {
     advanceTurn(): void {
         this.actionsLeft = this.actionsPerTurn;
         if (this.statuses.includes(Status.Fire)) {
-            this.wound(1, true);
+            this.wound(1, true, true);
         }
     }
 
