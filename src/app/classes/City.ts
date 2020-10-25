@@ -5,7 +5,7 @@ import { UnitSpecies } from './Unit';
 export class City {
 
     public static readonly FlowerHeights = new City('Flower Heights');
-    public static readonly Iivi = new City('iivi', [[UnitSpecies.Controller, 100]]);
+    public static readonly Iivi = new City('iivi', [[UnitSpecies.Controller, 100], [UnitSpecies.Gardener, 300]]);
 
     static getCities(): City[] {
         return [City.FlowerHeights, City.Iivi];

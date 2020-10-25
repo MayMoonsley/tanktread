@@ -2,8 +2,11 @@
     {{ formattedName() }}
     <app-status-emoji *ngFor="let status of unit!.statuses" [status]="status"></app-status-emoji>
 </h3>
-<p>{{ unit!.statString | formatInfinity }}</p>
-<h4>Skills</h4>
-<div id="skills">
-    <app-skill *ngFor="let skill of unit!.skills" [skill]="skill" [unit]="unit" [canBeUsed]="unit!.canAct()" [playerControlled]="unit!.playerControlled"></app-skill>
+<p>
+    <span pTooltip="Health" tooltipPosition="top">❤️</span> {{unit!.health | formatInfinity}}/{{unit!.maxHealth | formatInfinity}}
+    <span *ngIf="unit!.actionsPerTurn > 0"><span pTooltip="Actions" tooltipPosition="top">⚡</span> {{unit!.actionsLeft | formatInfinity}}/{{unit!.actionsPerTurn | formatInfinity}}</span>
+</p>
+<div id="skills" *ngIf="unit!.skills.length > 0">
+    <h4>Skills</h4>
+    <app-skill *ngFor="let skill of unit!.skills" [skill]="skill" [unit!]="unit!" [canBeUsed]="unit!.canAct()" [playerControlled]="unit!.playerControlled"></app-skill>
 </div>

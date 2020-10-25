@@ -4,7 +4,7 @@ import { Status } from '../classes/Status';
 import { ResourceInventory } from '../classes/Resource';
 
 export enum UnitFaction {
-    Tank = '👤', Drone = '🤖', Creature = '🐛'
+    Tank = '👤', Drone = '🤖', Creature = '🐛', Deposit = '🍄'
 }
 
 export interface Unit extends Targetable {

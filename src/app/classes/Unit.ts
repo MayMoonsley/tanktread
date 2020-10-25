@@ -62,6 +62,8 @@ export class Unit implements Interfaces.Unit {
     get rating(): AIRating {
         if (this.statuses.includes(Status.Pheromones)) {
             return AIRating.Good;
+        } else if (this.faction === Interfaces.UnitFaction.Deposit) {
+            return AIRating.Neutral;
         }
         return this.playerControlled ? AIRating.Bad : AIRating.Good;
     }
@@ -112,6 +114,9 @@ export class Unit implements Interfaces.Unit {
     }
 
     canAct(): boolean {
+        if (this.faction === Interfaces.UnitFaction.Deposit) {
+            return false;
+        }
         return this.actionsLeft > 0 || this.statuses.includes(Status.Advantage);
     }
 
@@ -162,6 +167,9 @@ export class UnitSpecies {
     public static readonly Mister = new UnitSpecies('Mister', Interfaces.UnitFaction.Drone, 1, 2,
         [Skill.Move, Skill.Mist], [{resource: Resource.Nodule, min: 2, max: 2, chance: 0}, {resource: Resource.Gristle, min: 2, max: 2, chance: 0}]);
 
+    public static readonly Gardener = new UnitSpecies('Gardener', Interfaces.UnitFaction.Drone, 4, 1,
+        [Skill.Move, Skill.Prune], [{ resource: Resource.Aluminite, min: 1, max: 3, chance: 0 }, {resource: Resource.Nodule, min: 1, max: 1, chance: 0}]);
+
     public static readonly Debug = new UnitSpecies('Troubleshooter', Interfaces.UnitFaction.Drone, Infinity, Infinity, [Skill.Move,
         Skill.Decapitate, Skill.Meteor], []);
 
@@ -193,8 +201,18 @@ export class UnitSpecies {
 
     public static readonly Lobster = new UnitSpecies('Lobster', Interfaces.UnitFaction.Creature, 2, 1, [Skill.Move, Skill.PhlegmaticShriek], [{ resource: Resource.Nodule, min: 0, max: 2, chance: 0.3 }, {resource: Resource.Silicate, min: 3, max: 5, chance: 0.75}]);
 
+    // Deposits
+    public static Clutch = UnitSpecies.createDepositSpecies('Clutch', 4, [{resource: Resource.Nodule, min: 3, max: 5}]);
+    public static Well = UnitSpecies.createDepositSpecies('Well', 3, [{resource: Resource.Petranol, min: 2, max: 4}]);
+    public static Coral = UnitSpecies.createDepositSpecies('Coral', 5, [{resource: Resource.Silicate, min: 2, max: 4}, {resource: Resource.Aluminite, min: 1, max: 3}], [Status.Armored]);
+    public static Spire = UnitSpecies.createDepositSpecies('Spire', 6, [{resource: Resource.Cordylith, min: 2, max: 4}]);
+
     private constructor(public name: string, public faction: Interfaces.UnitFaction, public health: number,
         public actionsPerTurn: number, public skills: Skill[], public drops: ResourceDrop[], public statuses: Status[] = []) {}
+
+    private static createDepositSpecies(name: string, health: number, drops: ResourceDrop[], statuses: Status[] = []): UnitSpecies {
+        return new UnitSpecies(name, Interfaces.UnitFaction.Deposit, health, 0, [], drops, statuses);
+    }
 
     get buildCost(): ResourceInventory {
         return ResourceInventory.fromAmounts(this.drops.map(item => { return { resource: item.resource, amount: item.max }; }));
