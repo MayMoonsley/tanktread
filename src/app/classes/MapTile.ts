@@ -29,7 +29,7 @@ export class Biome {
     }
 
     generateBattlefield(): Battlefield {
-        const numRegions = Random.int(2, 5);
+        const numRegions = Random.int(3, 6);
         const regions: BattlefieldRegion[] = [];
         const weightedRegions: [BattlefieldRegion, number][] = [];
         for (let i = 0; i < numRegions; i++) {
@@ -37,7 +37,7 @@ export class Biome {
             regions.push(curr);
             weightedRegions.push([curr, i + 1]);
         }
-        const numUnits = Random.int(numRegions * 2, numRegions * 3);
+        const numUnits = Random.int(numRegions, numRegions * 2);
         for (let i = 0; i < numUnits; i++) {
             Random.weightedRandom(weightedRegions).addUnit(Random.weightedRandom(this.species).instantiate());
         }
