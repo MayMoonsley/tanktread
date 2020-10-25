@@ -4,11 +4,12 @@ import { UnitSpecies } from './Unit';
 
 export class City {
 
-    public static readonly FlowerHeights = new City('Flower Heights');
-    public static readonly Iivi = new City('iivi', [[UnitSpecies.Controller, 100], [UnitSpecies.Gardener, 300]]);
+    public static readonly FlowerHeights = new City('Flower Heights', [[UnitSpecies.Gardener, 300]]);
+    public static readonly Iivi = new City('iivi', [[UnitSpecies.Controller, 100]]);
+    public static readonly Solarium = new City('Solarium');
 
     static getCities(): City[] {
-        return [City.FlowerHeights, City.Iivi];
+        return [City.FlowerHeights, City.Iivi, City.Solarium];
     }
 
     private constructor(public name: string, public schematics: [UnitSpecies, number][] = [],
