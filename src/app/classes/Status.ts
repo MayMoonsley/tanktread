@@ -9,6 +9,7 @@ export class Status {
     public static readonly Corroded = new Status('Corroded', '🧪', 'Take one more damage from attacks.', AIRating.Bad);
     public static readonly Pheromones = new Status('Pheromones', '⚗️', 'Blend in with creatures. Goes away after using a skill.', AIRating.Good);
     public static readonly Shield = new Status('Shield', '🔵', 'Blocks next damage taken.', AIRating.Good);
+    public static readonly Charged = new Status('Charged', '🔋', 'Required for more powerful skills.', AIRating.Good);
 
     private constructor(
         public readonly name: string,

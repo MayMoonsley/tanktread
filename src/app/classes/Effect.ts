@@ -5,7 +5,7 @@ import { Status } from './Status';
 import { Types } from '../util/Types';
 import { Targetable } from '../interfaces/Targetable';
 import { InventoryState } from '../state-trackers/InventoryState';
-import { AIRating } from '../interfaces/AIRating';
+import { AIRating, invertRating } from '../interfaces/AIRating';
 
 type UnitFunction = (user: Unit, target: Unit, focus: 'target' | 'user', ...args: any[]) => void;
 type RegionFunction = (user: Unit, target: BattlefieldRegion, focus: 'target' | 'user', ...args: any[]) => void;
@@ -66,6 +66,16 @@ export class EffectType {
         effectFocus.addStatus(status);
     }, (status: Status) => status.rating);
 
+    public static readonly RemoveStatus = EffectType.fromUnitFunction((user: Unit, target: Unit, focus: 'target' | 'user', status: Status) => {
+        let effectFocus: Unit;
+        if (focus === 'target') {
+            effectFocus = target;
+        } else {
+            effectFocus = user;
+        }
+        effectFocus.removeStatus(status);
+    }, (status: Status) => invertRating(status.rating));
+
     public static readonly Kill = EffectType.fromUnitFunction((user: Unit, target: Unit, focus: 'target' | 'user',) => {
         let effectFocus: Unit;
         if (focus === 'target') {
@@ -113,8 +123,12 @@ export class EffectType {
         effectFocus.die(false);
     }, () => AIRating.Good);
 
-    public applyToUnit(user: Unit, target: Unit, focus: 'target' | 'user', predicate?: EffectPredicate, ...args: any[]): void {
+    public applyToUnit(user: Unit, target: Unit, focus: 'target' | 'user', predicate?: EffectPredicate, otherwise?: Effect, ...args: any[]): void {
         if (predicate !== undefined && !testEffectPredicate(user, target, predicate)) {
+            // TODO: this should handle inventory
+            if (otherwise !== undefined) {
+                applyEffect(otherwise, user, target);
+            }
             return;
         }
         this.unitFunc(user, target, focus, ...args);
@@ -152,40 +166,44 @@ export class EffectType {
  * -Harvest: kills focus + gives player its build cost
  */
 
-export type Effect = {focus: 'target' | 'user'; predicate?: EffectPredicate;} & ({type: 'Damage'; amount: number;}
+export type Effect = {focus: 'target' | 'user'; predicate?: EffectPredicate; otherwise?: Effect} & ({type: 'Damage'; amount: number;}
 | {type: 'Heal'; amount: number;}
 | {type: 'Status'; status: Status;}
+| {type: 'RemoveStatus'; status: Status;}
 | {type: 'Kill';}
 | {type: 'MoveTo';}
 | {type: 'Collect';}
 | {type: 'Harvest';}
 | {type: 'Refresh'; amount: number;});
 
-export function applyEffect(effect: Effect, user: Unit, target: Targetable, inventory: InventoryState): void {
+export function applyEffect(effect: Effect, user: Unit, target: Targetable, inventory?: InventoryState): void {
     switch (effect.type) {
     case 'Damage':
-        EffectType.Damage.applyToTargetable(user, target, effect.focus, effect.predicate, effect.amount);
+        EffectType.Damage.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise, effect.amount);
         return;
     case 'Heal':
-        EffectType.Heal.applyToTargetable(user, target, effect.focus, effect.predicate, effect.amount);
+        EffectType.Heal.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise, effect.amount);
         return;
     case 'Status':
-        EffectType.Status.applyToTargetable(user, target, effect.focus, effect.predicate, effect.status);
+        EffectType.Status.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise, effect.status);
+        return;
+    case 'RemoveStatus':
+        EffectType.Status.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise, effect.status);
         return;
     case 'Kill':
-        EffectType.Kill.applyToTargetable(user, target, effect.focus, effect.predicate);
+        EffectType.Kill.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise);
         return;
     case 'MoveTo':
-        EffectType.MoveTo.applyToTargetable(user, target, effect.focus, effect.predicate);
+        EffectType.MoveTo.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise);
         return;
     case 'Collect':
-        EffectType.Collect.applyToTargetable(user, target, effect.focus, effect.predicate, inventory);
+        EffectType.Collect.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise, inventory);
         return;
     case 'Harvest':
-        EffectType.Harvest.applyToTargetable(user, target, effect.focus, effect.predicate, inventory);
+        EffectType.Harvest.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise, inventory);
         return;
     case 'Refresh':
-        EffectType.Harvest.applyToTargetable(user, target, effect.focus, effect.predicate, effect.amount);
+        EffectType.Harvest.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise, effect.amount);
         return;
     default:
         return Types.impossible(effect);
@@ -200,6 +218,8 @@ function subEffectToString(effect: Effect): string {
         return `Heal ${effect.focus} for ${effect.amount}.`;
     case 'Status':
         return `Give ${effect.focus} ${effect.status.emoji} ${effect.status.name}.`;
+    case 'RemoveStatus':
+        return `Remove ${effect.status.emoji} ${effect.status.name} from ${effect.focus}.`;
     case 'Kill':
         return `Kill ${effect.focus}.`;
     case 'MoveTo':
@@ -221,6 +241,8 @@ function getSubEffectRating(effect: Effect): AIRating {
             return EffectType.Heal.getRating(effect.amount);
         case 'Status':
             return EffectType.Status.getRating(effect.status);
+        case 'RemoveStatus':
+            return EffectType.RemoveStatus.getRating(effect.status);
         case 'Kill':
             return EffectType.Kill.getRating();
         case 'MoveTo':
@@ -247,7 +269,11 @@ export function getEffectRating(effect: Effect): {'user': AIRating, 'target': AI
 
 export function effectToString(effect: Effect): string {
     if (effect.predicate !== undefined) {
-        return `If ${effectPredicateToString(effect.predicate)}: ${subEffectToString(effect)}`;
+        if (effect.otherwise !== undefined) {
+            return `If ${effectPredicateToString(effect.predicate)}: ${subEffectToString(effect)}`;
+        } else {
+            return `If ${effectPredicateToString(effect.predicate)}: ${subEffectToString(effect)}`;
+        }
     } else {
         return subEffectToString(effect);
     }

@@ -1,4 +1,4 @@
-import { UnitSpecies } from './Unit';
+import { UnitSpecies } from './UnitSpecies';
 import { BattlefieldRegion } from './BattlefieldRegion';
 import { Random } from '../util/Random';
 import { Battlefield } from './Battlefield';

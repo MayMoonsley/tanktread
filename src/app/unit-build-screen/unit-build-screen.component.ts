@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { InventoryState } from '../state-trackers/InventoryState';
-import { UnitSpecies } from '../classes/Unit';
+import { UnitSpecies } from '../classes/UnitSpecies';
 import { Game } from '../Game';
 import { CombatState } from '../state-trackers/CombatState';
 

@@ -21,6 +21,8 @@ export interface Unit extends Targetable {
 
     addStatus(status: Status): void;
 
+    removeStatus(status: Status): void;
+
     moveTo(region: BattlefieldRegion): void;
 
     die(dropItems?: boolean): void;

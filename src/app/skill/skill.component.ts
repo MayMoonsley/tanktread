@@ -45,7 +45,7 @@ export class SkillComponent implements OnInit {
     }
 
     disabled(): boolean {
-        return !this.canBeUsed && !Game.isEnemyTurn();
+        return !this.canBeUsed && !Game.isEnemyTurn() && this.unit!.canAct() && this.skill!.canBeUsedBy(this.unit!);
     }
 
 }

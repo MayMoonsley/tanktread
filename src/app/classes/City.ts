@@ -1,6 +1,6 @@
 import { Resource } from './Resource';
 import { Objects } from '../util/Objects';
-import { UnitSpecies } from './Unit';
+import { UnitSpecies } from './UnitSpecies';
 
 export class City {
 

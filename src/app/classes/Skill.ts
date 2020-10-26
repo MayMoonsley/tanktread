@@ -2,6 +2,7 @@ import { Effect, effectToString, getEffectRating } from './Effect';
 import { Status } from './Status';
 import { UnitFaction } from '../interfaces/Unit';
 import { AIRating, combineRatings } from '../interfaces/AIRating';
+import { Unit } from './Unit';
 
 export enum SkillTargetingMode {
     Self, // can only target the user
@@ -42,6 +43,13 @@ export class Skill {
     public static readonly Maul = new Skill('Maul', SkillTargetingMode.UnitMelee, [{ type: 'Damage', focus: 'target', amount: 2 },
         { type: 'Refresh', focus: 'user', amount: 1, predicate: {type: 'IsDead', focus: 'target'} }]);
 
+    // Charged Skills
+    public static readonly Siphon = new Skill('Siphon', SkillTargetingMode.UnitMelee, [{ type: 'Damage', focus: 'target', amount: 2 },
+        { type: 'Status', focus: 'user', status: Status.Charged, predicate: {type: 'IsDead', focus: 'target'} }]);
+
+    public static readonly Arc = new Skill('Arc', SkillTargetingMode.UnitArtillery,
+        [{type: 'Status', status: Status.Charged, focus: 'target', predicate: {type: 'IsFaction', faction: UnitFaction.Drone, focus: 'target'}, otherwise: {type: 'Damage', focus: 'target', amount: 3}}, {type: 'RemoveStatus', status: Status.Charged, focus: 'user'}], true);
+
     // Fire Skills
     public static readonly Burn = new Skill('Burn', SkillTargetingMode.UnitMelee, [{ type: 'Status', focus: 'target', status: Status.Fire }]);
     public static readonly Detonate = new Skill('Detonate', SkillTargetingMode.UnitMelee, [{ type: 'Status', status: Status.Fire, focus: 'target' }, { type: 'Kill', focus: 'user' }]);
@@ -65,7 +73,7 @@ export class Skill {
     public static readonly Meteor = new Skill('Meteor', SkillTargetingMode.RegionRanged,
         [{type: 'Kill', focus: 'target'}]);
 
-    private constructor(name: string, targetingMode: SkillTargetingMode, effects: Effect[]) {
+    private constructor(name: string, targetingMode: SkillTargetingMode, effects: Effect[], public readonly requiresCharge: boolean = false) {
         this.name = name;
         this.targetingMode = targetingMode;
         this.effects = effects;
@@ -77,14 +85,24 @@ export class Skill {
     }
 
     get description(): string {
-        if (this.effects.length === 0) {
-            return 'Do nothing.'
+        let r: string[] = [];
+        if (this.requiresCharge) {
+            r.push('Requires 🔋 Charged.');
         }
-        return this.effects.map(effectToString).join('\n');
+        if (this.effects.length === 0) {
+            r.push('Do nothing.');
+        } else {
+            r = r.concat(this.effects.map(effectToString));
+        }
+        return r.join('\n');
     }
 
     get rating(): {'user': AIRating, 'target': AIRating} {
         return this._rating;
+    }
+
+    public canBeUsedBy(unit: Unit): boolean {
+        return !this.requiresCharge || unit.statuses.includes(Status.Charged);
     }
 
 }

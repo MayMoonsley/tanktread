@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { UnitSpecies } from '../classes/Unit';
+import { UnitSpecies } from '../classes/UnitSpecies';
 
 @Component({
   selector: 'app-unit-species',

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { City } from '../classes/City';
 import { Resource } from '../classes/Resource';
-import { UnitSpecies } from '../classes/Unit';
+import { UnitSpecies } from '../classes/UnitSpecies';
 import { Game } from '../Game';
 import { InventoryState } from '../state-trackers/InventoryState';
 import { Objects } from '../util/Objects';

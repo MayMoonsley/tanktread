@@ -1,5 +1,5 @@
 import { Resource, ResourceInventory } from '../classes/Resource';
-import { UnitSpecies } from '../classes/Unit';
+import { UnitSpecies } from '../classes/UnitSpecies';
 
 export class InventoryState {
 
