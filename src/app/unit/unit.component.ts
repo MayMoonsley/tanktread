@@ -7,6 +7,7 @@ import { Game } from '../Game';
     templateUrl: './unit.component.html',
     host: {
         '[class.targetable]': 'targetable',
+        '[class.targeted]': 'beingTargeted()',
         '(click)': 'target($event)'
     },
     styleUrls: ['./unit.component.css']
@@ -41,6 +42,10 @@ export class UnitComponent implements OnInit {
             event.stopPropagation();
             Game.target(this.unit);
         }
+    }
+
+    beingTargeted(): boolean {
+        return Game.isCurrentlyBeingTargeted(this.unit!);
     }
 
 }

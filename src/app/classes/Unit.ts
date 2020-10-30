@@ -4,6 +4,7 @@ import { Status } from './Status';
 import { Arrays } from '../util/Arrays';
 import { ResourceDrop, resourceDropToAmount, ResourceInventory, Resource } from './Resource';
 import * as Interfaces from '../interfaces/Unit';
+import { AIRating } from '../interfaces/AIRating';
 
 export class Unit implements Interfaces.Unit {
 
@@ -39,9 +40,6 @@ export class Unit implements Interfaces.Unit {
 
     get formattedName(): string {
         let r: string = `${this.faction} ${this.name}`;
-        if (this.statuses.length > 0) {
-            r += ` ${this.statuses.map(status => status.emoji).join('')}`;
-        }
         return r;
     }
 
@@ -61,9 +59,25 @@ export class Unit implements Interfaces.Unit {
         return ResourceInventory.fromAmounts(this.drops.map(item => { return { resource: item.resource, amount: item.max }; }));
     }
 
-    wound(x: number, piercing: boolean = false): void {
+    get rating(): AIRating {
+        if (this.statuses.includes(Status.Pheromones)) {
+            return AIRating.Good;
+        } else if (this.faction === Interfaces.UnitFaction.Deposit) {
+            return AIRating.Neutral;
+        }
+        return this.playerControlled ? AIRating.Bad : AIRating.Good;
+    }
+
+    wound(x: number, piercing: boolean = false, ignoreCorrosion: boolean = false): void {
         if (this.statuses.includes(Status.Armored) && !piercing) {
             x = Math.max(0, x - 1);
+        }
+        if (this.statuses.includes(Status.Corroded) && !ignoreCorrosion) {
+            x += 1;
+        }
+        if (!piercing && this.statuses.includes(Status.Shield) && x > 0) {
+            this.removeStatus(Status.Shield);
+            return;
         }
         this.health -= x;
         if (this.health <= 0) {
@@ -104,7 +118,14 @@ export class Unit implements Interfaces.Unit {
     }
 
     canAct(): boolean {
+        if (this.faction === Interfaces.UnitFaction.Deposit) {
+            return false;
+        }
         return this.actionsLeft > 0 || this.statuses.includes(Status.Advantage);
+    }
+
+    addActions(amount: number): void {
+        this.actionsLeft = Math.min(this.actionsLeft + amount, this.actionsPerTurn);
     }
 
     spendAction(): void {
@@ -126,46 +147,8 @@ export class Unit implements Interfaces.Unit {
     advanceTurn(): void {
         this.actionsLeft = this.actionsPerTurn;
         if (this.statuses.includes(Status.Fire)) {
-            this.wound(1, true);
+            this.wound(1, true, true);
         }
-    }
-
-}
-
-export class UnitSpecies {
-
-    // The Tank
-    public static readonly Tank = new UnitSpecies('Tank', Interfaces.UnitFaction.Tank, Infinity, 2,
-        [Skill.Move, Skill.Collect, Skill.Deconstruct], []);
-
-    // Drones
-    public static readonly Stinger = new UnitSpecies('Stinger', Interfaces.UnitFaction.Drone, 1, 2, [Skill.Move, Skill.Sting, Skill.Collect], []);
-
-    public static readonly Detonator = new UnitSpecies('Detonator', Interfaces.UnitFaction.Drone,
-        1, 2, [Skill.Move, Skill.Detonate], [{ resource: Resource.Petranol, min: 1, max: 3, chance: 0 }]);
-
-    public static readonly Controller = new UnitSpecies('Controller', Interfaces.UnitFaction.Drone,
-        1, 2, [Skill.Move, Skill.Hypnotize], [{ resource: Resource.Cordylith, min: 1, max: 1, chance: 0 }]);
-
-    // Creatures
-    public static readonly Rat = new UnitSpecies('Rat', Interfaces.UnitFaction.Creature, 1, 1, [Skill.Move, Skill.Prod],
-        [{ resource: Resource.Hide, min: 0, max: 1 }, { resource: Resource.Gristle, min: 0, max: 1 }]);
-
-    public static readonly Wyrm = new UnitSpecies('Wyrm', Interfaces.UnitFaction.Creature, 1, 3, [Skill.Burrow, Skill.Burn],
-        [{ resource: Resource.Petranol, min: 1, max: 3, chance: 0.75 }, { resource: Resource.Gristle, min: 1, max: 2, chance: 0.75 }]);
-
-    public static readonly Isopod = new UnitSpecies('Isopod', Interfaces.UnitFaction.Creature, 2, 1, [Skill.Move, Skill.Prod],
-        [{ resource: Resource.Aluminite, min: 1, max: 3, chance: 0.75 }, { resource: Resource.Hide, min: 2, max: 4, chance: 0.75 }], [Status.Armored]);
-
-    private constructor(public name: string, public faction: Interfaces.UnitFaction, public health: number,
-        public actionsPerTurn: number, public skills: Skill[], public drops: ResourceDrop[], public statuses: Status[] = []) {}
-
-    get buildCost(): ResourceInventory {
-        return ResourceInventory.fromAmounts(this.drops.map(item => { return { resource: item.resource, amount: item.max }; }));
-    }
-
-    public instantiate(): Unit {
-        return new Unit(this.name, this.faction, this.health, this.actionsPerTurn, this.skills, this.drops, this.statuses);
     }
 
 }

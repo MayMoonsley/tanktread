@@ -4,7 +4,7 @@ import { Status } from '../classes/Status';
 import { ResourceInventory } from '../classes/Resource';
 
 export enum UnitFaction {
-    Tank = '👤', Drone = '🤖', Creature = '🐛'
+    Tank = '👤', Drone = '🤖', Creature = '🐛', Deposit = '🍄'
 }
 
 export interface Unit extends Targetable {
@@ -13,6 +13,7 @@ export interface Unit extends Targetable {
     faction: UnitFaction;
     buildCost: ResourceInventory;
     statuses: Status[];
+    alive: boolean;
 
     wound(amount: number): void;
 
@@ -20,8 +21,12 @@ export interface Unit extends Targetable {
 
     addStatus(status: Status): void;
 
+    removeStatus(status: Status): void;
+
     moveTo(region: BattlefieldRegion): void;
 
     die(dropItems?: boolean): void;
+
+    addActions(amount: number): void;
 
 }

@@ -7,11 +7,12 @@ export class Resource {
     public static readonly Silicate = new Resource('Silicate', 'Clarified sand. Common computational substrate.', 3);
     public static readonly Petranol = new Resource('Petranol', 'Odorous liquid. Clean-burning fuel.', 2);
     public static readonly Cordylith = new Resource('Cordylith', 'Crystalline fungus mesh. Mood regulator in low doses.', 20);
-    public static readonly Hide = new Resource('Hide', 'Miscellaneous creature dermis. Usable after processing.', 1);
+    public static readonly Hide = new Resource('Hide', 'Chitinous creature dermis. Usable after processing.', 1);
     public static readonly Gristle = new Resource('Gristle', 'Low-quality creature flesh. Technically edible.', 1);
     public static readonly Nodule = new Resource('Nodule', 'Sucrose storage organ. Calorie dense.', 10);
+    public static readonly Fang = new Resource('Fang', 'Serpentine relic producing constant energy.', 2500, false);
 
-    private constructor(public readonly name: string, public readonly description: string, public readonly value: number) {}
+    private constructor(public readonly name: string, public readonly description: string, public readonly value: number, public readonly forSale: boolean = true) {}
 
 }
 

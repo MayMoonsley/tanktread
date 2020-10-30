@@ -9,7 +9,7 @@
     cursor: pointer;
 }
 
-:host(.targetable):hover {
+:host(.targetable):hover, :host.targeted {
     background: #FF9999;
 }
 

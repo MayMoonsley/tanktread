@@ -5,4 +5,6 @@
     <p-button (onClick)="receiveMassiveInheritance()" styleClass="p-button-help p-button-rounded">Receive Massive
         Inheritance</p-button>
 </div>
-<app-combat-screen></app-combat-screen>
+<app-map-screen *ngIf="gameMode() === 'map'"></app-map-screen>
+<app-combat-screen *ngIf="gameMode() === 'battle'"></app-combat-screen>
+<app-commerce-screen *ngIf="gameMode() === 'town'"></app-commerce-screen>

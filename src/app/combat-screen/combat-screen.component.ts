@@ -17,4 +17,24 @@ export class CombatScreenComponent implements OnInit {
         Game.advanceTurn();
     }
 
+    retreat(): void {
+        Game.returnToMap();
+    }
+
+    packUp(): void {
+        Game.packUp();
+    }
+
+    canRetreat(): boolean {
+        return Game.getCombatState().canRetreat() && !Game.isEnemyTurn();
+    }
+
+    canPackUp(): boolean {
+        return Game.getCombatState().canPackUp() && !Game.isEnemyTurn();
+    }
+
+    canAdvance(): boolean {
+        return !Game.isEnemyTurn();
+    }
+
 }

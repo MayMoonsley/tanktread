@@ -1,5 +1,5 @@
 import { Resource, ResourceInventory } from '../classes/Resource';
-import { UnitSpecies } from '../classes/Unit';
+import { UnitSpecies } from '../classes/UnitSpecies';
 
 export class InventoryState {
 
@@ -10,7 +10,7 @@ export class InventoryState {
     constructor() {
         this.credits = 0;
         this.resources = new ResourceInventory();
-        this.schematics = [UnitSpecies.Stinger, UnitSpecies.Detonator, UnitSpecies.Controller];
+        this.schematics = [UnitSpecies.Stinger, UnitSpecies.Firebomb];
     }
 
     addCredits(amount: number): void {

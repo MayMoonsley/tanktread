@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Game } from '../Game';
 import { InventoryState } from '../state-trackers/InventoryState';
 
@@ -10,6 +10,7 @@ import { InventoryState } from '../state-trackers/InventoryState';
 export class InventoryScreenComponent implements OnInit {
 
     inventory: InventoryState = new InventoryState();
+    @Input() flex: boolean = false;
 
     constructor() { }
 

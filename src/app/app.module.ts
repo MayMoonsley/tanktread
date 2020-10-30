@@ -14,7 +14,12 @@ import { UnitBuildScreenComponent } from './unit-build-screen/unit-build-screen.
 import { DefaultMessagePipe } from './default-message.pipe';
 import { ButtonModule } from 'primeng/button';
 import { AccordionModule } from 'primeng/accordion';
+import {TooltipModule} from 'primeng/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MapScreenComponent } from './map-screen/map-screen.component';
+import { CommerceScreenComponent } from './commerce-screen/commerce-screen.component';
+import { UnitSpeciesComponent } from './unit-species/unit-species.component';
+import { StatusEmojiComponent } from './status-emoji/status-emoji.component';
 
 
 @NgModule({
@@ -28,13 +33,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         InventoryScreenComponent,
         FormatInfinityPipe,
         UnitBuildScreenComponent,
-        DefaultMessagePipe
+        DefaultMessagePipe,
+        MapScreenComponent,
+        CommerceScreenComponent,
+        UnitSpeciesComponent,
+        StatusEmojiComponent
     ],
     imports: [
         BrowserModule,
         ButtonModule,
         AccordionModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        TooltipModule
     ],
     providers: [],
     bootstrap: [AppComponent]

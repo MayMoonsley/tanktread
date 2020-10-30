@@ -1,6 +1,7 @@
 :host {
     display: block;
-    border-left: 2px dotted black;
-    border-bottom: 2px dotted black;
-    padding: 0px 8px;
+}
+
+:host.currentlyUsing {
+    background: #CFF;
 }

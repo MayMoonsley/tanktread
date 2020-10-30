@@ -1,0 +1,13 @@
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+}
+
+.flex p {
+    margin: 0 16px;
+}
+
+.center {
+    text-align: center;
+}

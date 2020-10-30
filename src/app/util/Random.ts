@@ -12,6 +12,21 @@ export namespace Random {
         return float(min, max) | 0;
     }
 
+    export function point(width: number, height: number): [number, number] {
+        return [int(0, width), int(0, height)];
+    }
+
+    export function points(num: number, width: number, height: number): [number, number][] {
+        const r: [number, number][] = [];
+        while (r.length < num) {
+            let p: [number, number] = point(width, height);
+            if (!r.some(otherPoint => otherPoint[0] === p[0] && otherPoint[1] === p[1])) {
+                r.push(p);
+            }
+        }
+        return r;
+    }
+
     export function fromArray<T>(arr: T[]): T {
         return arr[int(0, arr.length)];
     }

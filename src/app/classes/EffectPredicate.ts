@@ -25,10 +25,16 @@ export class EffectPredicateType {
         (focus: string, faction: UnitFaction) => `${focus} is a ${faction} ${Objects.enumKey(UnitFaction, faction)}`
     );
 
+    public static readonly IsDead = new EffectPredicateType(
+        (unit: Unit) => !unit.alive,
+        (focus: string) => `${focus} is dead`
+    );
+
 }
 
 export type EffectPredicate = {focus: 'user' | 'target';} & ({type: 'IsFaction'; faction: UnitFaction;}
 | {type: 'HasStatus'; status: Status;}
+| {type: 'IsDead'}
 | {type: 'and'; a: EffectPredicate; b: EffectPredicate;}
 | {type: 'or'; a: EffectPredicate; b: EffectPredicate;});
 
@@ -44,6 +50,8 @@ export function testEffectPredicate(user: Unit, target: Unit, predicate: EffectP
         return EffectPredicateType.HasStatus.test(focus, predicate.status);
     case 'IsFaction':
         return EffectPredicateType.IsFaction.test(focus, predicate.faction);
+    case 'IsDead':
+        return EffectPredicateType.IsDead.test(focus);
     case 'and':
         return testEffectPredicate(user, target, predicate.a) && testEffectPredicate(user, target, predicate.b);
     case 'or':
@@ -59,6 +67,8 @@ export function effectPredicateToString(predicate: EffectPredicate): string {
         return EffectPredicateType.HasStatus.toString(predicate.focus, predicate.status);
     case 'IsFaction':
         return EffectPredicateType.IsFaction.toString(predicate.focus, predicate.faction);
+    case 'IsDead':
+        return EffectPredicateType.IsDead.toString(predicate.focus);
     case 'and':
         return `${effectPredicateToString(predicate.a)} and ${effectPredicateToString(predicate.b)}`;
     case 'or':

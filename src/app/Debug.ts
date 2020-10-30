@@ -1,6 +1,6 @@
 import { Game } from './Game';
 import { ResourceInventory } from './classes/Resource';
-import { UnitSpecies } from './classes/Unit';
+import { UnitSpecies } from './classes/UnitSpecies';
 import { Objects } from './util/Objects';
 
 export namespace Debug {

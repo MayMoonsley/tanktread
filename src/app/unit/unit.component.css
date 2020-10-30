@@ -1,5 +1,7 @@
 :host {
     display: block;
+    background: #DDDDDD;
+    background-origin: border-box;
 }
 
 :host(.targetable) {
@@ -7,6 +9,6 @@
     cursor: pointer;
 }
 
-:host(.targetable):hover {
+:host(.targetable):hover, :host.targeted {
     background: #FF9999;
 }
