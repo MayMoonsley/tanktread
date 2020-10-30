@@ -8,5 +8,5 @@
 </p>
 <div id="skills" *ngIf="unit!.skills.length > 0">
     <h4>Skills</h4>
-    <app-skill *ngFor="let skill of unit!.skills" [skill]="skill" [unit!]="unit!" [canBeUsed]="unit!.canAct()" [playerControlled]="unit!.playerControlled"></app-skill>
+    <app-skill *ngFor="let skill of unit!.skills" [skill]="skill" [unit]="unit!" [canBeUsed]="unit!.canAct()" [playerControlled]="unit!.playerControlled"></app-skill>
 </div>
