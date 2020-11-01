@@ -1,0 +1,15 @@
+:host {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    position: fixed;
+    bottom: 0.5em;
+    left: auto;
+    right: auto;
+    font-size: 1.15em;
+}
+
+p {
+    margin: 0.5em 1em;
+    color: #666;
+}
