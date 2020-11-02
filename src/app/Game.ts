@@ -96,6 +96,7 @@ export namespace Game {
     }
 
     export function enterBiome(biome: Biome): void {
+        currentState.map.exploreRegion(biome, 2);
         enterCombat(biome.generateBattlefield());
     }
 
@@ -118,6 +119,7 @@ export namespace Game {
         for (let region of currentState.combat.battlefield.regions) {
             currentState.inventory.addResourceInventory(region.collectResources());
         }
+        currentState.map.exploreRegion(currentState.map.playerLocation, 3);
         returnToMap();
     }
 

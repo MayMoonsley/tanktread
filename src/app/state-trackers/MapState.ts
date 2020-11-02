@@ -45,6 +45,11 @@ export class MapState {
         return this.progress[biome.name];
     }
 
+    public exploreRegion(biome: Biome, amount: number): void {
+        this.progress[biome.name].percentExplored = Math.min(100,
+            this.progress[biome.name].percentExplored + amount);
+    }
+
     public moveTank(biome: Biome): void {
         this._location = biome;
     }
