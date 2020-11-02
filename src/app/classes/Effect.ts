@@ -63,7 +63,9 @@ export class EffectType {
         } else {
             effectFocus = user;
         }
-        effectFocus.addStatus(status);
+        if (status !== Status.MindControl || !effectFocus.statuses.includes(Status.Boss)) {
+            effectFocus.addStatus(status);
+        }
     }, (status: Status) => status.rating);
 
     public static readonly RemoveStatus = EffectType.fromUnitFunction((user: Unit, target: Unit, focus: 'target' | 'user', status: Status) => {
@@ -83,7 +85,9 @@ export class EffectType {
         } else {
             effectFocus = user;
         }
-        effectFocus.die();
+        if (!effectFocus.statuses.includes(Statuses.Boss)) {
+            effectFocus.die();
+        }
     }, () => AIRating.Bad);
 
     public static readonly MoveTo = EffectType.fromRegionFunction((user: Unit, target: BattlefieldRegion, focus: 'target' | 'user') => {
