@@ -43,4 +43,8 @@ export class AppComponent {
         Debug.receiveMassiveInheritance();
     }
 
+    mapTheWorld(): void {
+        Debug.mapTheWorld();
+    }
+
 }
