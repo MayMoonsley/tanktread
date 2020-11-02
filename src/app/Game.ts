@@ -176,4 +176,16 @@ export namespace Game {
         }
     }
 
+    export function creditsActive(): boolean {
+        return currentState.creditsActive;
+    }
+
+    export function toggleCredits(): void {
+        currentState.creditsActive = !currentState.creditsActive;
+    }
+
+    export function setCreditsActive(value: boolean): void {
+        currentState.creditsActive = value;
+    }
+
 }

@@ -19,6 +19,18 @@ export class AppComponent {
         return Game.getMode();
     }
 
+    creditsActive(): boolean {
+        return Game.creditsActive();
+    }
+
+    showCredits(): void {
+        Game.setCreditsActive(true);
+    }
+
+    hideCredits(): void {
+        Game.setCreditsActive(false);
+    }
+
     eliminateScarcity(): void {
         Debug.eliminateScarcity();
     }

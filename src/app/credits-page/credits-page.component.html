@@ -1,2 +1,4 @@
-<p><strong>Credits</strong></p>
-<p *ngFor="let entry of credits()"><strong>{{ entry.name }}:</strong> {{ entry.dutiesString }}</p>
+<h2 class="heading">Credits</h2>
+<div class="people">
+    <p *ngFor="let entry of credits()"><strong>{{ entry.name }}:</strong> {{ entry.dutiesString }}</p>
+</div>

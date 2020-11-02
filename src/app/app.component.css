@@ -18,3 +18,9 @@ h1 {
     display: block;
     margin: 2px;
 }
+
+.creditsButton {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+}

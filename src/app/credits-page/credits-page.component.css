@@ -1,15 +1,18 @@
-:host {
+.people {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
     align-items: center;
-    position: fixed;
     bottom: 0.5em;
     left: auto;
     right: auto;
     font-size: 1.15em;
 }
 
-p {
+.heading {
+    text-align: center;
+}
+
+p, h2 {
     margin: 0.5em 1em;
-    color: #666;
 }

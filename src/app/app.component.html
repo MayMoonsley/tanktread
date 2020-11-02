@@ -5,7 +5,13 @@
     <p-button (onClick)="receiveMassiveInheritance()" styleClass="p-button-help p-button-rounded">Receive Massive
         Inheritance</p-button>
 </div>
-<app-map-screen *ngIf="gameMode() === 'map'"></app-map-screen>
-<app-combat-screen *ngIf="gameMode() === 'battle'"></app-combat-screen>
-<app-commerce-screen *ngIf="gameMode() === 'town'"></app-commerce-screen>
-<app-credits-page></app-credits-page>
+<div *ngIf="!creditsActive()">
+    <p-button (onClick)="showCredits()" class="creditsButton">Credits</p-button>
+    <app-map-screen *ngIf="gameMode() === 'map'"></app-map-screen>
+    <app-combat-screen *ngIf="gameMode() === 'battle'"></app-combat-screen>
+    <app-commerce-screen *ngIf="gameMode() === 'town'"></app-commerce-screen>
+</div>
+<div *ngIf="creditsActive()">
+    <p-button (onClick)="hideCredits()" class="creditsButton">Back</p-button>
+    <app-credits-page></app-credits-page>
+</div>
