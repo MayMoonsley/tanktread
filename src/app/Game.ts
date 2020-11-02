@@ -95,9 +95,9 @@ export namespace Game {
         currentState.mode = GameMode.Town;
     }
 
-    export function enterBiome(biome: Biome): void {
+    export function enterBiome(biome: Biome, boss: boolean = false): void {
         currentState.map.exploreRegion(biome, 2);
-        enterCombat(biome.generateBattlefield());
+        enterCombat(biome.generateBattlefield(boss));
     }
 
     export function enterCombat(battlefield: Battlefield): void {

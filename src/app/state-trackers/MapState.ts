@@ -41,6 +41,11 @@ export class MapState {
         return this._location;
     }
 
+    public bossFightAvailable(biome: Biome): boolean {
+        const progress = this.progress[biome.name];
+        return !progress.bossBeaten && progress.percentExplored >= 100;
+    }
+
     public getProgress(biome: Biome): BiomeProgressInfo {
         return this.progress[biome.name];
     }

@@ -36,8 +36,12 @@ export class MapScreenComponent implements OnInit {
         return Game.getMapState().getProgress(biome);
     }
 
-    enterCombat(): void {
-        Game.enterBiome(Game.getMapState().playerLocation);
+    bossFightAvailable(biome: Biome): boolean {
+        return Game.getMapState().bossFightAvailable(biome);
+    }
+
+    enterCombat(boss: boolean = false): void {
+        Game.enterBiome(Game.getMapState().playerLocation, boss);
     }
 
     enterCity(city: City): void {
