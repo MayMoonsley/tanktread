@@ -134,11 +134,11 @@ export class EffectType {
         this.unitFunc(user, target, focus, ...args);
     }
 
-    public applyToRegion(user: Unit, target: BattlefieldRegion, focus: 'target' | 'user', predicate?: EffectPredicate, ...args: any[]): void {
+    public applyToRegion(user: Unit, target: BattlefieldRegion, focus: 'target' | 'user', predicate?: EffectPredicate, otherwise?: Effect, ...args: any[]): void {
         this.regionFunc(user, target, focus, ...args);
     }
 
-    public applyToTargetable(user: Unit, target: Targetable, focus: 'target' | 'user', predicate?: EffectPredicate, ...args: any[]): void {
+    public applyToTargetable(user: Unit, target: Targetable, focus: 'target' | 'user', predicate?: EffectPredicate, otherwise?: Effect, ...args: any[]): void {
         if (target instanceof BattlefieldRegion) {
             this.applyToRegion(user, target, focus, predicate, ...args);
         } else {
