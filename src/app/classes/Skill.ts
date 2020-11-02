@@ -56,6 +56,7 @@ export class Skill {
 
     // Corrosion Skills
     public static readonly Corrode = new Skill('Corrode', SkillTargetingMode.UnitMelee, [{type: 'Status', focus: 'target', status: Status.Corroded}]);
+    public static readonly Pinch = new Skill('Pinch', SkillTargetingMode.UnitMelee, [{type: 'Damage', focus: 'target', amount: 1}, {type: 'Damage', focus: 'target', amount: 3, predicate: {type: 'HasStatus', focus: 'target', status: Status.Corroded}}]);
     public static readonly PhlegmaticShriek = new Skill('Phlegmatic Shriek', SkillTargetingMode.RegionAdjacent, [{type: 'Status', focus: 'target', status: Status.Corroded}]);
 
     // Mind Control Skills

@@ -11,7 +11,7 @@ export class Biome {
     public static readonly Desert = new Biome('Desert', '🏜️', ['Dune', 'Oasis', 'Flats'],
         [[UnitSpecies.Crab, 2], [UnitSpecies.Lobster, 1]],
         [[UnitSpecies.Well, 1]],
-        UnitSpecies.Rat);
+        UnitSpecies.Friday);
     public static readonly Forest = new Biome('Forest', '🌳', ['Clearing', 'Thicket', 'Creek'],
         [[UnitSpecies.Rat, 2], [UnitSpecies.Tyger, 1]],
         [[UnitSpecies.Clutch, 1]],
@@ -51,11 +51,10 @@ export class Biome {
         }
         if (boss) {
             regions[regions.length - 1].addUnit(this.boss.instantiate());
-        } else {
-            const numUnits = Random.int(numRegions, numRegions * 2);
-            for (let i = 0; i < numUnits; i++) {
-                Random.weightedRandom(weightedRegions).addUnit(Random.weightedRandom(this.species).instantiate());
-            }
+        }
+        const numUnits = boss ? 4 : Random.int(numRegions, numRegions * 2);
+        for (let i = 0; i < numUnits; i++) {
+            Random.weightedRandom(weightedRegions).addUnit(Random.weightedRandom(this.species).instantiate());
         }
         if (this.deposits.length > 0) {
             const numDeposits = Random.int(numRegions * 0.5, numRegions * 1);

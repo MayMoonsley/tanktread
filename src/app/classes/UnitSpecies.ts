@@ -54,7 +54,11 @@ export class UnitSpecies {
     // Corrosion Series
     public static readonly Crab = new UnitSpecies('Crab', UnitFaction.Creature, 2, 1, [Skill.Move, Skill.Corrode], [{ resource: Resource.Nodule, min: 0, max: 1, chance: 0.2 }, {resource: Resource.Silicate, min: 1, max: 2, chance: 0.75}]);
 
-    public static readonly Lobster = new UnitSpecies('Lobster', UnitFaction.Creature, 2, 1, [Skill.Move, Skill.PhlegmaticShriek], [{ resource: Resource.Nodule, min: 0, max: 2, chance: 0.3 }, {resource: Resource.Silicate, min: 3, max: 5, chance: 0.75}]);
+    public static readonly Lobster = new UnitSpecies('Lobster', UnitFaction.Creature, 2, 1, [Skill.Move, Skill.Pinch], [{ resource: Resource.Nodule, min: 0, max: 2, chance: 0.3 }, {resource: Resource.Silicate, min: 3, max: 5, chance: 0.75}]);
+
+    // Bosses
+
+    public static readonly Friday = new UnitSpecies('Friday', UnitFaction.Creature, 10, 2, [Skill.Move, Skill.PhlegmaticShriek, Skill.Pinch], [{ resource: Resource.Fang, min: 1, max: 1, chance: 1 }, {resource: Resource.Silicate, min: 10, max: 20, chance: 1}, {resource: Resource.Nodule, min: 5, max: 10, chance: 1}], [Status.Boss]);
 
     // Deposits
     public static Clutch = UnitSpecies.createDepositSpecies('Clutch', 4, [{resource: Resource.Nodule, min: 3, max: 5}]);
