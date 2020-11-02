@@ -59,8 +59,9 @@ h2, h3 {
     background: #CFF;
 }
 
-.biome h3 {
+.biome h3, .biome p {
     margin: none;
+    text-align: center;
 }
 
 .player {

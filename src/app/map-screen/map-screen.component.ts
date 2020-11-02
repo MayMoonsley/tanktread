@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MapTile, Biome } from '../classes/MapTile';
 import { Game } from '../Game';
 import { City } from '../classes/City';
+import { BiomeProgressInfo } from '../state-trackers/MapState';
 
 @Component({
     selector: 'app-map-screen',
@@ -23,20 +24,16 @@ export class MapScreenComponent implements OnInit {
         return City.getCities().filter(city => city.location === this.playerLocation())
     }
 
-    tiles(): MapTile[][] {
-        return Game.getMapState().tiles;
-    }
-
-    emojiRows(): string[][] {
-        return Game.getMapState().symbols;
-    }
-
     playerLocation(): Biome {
         return Game.getMapState().playerLocation;
     }
 
     moveTank(biome: Biome): void {
         return Game.getMapState().moveTank(biome);
+    }
+
+    progress(biome: Biome): BiomeProgressInfo {
+        return Game.getMapState().getProgress(biome);
     }
 
     enterCombat(): void {

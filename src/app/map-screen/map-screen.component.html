@@ -1,6 +1,7 @@
 <div id="upper">
     <div *ngFor="let biome of biomes()" class="biome" (click)="moveTank(biome)">
         <h3>{{ biome.name }}</h3>
+        <p>{{ progress(biome).percentExplored }}% explored</p>
         <p class="player" *ngIf="biome == playerLocation()">@</p>
     </div>
 </div>
