@@ -93,7 +93,7 @@ export class ResourceInventory {
     remove(resource: Resource, amount: number): ResourceInventory {
         const key = Objects.multitonKey(Resource, resource);
         const newRecord = { ...this.amounts };
-        newRecord[key] = this.getAmount(resource) + amount;
+        newRecord[key] = this.getAmount(resource) - amount;
         if (newRecord[key]! <= 0) {
             delete newRecord[key];
         }
