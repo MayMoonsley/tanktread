@@ -85,7 +85,7 @@ export class EffectType {
         } else {
             effectFocus = user;
         }
-        if (!effectFocus.statuses.includes(Statuses.Boss)) {
+        if (!effectFocus.statuses.includes(Status.Boss)) {
             effectFocus.die();
         }
     }, () => AIRating.Bad);
