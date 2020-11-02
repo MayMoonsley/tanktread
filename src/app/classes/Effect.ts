@@ -123,8 +123,10 @@ export class EffectType {
         } else {
             effectFocus = user;
         }
-        inventory.addResourceInventory(effectFocus.buildCost);
-        effectFocus.die(false);
+        if (!effectFocus.statuses.includes(Status.Boss)) {
+            inventory.addResourceInventory(effectFocus.buildCost);
+            effectFocus.die(false);
+        }
     }, () => AIRating.Good);
 
     public applyToUnit(user: Unit, target: Unit, focus: 'target' | 'user', predicate?: EffectPredicate, otherwise?: Effect, ...args: any[]): void {
