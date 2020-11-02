@@ -1,18 +1,19 @@
 import { Resource } from './Resource';
 import { Objects } from '../util/Objects';
 import { UnitSpecies } from './UnitSpecies';
+import { Biome } from './MapTile';
 
 export class City {
 
-    public static readonly FlowerHeights = new City('Flower Heights', [[UnitSpecies.Gardener, 300]]);
-    public static readonly Iivi = new City('iivi', [[UnitSpecies.Controller, 100]]);
-    public static readonly Solarium = new City('Solarium');
+    public static readonly FlowerHeights = new City('Flower Heights', Biome.Forest, [[UnitSpecies.Gardener, 300]]);
+    public static readonly Iivi = new City('iivi', Biome.Mountain, [[UnitSpecies.Controller, 100]]);
+    public static readonly Solarium = new City('Solarium', Biome.Desert);
 
     static getCities(): City[] {
         return [City.FlowerHeights, City.Iivi, City.Solarium];
     }
 
-    private constructor(public name: string, public schematics: [UnitSpecies, number][] = [],
+    private constructor(public name: string, public location: Biome, public schematics: [UnitSpecies, number][] = [],
         private priceMultipliers: Record<string, number> = {}) {};
 
     getPriceMultiplier(resource: Resource): number {

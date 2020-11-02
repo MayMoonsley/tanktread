@@ -19,7 +19,7 @@ export class CommerceScreenComponent implements OnInit {
     }
 
     city(): City {
-        return Game.getMapState().playerLocation.city!;
+        return Game.getMapState().city!;
     }
 
     inventory(): InventoryState {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MapTile } from '../classes/MapTile';
+import { MapTile, Biome } from '../classes/MapTile';
 import { Game } from '../Game';
+import { City } from '../classes/City';
 
 @Component({
     selector: 'app-map-screen',
@@ -14,6 +15,14 @@ export class MapScreenComponent implements OnInit {
     ngOnInit(): void {
     }
 
+    biomes(): Biome[] {
+        return Game.getMapState().biomes;
+    }
+
+    cities(): City[] {
+        return City.getCities().filter(city => city.location === this.playerLocation())
+    }
+
     tiles(): MapTile[][] {
         return Game.getMapState().tiles;
     }
@@ -22,16 +31,20 @@ export class MapScreenComponent implements OnInit {
         return Game.getMapState().symbols;
     }
 
-    playerLocation(): MapTile {
+    playerLocation(): Biome {
         return Game.getMapState().playerLocation;
     }
 
-    moveTank(dx: number, dy: number): void {
-        return Game.getMapState().moveTank(dx, dy);
+    moveTank(biome: Biome): void {
+        return Game.getMapState().moveTank(biome);
     }
 
-    enter(tile: MapTile): void {
-        Game.enterMapTile(tile);
+    enterCombat(): void {
+        Game.enterBiome(Game.getMapState().playerLocation);
+    }
+
+    enterCity(city: City): void {
+        Game.enterCity(city);
     }
 
 }

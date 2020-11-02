@@ -1,3 +1,5 @@
+// TODO: This file needs to be renamed, since map tiles are defunct
+
 import { UnitSpecies } from './UnitSpecies';
 import { BattlefieldRegion } from './BattlefieldRegion';
 import { Random } from '../util/Random';

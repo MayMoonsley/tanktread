@@ -10,7 +10,8 @@ import { Random } from './util/Random';
 import { Skill } from './classes/Skill';
 import { Targetable } from './interfaces/Targetable';
 import { applyEffect } from './classes/Effect';
-import { MapTile } from './classes/MapTile';
+import { City } from './classes/City';
+import { MapTile, Biome } from './classes/MapTile';
 import { UnitFaction } from './interfaces/Unit';
 import { Promises } from './util/Promises';
 
@@ -87,6 +88,15 @@ export namespace Game {
         } else {
             enterCombat(tile.biome.generateBattlefield());
         }
+    }
+
+    export function enterCity(city: City): void {
+        currentState.map.city = city;
+        currentState.mode = GameMode.Town;
+    }
+
+    export function enterBiome(biome: Biome): void {
+        enterCombat(biome.generateBattlefield());
     }
 
     export function enterCombat(battlefield: Battlefield): void {

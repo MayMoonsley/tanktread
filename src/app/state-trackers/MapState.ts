@@ -9,8 +9,18 @@ export class MapState {
     private width: number;
     private height: number;
     private _playerLocation!: MapTile;
+    public biomes: Biome[];
+    private _location: Biome;
+    public city?: City;
 
     public constructor(tiles?: MapTile[][], public tankX: number = 0, public tankY: number = 0) {
+        this.biomes = [
+            Biome.Ocean,
+            Biome.Forest,
+            Biome.Mountain,
+            Biome.Desert
+        ];
+        this._location = Biome.Desert;
         if (tiles !== undefined) {
             this.tiles = tiles;
             this.height = tiles.length;
@@ -27,14 +37,12 @@ export class MapState {
         return this.tiles.map(arr => arr.map(tile => tile.symbol));
     }
 
-    get playerLocation(): MapTile {
-        return this._playerLocation;
+    get playerLocation(): Biome {
+        return this._location;
     }
 
-    public moveTank(dx: number, dy: number): void {
-        this.tankX = Numbers.clamp(this.tankX + dx, 0, this.width - 1);
-        this.tankY = Numbers.clamp(this.tankY + dy, 0, this.height - 1);
-        this.updateLocation();
+    public moveTank(biome: Biome): void {
+        this._location = biome;
     }
 
     private generateMap(width: number, height: number): MapTile[][] {
