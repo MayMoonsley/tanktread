@@ -5,6 +5,7 @@ import { Arrays } from '../util/Arrays';
 import { ResourceDrop, resourceDropToAmount, ResourceInventory, Resource } from './Resource';
 import * as Interfaces from '../interfaces/Unit';
 import { AIRating } from '../interfaces/AIRating';
+import { Random } from '../util/Random';
 
 export class Unit implements Interfaces.Unit {
 
@@ -96,6 +97,9 @@ export class Unit implements Interfaces.Unit {
             if (dropItems) {
                 for (const drop of this.drops) {
                     this.containingRegion.addResource(drop.resource, resourceDropToAmount(drop));
+                }
+                if (this.faction === Interfaces.UnitFaction.Creature && Random.boolean(this.maxHealth / 255)) {
+                    this.containingRegion.addResource(Resource.Scale, 1);
                 }
             }
             this.containingRegion.removeUnit(this);

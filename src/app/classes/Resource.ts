@@ -11,6 +11,7 @@ export class Resource {
     public static readonly Gristle = new Resource('Gristle', 'Low-quality creature flesh. Technically edible.', 1);
     public static readonly Nodule = new Resource('Nodule', 'Sucrose storage organ. Calorie dense.', 10);
     public static readonly Fang = new Resource('Fang', 'Serpentine relic producing constant energy.', 2500, false);
+    public static readonly Scale = new Resource('Scale', 'Fragment of extraterrestrial bio-alloy.', 250, false)
 
     private constructor(public readonly name: string, public readonly description: string, public readonly value: number, public readonly forSale: boolean = true) {}
 
