@@ -5,15 +5,20 @@ import { Biome } from './MapTile';
 
 export class City {
 
-    public static readonly FlowerHeights = new City('Flower Heights', Biome.Forest, [[UnitSpecies.Gardener, 300]]);
-    public static readonly Iivi = new City('iivi', Biome.Mountain, [[UnitSpecies.Controller, 100]]);
-    public static readonly Solarium = new City('Solarium', Biome.Desert);
+    public static readonly FlowerHeights = new City('Flower Heights',
+        'Pruning a World in Bloom', Biome.Forest, [[UnitSpecies.Gardener, 300]]);
+    public static readonly Iivi = new City('iivi', 'Old Hands, New Purpose',
+        Biome.Mountain, [[UnitSpecies.Controller, 100]]);
+    public static readonly Solarium = new City('Solarium',
+        'For the Love of Light', Biome.Desert);
+    public static readonly MilleniumHall = new City('Millenium Hall',
+        'To One Thousand Years of Progress', Biome.Ocean);
 
     static getCities(): City[] {
-        return [City.FlowerHeights, City.Iivi, City.Solarium];
+        return [City.FlowerHeights, City.Iivi, City.Solarium, City.MilleniumHall];
     }
 
-    private constructor(public name: string, public location: Biome, public schematics: [UnitSpecies, number][] = [],
+    private constructor(public name: string, public motto: string, public location: Biome, public schematics: [UnitSpecies, number][] = [],
         private priceMultipliers: Record<string, number> = {}) {};
 
     getPriceMultiplier(resource: Resource): number {
