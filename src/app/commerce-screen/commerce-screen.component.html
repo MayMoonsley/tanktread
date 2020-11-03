@@ -1,8 +1,8 @@
 <h1>{{ city().name }}</h1>
 <h2><em>"{{ city().motto }}"</em></h2>
 <h2>Money: {{inventory().credits | formatInfinity}}&curren;</h2>
+<h2>Resources</h2>
 <div class="resources">
-    <h2>Resources</h2>
     <div class="resource" *ngFor="let resource of resources()">
         <p><strong>{{ resource.name }}:</strong> {{ resource.description }} (Owned: {{ inventory().resources.getAmount(resource) }})</p>
         <div class="buy" *ngIf="resource.forSale">
@@ -13,8 +13,8 @@
         </div>
     </div>
 </div>
+<h2>Schematics</h2>
 <div class="schematics">
-    <h2>Schematics</h2>
     <p *ngIf="city().schematics.length === 0">None</p>
     <div *ngFor="let listing of city().schematics">
         <app-unit-species [species]="listing[0]"></app-unit-species>
