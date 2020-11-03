@@ -17,7 +17,19 @@ export type AIAction = {
 
 export class CombatState {
 
-    constructor(public tank: Unit, public battlefield: Battlefield, public isEnemyTurn: boolean = false) {}
+    private _bossFight: boolean;
+
+    constructor(public tank: Unit, public battlefield: Battlefield, public isEnemyTurn: boolean = false, bossFight?: boolean) {
+        if (bossFight !== undefined) {
+            this._bossFight = bossFight;
+        } else {
+            this._bossFight = battlefield.getAllUnits().some(unit => unit.statuses.includes(Status.Boss));
+        }
+    }
+
+    get isBossFight(): boolean {
+        return this._bossFight;
+    }
 
     advanceTurn(): void {
         // and now the turn's really over, so...
