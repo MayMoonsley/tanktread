@@ -21,7 +21,7 @@ export class MapScreenComponent implements OnInit {
     }
 
     cities(): City[] {
-        return City.getCities().filter(city => city.location === this.playerLocation())
+        return Game.getMapState().citiesAvailableIn(this.playerLocation());
     }
 
     playerLocation(): Biome {

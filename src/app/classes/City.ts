@@ -6,19 +6,27 @@ import { Biome } from './MapTile';
 export class City {
 
     public static readonly FlowerHeights = new City('Flower Heights',
-        'Pruning a World in Bloom', Biome.Forest, [[UnitSpecies.Gardener, 300]]);
+        'Pruning a World in Bloom', Biome.Forest, 0, [[UnitSpecies.Gardener, 300]]);
     public static readonly Iivi = new City('iivi', 'Old Hands, New Purpose',
-        Biome.Mountain, [[UnitSpecies.Controller, 100]]);
+        Biome.Mountain, 0, [[UnitSpecies.Controller, 100]]);
     public static readonly Solarium = new City('Solarium',
-        'For the Love of Light', Biome.Desert);
+        'For the Love of Light', Biome.Desert, 0);
     public static readonly MilleniumHall = new City('Millenium Hall',
-        'To One Thousand Years of Progress', Biome.Ocean);
+        'To One Thousand Years of Progress', Biome.Ocean, 0);
+    public static readonly HuskGarage = new City('Husk Garage',
+        'Repair and Breathe', Biome.Desert, 50);
 
     static getCities(): City[] {
-        return [City.FlowerHeights, City.Iivi, City.Solarium, City.MilleniumHall];
+        return [
+            City.FlowerHeights,
+            City.Iivi,
+            City.Solarium, City.HuskGarage,
+            City.MilleniumHall];
     }
 
-    private constructor(public name: string, public motto: string, public location: Biome, public schematics: [UnitSpecies, number][] = [],
+    private constructor(public name: string, public motto: string,
+        public location: Biome, public explorationNeeded: number,
+        public schematics: [UnitSpecies, number][] = [],
         private priceMultipliers: Record<string, number> = {}) {};
 
     getPriceMultiplier(resource: Resource): number {

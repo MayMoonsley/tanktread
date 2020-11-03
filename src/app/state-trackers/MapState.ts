@@ -50,6 +50,13 @@ export class MapState {
         return this.progress[biome.name];
     }
 
+    public citiesAvailableIn(biome: Biome): City[] {
+        return City.getCities().filter(
+            city => city.location === biome
+                && this.getProgress(biome).percentExplored >= city.explorationNeeded
+        );
+    }
+
     public exploreRegion(biome: Biome, amount: number): void {
         this.progress[biome.name].percentExplored = Math.min(100,
             this.progress[biome.name].percentExplored + amount);
