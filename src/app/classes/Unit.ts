@@ -35,7 +35,8 @@ export class Unit implements Interfaces.Unit {
         this.actionsLeft = actionsPerTurn;
         // add each status (effectively cloning input array)
         for (const status of statuses) {
-            this.addStatus(status);
+            // this pushes so it doesn't run into issues with Slippery
+            this.statuses.push(status);
         }
     }
 
@@ -93,6 +94,11 @@ export class Unit implements Interfaces.Unit {
         if (this.health === Infinity) {
             return;
         }
+        if (this.statuses.includes(Status.Undying)) {
+            this.health = this.maxHealth;
+            this.removeStatus(Status.Undying);
+            return;
+        }
         if (this.containingRegion !== undefined) {
             if (dropItems) {
                 for (const drop of this.drops) {
@@ -141,6 +147,9 @@ export class Unit implements Interfaces.Unit {
     }
 
     addStatus(status: Status): void {
+        if (this.statuses.includes(Status.Slippery)) {
+            return;
+        }
         this.statuses = Arrays.addWithoutDuplicate(status, this.statuses);
     }
 
