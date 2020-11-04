@@ -146,10 +146,10 @@ export class EffectType {
 
     public applyToTargetable(user: Unit, target: Targetable, focus: 'target' | 'user', predicate?: EffectPredicate, otherwise?: Effect, ...args: any[]): void {
         if (target instanceof BattlefieldRegion) {
-            this.applyToRegion(user, target, focus, predicate, ...args);
+            this.applyToRegion(user, target, focus, predicate, otherwise, ...args);
         } else {
             // safe unless we add more targetable things
-            this.applyToUnit(user, target as Unit, focus, predicate, ...args);
+            this.applyToUnit(user, target as Unit, focus, predicate, otherwise, ...args);
         }
     }
 
