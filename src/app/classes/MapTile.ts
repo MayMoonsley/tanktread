@@ -23,7 +23,7 @@ export class Biome {
     public static readonly Ocean = new Biome('Ocean', '🌊', ['Sandbar', 'Shallows', 'Tide Pool'],
         [[UnitSpecies.Isopod, 2], [UnitSpecies.Barracuda, 1]],
         [[UnitSpecies.Coral, 1]],
-        UnitSpecies.Rat);
+        UnitSpecies.Mint);
 
     private constructor(private _name: string,
         private _symbol: string,

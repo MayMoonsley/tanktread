@@ -26,7 +26,7 @@ export class UnitSpecies {
         [Skill.Move, Skill.Prune], [{ resource: Resource.Aluminite, min: 1, max: 3, chance: 0 }, {resource: Resource.Nodule, min: 1, max: 1, chance: 0}]);
 
     public static readonly Debug = new UnitSpecies('Troubleshooter', UnitFaction.Drone, Infinity, Infinity, [Skill.Move,
-        Skill.Decapitate, Skill.Meteor], []);
+        Skill.Decapitate, Skill.Meteor, Skill.Slash], []);
 
     // Creatures
 
@@ -59,6 +59,10 @@ export class UnitSpecies {
     // Bosses
 
     public static readonly Friday = new UnitSpecies('Friday', UnitFaction.Creature, 10, 2, [Skill.Move, Skill.PhlegmaticShriek, Skill.Pinch], [{ resource: Resource.Fang, min: 1, max: 1, chance: 1 }, {resource: Resource.Silicate, min: 10, max: 20, chance: 1}, {resource: Resource.Nodule, min: 5, max: 10, chance: 1}], [Status.Boss]);
+
+    // TODO: this should have a more interesting design
+    public static readonly Mint = new UnitSpecies('Mint', UnitFaction.Creature, 10, 2, [Skill.Move, Skill.Slash], [{ resource: Resource.Fang, min: 1, max: 1, chance: 1 }, { resource: Resource.Hide, min: 10, max: 20, chance: 1 }, { resource: Resource.Aluminite, min: 8, max: 16, chance: 1 }], [Status.Boss, Status.Armored, Status.Slippery]);
+
 
     // Deposits
     public static Clutch = UnitSpecies.createDepositSpecies('Clutch', 4, [{resource: Resource.Nodule, min: 3, max: 5}]);
