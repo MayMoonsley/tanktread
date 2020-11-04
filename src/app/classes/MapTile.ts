@@ -24,6 +24,10 @@ export class Biome {
         [[UnitSpecies.Isopod, 2], [UnitSpecies.Barracuda, 1]],
         [[UnitSpecies.Coral, 1]],
         UnitSpecies.Mint);
+    public static readonly Wasteland = new Biome('Wasteland', ['Ruins', 'Tarmac', 'Sewers'],
+        [[UnitSpecies.Anemone, 1], [UnitSpecies.Vermin, 1]],
+        [[UnitSpecies.Lodestone, 1]],
+        UnitSpecies.Rat);
 
     private constructor(private _name: string,
         private regionNames: string[],

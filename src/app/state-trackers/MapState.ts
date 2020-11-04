@@ -20,6 +20,7 @@ export class MapState {
             Biome.Ocean,
             Biome.Forest,
             Biome.Mountain,
+            Biome.Wasteland,
             Biome.Desert
         ];
         this._location = Biome.Desert;

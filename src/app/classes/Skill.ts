@@ -50,6 +50,12 @@ export class Skill {
     public static readonly Arc = new Skill('Arc', SkillTargetingMode.UnitArtillery,
         [{type: 'Status', status: Status.Charged, focus: 'target', predicate: {type: 'IsFaction', faction: UnitFaction.Drone, focus: 'target'}, otherwise: {type: 'Damage', focus: 'target', amount: 3}}, {type: 'RemoveStatus', status: Status.Charged, focus: 'user'}], true);
 
+    public static readonly Electrify = new Skill('Electrify', SkillTargetingMode.UnitRanged,
+        [{type: 'Status', status: Status.Charged, focus: 'target'}, {type: 'Status', status: Status.Stunned, focus: 'user'}]);
+
+    public static readonly Shock = new Skill('Shock', SkillTargetingMode.UnitRanged,
+        [{ type: 'Damage', focus: 'target', amount: 4 }], true);
+
     // Fire Skills
     public static readonly Burn = new Skill('Burn', SkillTargetingMode.UnitMelee, [{ type: 'Status', focus: 'target', status: Status.Fire }]);
     public static readonly Detonate = new Skill('Detonate', SkillTargetingMode.UnitMelee, [{ type: 'Status', status: Status.Fire, focus: 'target' }, { type: 'Kill', focus: 'user' }]);
