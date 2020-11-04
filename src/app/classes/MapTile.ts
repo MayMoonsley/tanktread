@@ -8,25 +8,24 @@ import { City } from './City';
 
 export class Biome {
 
-    public static readonly Desert = new Biome('Desert', '🏜️', ['Dune', 'Oasis', 'Flats'],
+    public static readonly Desert = new Biome('Desert', ['Dune', 'Oasis', 'Flats'],
         [[UnitSpecies.Crab, 2], [UnitSpecies.Lobster, 1]],
         [[UnitSpecies.Well, 1]],
         UnitSpecies.Friday);
-    public static readonly Forest = new Biome('Forest', '🌳', ['Clearing', 'Thicket', 'Creek'],
+    public static readonly Forest = new Biome('Forest', ['Clearing', 'Thicket', 'Creek'],
         [[UnitSpecies.Rat, 2], [UnitSpecies.Tyger, 1]],
         [[UnitSpecies.Clutch, 1]],
         UnitSpecies.Rat);
-    public static readonly Mountain = new Biome('Mountain', '⛰️', ['Plateau', 'Peak', 'Valley'],
+    public static readonly Mountain = new Biome('Mountain', ['Plateau', 'Peak', 'Valley'],
         [[UnitSpecies.Wyrm, 2], [UnitSpecies.Drake, 1]],
         [[UnitSpecies.Spire, 1]],
         UnitSpecies.Ember);
-    public static readonly Ocean = new Biome('Ocean', '🌊', ['Sandbar', 'Shallows', 'Tide Pool'],
+    public static readonly Ocean = new Biome('Ocean', ['Sandbar', 'Shallows', 'Tide Pool'],
         [[UnitSpecies.Isopod, 2], [UnitSpecies.Barracuda, 1]],
         [[UnitSpecies.Coral, 1]],
         UnitSpecies.Mint);
 
     private constructor(private _name: string,
-        private _symbol: string,
         private regionNames: string[],
         private species: [UnitSpecies, number][],
         private deposits: [UnitSpecies, number][],
@@ -34,10 +33,6 @@ export class Biome {
 
     get name(): string {
         return this._name;
-    }
-
-    get symbol(): string {
-        return this._symbol;
     }
 
     generateBattlefield(boss: boolean = false): Battlefield {
@@ -63,36 +58,6 @@ export class Biome {
             }
         }
         return new Battlefield(regions);
-    }
-
-}
-
-export class MapTile {
-
-    public tankHere: boolean = false;
-
-    public constructor(public biome: Biome, public city?: City) {};
-
-    get symbol(): string {
-        if (this.city !== undefined) {
-            return '🏙️';
-        }
-        return this.biome.symbol;
-    }
-
-    get tankedSymbol(): string {
-        if (this.tankHere) {
-            return '🚗';
-        }
-        return this.symbol;
-    }
-
-    get name(): string {
-        if (this.city !== undefined) {
-            return `The City of ${this.city.name}`;
-        } else {
-            return this.biome.name;
-        }
     }
 
 }

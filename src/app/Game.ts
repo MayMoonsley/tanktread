@@ -11,7 +11,7 @@ import { Skill } from './classes/Skill';
 import { Targetable } from './interfaces/Targetable';
 import { applyEffect } from './classes/Effect';
 import { City } from './classes/City';
-import { MapTile, Biome } from './classes/MapTile';
+import { Biome } from './classes/MapTile';
 import { UnitFaction } from './interfaces/Unit';
 import { Promises } from './util/Promises';
 
@@ -87,14 +87,6 @@ export namespace Game {
 
     export function isEnemyTurn(): boolean {
         return currentState.combat.isEnemyTurn;
-    }
-
-    export function enterMapTile(tile: MapTile): void {
-        if (tile.city !== undefined) {
-            currentState.mode = GameMode.Town;
-        } else {
-            enterCombat(tile.biome.generateBattlefield());
-        }
     }
 
     export function enterCity(city: City): void {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MapTile, Biome } from '../classes/MapTile';
+import { Biome } from '../classes/MapTile';
 import { Game } from '../Game';
 import { City } from '../classes/City';
 import { BiomeProgressInfo } from '../state-trackers/MapState';
