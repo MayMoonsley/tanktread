@@ -32,7 +32,7 @@ export namespace Game {
         targetables: []
     };
 
-    function initialCombatState(): CombatState {
+    function initialCombatState(map: MapState): CombatState {
         const regionNames = ['Plains', 'Island', 'Swamp', 'Mountain', 'Forest'];
         const tank = UnitSpecies.Tank.instantiate();
         const enemySpecies = [UnitSpecies.Rat, UnitSpecies.Wyrm];
@@ -46,10 +46,17 @@ export namespace Game {
         }
         battlefield.regions = Random.shuffle(battlefield.regions);
         battlefield.regions[0].addUnit(tank);
-        return new CombatState(tank, battlefield);
+        return new CombatState(tank, battlefield, map);
     }
 
-    const currentState = new GameState(GameMode.Map, initialCombatState(), new InventoryState(), new MapState());
+    function initialState(): GameState {
+        const map = new MapState();
+        const inv = new InventoryState();
+        const combat = initialCombatState(map);
+        return new GameState(GameMode.Map, combat, inv, map);
+    }
+
+    const currentState = initialState();
 
     export function getMode(): GameMode {
         return currentState.mode;
@@ -103,7 +110,7 @@ export namespace Game {
     export function enterCombat(battlefield: Battlefield): void {
         const tank = UnitSpecies.Tank.instantiate();
         battlefield.regions[0].addUnit(tank);
-        currentState.combat = new CombatState(tank, battlefield);
+        currentState.combat = new CombatState(tank, battlefield, currentState.map);
         currentState.mode = GameMode.Battle;
     }
 

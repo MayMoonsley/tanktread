@@ -8,6 +8,7 @@ import { Targetable } from '../interfaces/Targetable';
 import { UnitFaction } from '../interfaces/Unit';
 import { Random } from '../util/Random';
 import { InventoryState } from './InventoryState';
+import { MapState } from './MapState';
 
 export type AIAction = {
     user: Unit,
@@ -18,12 +19,17 @@ export type AIAction = {
 export class CombatState {
 
     private _bossFight: boolean;
+    private boss?: Unit;
 
-    constructor(public tank: Unit, public battlefield: Battlefield, public isEnemyTurn: boolean = false, bossFight?: boolean) {
+    constructor(public tank: Unit, public battlefield: Battlefield, private mapState: MapState, public isEnemyTurn: boolean = false, bossFight?: boolean, boss?: Unit) {
         if (bossFight !== undefined) {
             this._bossFight = bossFight;
         } else {
-            this._bossFight = battlefield.getAllUnits().some(unit => unit.statuses.includes(Status.Boss));
+            const bossArr = battlefield.getAllUnits().filter(unit => unit.statuses.includes(Status.Boss));
+            this._bossFight = bossArr.length > 0;
+            if (this._bossFight) {
+                this.boss = bossArr[0];
+            }
         }
     }
 
@@ -48,6 +54,9 @@ export class CombatState {
         }
         user.spendAction();
         user.removeStatus(Status.Pheromones);
+        if (this.boss !== undefined && !this.boss.alive) {
+            this.mapState.killBoss();
+        }
     }
 
     //TODO: There are some issues with this.

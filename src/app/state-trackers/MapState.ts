@@ -66,4 +66,8 @@ export class MapState {
         this._location = biome;
     }
 
+    public killBoss(biome: Biome = this._location): void {
+        this.progress[biome.name].bossBeaten = true;
+    }
+
 }
