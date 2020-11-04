@@ -158,7 +158,11 @@ export class Unit implements Interfaces.Unit {
     }
 
     advanceTurn(): void {
-        this.actionsLeft = this.actionsPerTurn;
+        if (this.statuses.includes(Status.Stunned)) {
+            this.removeStatus(Status.Stunned);
+        } else {
+            this.actionsLeft = this.actionsPerTurn;
+        }
         if (this.statuses.includes(Status.Fire)) {
             this.wound(1, true, true);
         }
