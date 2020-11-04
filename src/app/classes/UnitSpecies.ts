@@ -41,7 +41,7 @@ export class UnitSpecies {
     public static readonly Wyrm = new UnitSpecies('Wyrm', UnitFaction.Creature, 1, 3, [Skill.Burrow, Skill.Burn],
         [{ resource: Resource.Petranol, min: 1, max: 3, chance: 0.75 }, { resource: Resource.Gristle, min: 1, max: 2, chance: 0.75 }]);
 
-    public static readonly Drake = new UnitSpecies('Drake', UnitFaction.Creature, 3, 3, [Skill.FlamingWings, Skill.Burn],
+    public static readonly Drake = new UnitSpecies('Drake', UnitFaction.Creature, 3, 3, [Skill.Move, Skill.Bite],
         [{ resource: Resource.Petranol, min: 4, max: 6, chance: 0.75 }, { resource: Resource.Gristle, min: 3, max: 5, chance: 0.75 }, { resource: Resource.Cordylith, min: 0, max: 1, chance: 0.01}])
 
     // Armor Series
@@ -63,6 +63,9 @@ export class UnitSpecies {
     // TODO: this should have a more interesting design
     public static readonly Mint = new UnitSpecies('Mint', UnitFaction.Creature, 10, 2, [Skill.Move, Skill.Slash], [{ resource: Resource.Fang, min: 1, max: 1, chance: 1 }, { resource: Resource.Hide, min: 10, max: 20, chance: 1 }, { resource: Resource.Aluminite, min: 8, max: 16, chance: 1 }], [Status.Boss, Status.Armored, Status.Slippery]);
 
+    public static readonly Ember = new UnitSpecies('Ember', UnitFaction.Creature, 10, 2, [Skill.FlamingWings, Skill.Bite, Skill.Burn],
+        [{resource: Resource.Fang, min: 1, max: 1, chance: 1}, { resource: Resource.Petranol, min: 15, max: 24, chance: 1 }, { resource: Resource.Gristle, min: 10, max: 14, chance: 1 }, { resource: Resource.Cordylith, min: 3, max: 3, chance: 1}],
+        [Status.Boss]);
 
     // Deposits
     public static Clutch = UnitSpecies.createDepositSpecies('Clutch', 4, [{resource: Resource.Nodule, min: 3, max: 5}]);

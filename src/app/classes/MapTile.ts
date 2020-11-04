@@ -19,7 +19,7 @@ export class Biome {
     public static readonly Mountain = new Biome('Mountain', '⛰️', ['Plateau', 'Peak', 'Valley'],
         [[UnitSpecies.Wyrm, 2], [UnitSpecies.Drake, 1]],
         [[UnitSpecies.Spire, 1]],
-        UnitSpecies.Rat);
+        UnitSpecies.Ember);
     public static readonly Ocean = new Biome('Ocean', '🌊', ['Sandbar', 'Shallows', 'Tide Pool'],
         [[UnitSpecies.Isopod, 2], [UnitSpecies.Barracuda, 1]],
         [[UnitSpecies.Coral, 1]],

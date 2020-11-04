@@ -53,6 +53,8 @@ export class Skill {
     // Fire Skills
     public static readonly Burn = new Skill('Burn', SkillTargetingMode.UnitMelee, [{ type: 'Status', focus: 'target', status: Status.Fire }]);
     public static readonly Detonate = new Skill('Detonate', SkillTargetingMode.UnitMelee, [{ type: 'Status', status: Status.Fire, focus: 'target' }, { type: 'Kill', focus: 'user' }]);
+    public static readonly Bite = new Skill('Bite', SkillTargetingMode.UnitMelee, [{ type: 'Damage', focus: 'target', amount: 1 },
+        { type: 'Refresh', focus: 'user', amount: 1, predicate: {type: 'HasStatus', focus: 'target', status: Status.Fire} }]);
 
     // Corrosion Skills
     public static readonly Corrode = new Skill('Corrode', SkillTargetingMode.UnitMelee, [{type: 'Status', focus: 'target', status: Status.Corroded}]);
