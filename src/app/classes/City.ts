@@ -14,7 +14,7 @@ export class City {
     public static readonly MilleniumHall = new City('Millenium Hall',
         'To One Thousand Years of Progress', Biome.Ocean, 0);
     public static readonly HuskGarage = new City('Husk Garage',
-        'Repair and Breathe', Biome.Desert, 50);
+        'Repair and Breathe', Biome.Wasteland, 0);
 
     static getCities(): City[] {
         return [
