@@ -21,6 +21,7 @@ import { CommerceScreenComponent } from './commerce-screen/commerce-screen.compo
 import { UnitSpeciesComponent } from './unit-species/unit-species.component';
 import { StatusEmojiComponent } from './status-emoji/status-emoji.component';
 import { CreditsPageComponent } from './credits-page/credits-page.component';
+import { TitleScreenComponent } from './title-screen/title-screen.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { CreditsPageComponent } from './credits-page/credits-page.component';
         CommerceScreenComponent,
         UnitSpeciesComponent,
         StatusEmojiComponent,
-        CreditsPageComponent
+        CreditsPageComponent,
+        TitleScreenComponent
     ],
     imports: [
         BrowserModule,

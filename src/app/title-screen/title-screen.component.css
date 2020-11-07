@@ -1,0 +1,28 @@
+:host {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    width: 100vw;
+    background-size: 100% auto;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-image: url('../../assets/title.png');
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.main {
+    background: rgba(255, 255, 255, 0.9);
+    margin: auto auto;
+    border: 4px solid black;
+    padding: 48px;
+}
+
+.main * {
+    text-align: center;
+}
+
+.main p-button {
+    display: block;
+}

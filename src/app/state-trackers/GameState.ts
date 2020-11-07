@@ -9,6 +9,7 @@ export enum GameMode {
 export class GameState {
 
     public creditsActive: boolean = false;
+    public titleActive: boolean = true;
 
     constructor(public mode: GameMode, public combat: CombatState, public inventory: InventoryState, public map: MapState) {};
 

@@ -47,4 +47,8 @@ export class AppComponent {
         Debug.mapTheWorld();
     }
 
+    titleActive(): boolean {
+        return Game.titleActive();
+    }
+
 }

@@ -199,4 +199,16 @@ export namespace Game {
         currentState.creditsActive = value;
     }
 
+    export function titleActive(): boolean {
+        return currentState.titleActive;
+    }
+
+    export function toggleTitle(): void {
+        currentState.titleActive = !currentState.titleActive;
+    }
+
+    export function setTitleActive(value: boolean): void {
+        currentState.titleActive = value;
+    }
+
 }
