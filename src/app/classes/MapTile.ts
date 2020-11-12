@@ -1,3 +1,5 @@
+// TODO: This file needs to be renamed, since map tiles are defunct
+
 import { UnitSpecies } from './UnitSpecies';
 import { BattlefieldRegion } from './BattlefieldRegion';
 import { Random } from '../util/Random';
@@ -6,35 +8,39 @@ import { City } from './City';
 
 export class Biome {
 
-    public static readonly Desert = new Biome('Desert', '🏜️', ['Dune', 'Oasis', 'Flats'],
-        [[UnitSpecies.Crab, 3], [UnitSpecies.Lobster, 1]],
-        [[UnitSpecies.Well, 1]]);
-    public static readonly Forest = new Biome('Forest', '🌳', ['Clearing', 'Thicket', 'Creek'],
-        [[UnitSpecies.Rat, 3], [UnitSpecies.Tyger, 1]],
-        [[UnitSpecies.Clutch, 1]]);
-    public static readonly Mountain = new Biome('Mountain', '⛰️', ['Plateau', 'Peak', 'Valley'],
-        [[UnitSpecies.Wyrm, 3], [UnitSpecies.Drake, 1]],
-        [[UnitSpecies.Spire, 1]]);
-    public static readonly Ocean = new Biome('Ocean', '🌊', ['Sandbar', 'Shallows', 'Tide Pool'],
-        [[UnitSpecies.Isopod, 3], [UnitSpecies.Barracuda, 1]],
-        [[UnitSpecies.Coral, 1]]);
+    public static readonly Desert = new Biome('Desert', ['Dune', 'Oasis', 'Flats'],
+        [[UnitSpecies.Crab, 2], [UnitSpecies.Lobster, 1]],
+        [[UnitSpecies.Well, 1]],
+        UnitSpecies.Friday);
+    public static readonly Forest = new Biome('Forest', ['Clearing', 'Thicket', 'Creek'],
+        [[UnitSpecies.Rat, 2], [UnitSpecies.Tyger, 1]],
+        [[UnitSpecies.Clutch, 1]],
+        UnitSpecies.Charleston);
+    public static readonly Mountain = new Biome('Mountain', ['Plateau', 'Peak', 'Valley'],
+        [[UnitSpecies.Wyrm, 2], [UnitSpecies.Drake, 1]],
+        [[UnitSpecies.Spire, 1]],
+        UnitSpecies.Ember);
+    public static readonly Ocean = new Biome('Ocean', ['Sandbar', 'Shallows', 'Tide Pool'],
+        [[UnitSpecies.Isopod, 2], [UnitSpecies.Barracuda, 1]],
+        [[UnitSpecies.Coral, 1]],
+        UnitSpecies.Mint);
+    public static readonly Wasteland = new Biome('Wasteland', ['Ruins', 'Tarmac', 'Sewers'],
+        [[UnitSpecies.Anemone, 1], [UnitSpecies.Vermin, 1]],
+        [[UnitSpecies.Lodestone, 1]],
+        UnitSpecies.Magic);
 
     private constructor(private _name: string,
-        private _symbol: string,
         private regionNames: string[],
         private species: [UnitSpecies, number][],
-        private deposits: [UnitSpecies, number][]) {};
+        private deposits: [UnitSpecies, number][],
+        private boss: UnitSpecies) {};
 
     get name(): string {
         return this._name;
     }
 
-    get symbol(): string {
-        return this._symbol;
-    }
-
-    generateBattlefield(): Battlefield {
-        const numRegions = Random.int(3, 6);
+    generateBattlefield(boss: boolean = false): Battlefield {
+        const numRegions = boss ? 3 : Random.int(3, 6);
         const regions: BattlefieldRegion[] = [];
         const weightedRegions: [BattlefieldRegion, number][] = [];
         for (let i = 0; i < numRegions; i++) {
@@ -42,7 +48,10 @@ export class Biome {
             regions.push(curr);
             weightedRegions.push([curr, i + 1]);
         }
-        const numUnits = Random.int(numRegions, numRegions * 2);
+        if (boss) {
+            regions[regions.length - 1].addUnit(this.boss.instantiate());
+        }
+        const numUnits = boss ? 4 : Random.int(numRegions, numRegions * 2);
         for (let i = 0; i < numUnits; i++) {
             Random.weightedRandom(weightedRegions).addUnit(Random.weightedRandom(this.species).instantiate());
         }
@@ -53,36 +62,6 @@ export class Biome {
             }
         }
         return new Battlefield(regions);
-    }
-
-}
-
-export class MapTile {
-
-    public tankHere: boolean = false;
-
-    public constructor(public biome: Biome, public city?: City) {};
-
-    get symbol(): string {
-        if (this.city !== undefined) {
-            return '🏙️';
-        }
-        return this.biome.symbol;
-    }
-
-    get tankedSymbol(): string {
-        if (this.tankHere) {
-            return '🚗';
-        }
-        return this.symbol;
-    }
-
-    get name(): string {
-        if (this.city !== undefined) {
-            return `The City of ${this.city.name}`;
-        } else {
-            return this.biome.name;
-        }
     }
 
 }

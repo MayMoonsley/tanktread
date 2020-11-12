@@ -10,7 +10,8 @@ import { Random } from './util/Random';
 import { Skill } from './classes/Skill';
 import { Targetable } from './interfaces/Targetable';
 import { applyEffect } from './classes/Effect';
-import { MapTile } from './classes/MapTile';
+import { City } from './classes/City';
+import { Biome } from './classes/MapTile';
 import { UnitFaction } from './interfaces/Unit';
 import { Promises } from './util/Promises';
 
@@ -31,7 +32,7 @@ export namespace Game {
         targetables: []
     };
 
-    function initialCombatState(): CombatState {
+    function initialCombatState(map: MapState): CombatState {
         const regionNames = ['Plains', 'Island', 'Swamp', 'Mountain', 'Forest'];
         const tank = UnitSpecies.Tank.instantiate();
         const enemySpecies = [UnitSpecies.Rat, UnitSpecies.Wyrm];
@@ -45,10 +46,17 @@ export namespace Game {
         }
         battlefield.regions = Random.shuffle(battlefield.regions);
         battlefield.regions[0].addUnit(tank);
-        return new CombatState(tank, battlefield);
+        return new CombatState(tank, battlefield, map);
     }
 
-    const currentState = new GameState(GameMode.Map, initialCombatState(), new InventoryState(), new MapState());
+    function initialState(): GameState {
+        const map = new MapState();
+        const inv = new InventoryState();
+        const combat = initialCombatState(map);
+        return new GameState(GameMode.Map, combat, inv, map);
+    }
+
+    const currentState = initialState();
 
     export function getMode(): GameMode {
         return currentState.mode;
@@ -81,18 +89,20 @@ export namespace Game {
         return currentState.combat.isEnemyTurn;
     }
 
-    export function enterMapTile(tile: MapTile): void {
-        if (tile.city !== undefined) {
-            currentState.mode = GameMode.Town;
-        } else {
-            enterCombat(tile.biome.generateBattlefield());
-        }
+    export function enterCity(city: City): void {
+        currentState.map.city = city;
+        currentState.mode = GameMode.Town;
+    }
+
+    export function enterBiome(biome: Biome, boss: boolean = false): void {
+        currentState.map.exploreRegion(biome, 2);
+        enterCombat(biome.generateBattlefield(boss));
     }
 
     export function enterCombat(battlefield: Battlefield): void {
         const tank = UnitSpecies.Tank.instantiate();
         battlefield.regions[0].addUnit(tank);
-        currentState.combat = new CombatState(tank, battlefield);
+        currentState.combat = new CombatState(tank, battlefield, currentState.map);
         currentState.mode = GameMode.Battle;
     }
 
@@ -108,6 +118,7 @@ export namespace Game {
         for (let region of currentState.combat.battlefield.regions) {
             currentState.inventory.addResourceInventory(region.collectResources());
         }
+        currentState.map.exploreRegion(currentState.map.playerLocation, 3);
         returnToMap();
     }
 
@@ -174,6 +185,30 @@ export namespace Game {
             currentState.inventory.removeResourceInventory(species.buildCost);
             currentState.combat.tank.spendAction();
         }
+    }
+
+    export function creditsActive(): boolean {
+        return currentState.creditsActive;
+    }
+
+    export function toggleCredits(): void {
+        currentState.creditsActive = !currentState.creditsActive;
+    }
+
+    export function setCreditsActive(value: boolean): void {
+        currentState.creditsActive = value;
+    }
+
+    export function titleActive(): boolean {
+        return currentState.titleActive;
+    }
+
+    export function toggleTitle(): void {
+        currentState.titleActive = !currentState.titleActive;
+    }
+
+    export function setTitleActive(value: boolean): void {
+        currentState.titleActive = value;
     }
 
 }

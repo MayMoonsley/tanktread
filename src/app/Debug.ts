@@ -25,4 +25,12 @@ export namespace Debug {
         }
     }
 
+    // explore every biome
+    export function mapTheWorld(): void {
+        const mapState = Game.getMapState();
+        for (let biome of mapState.biomes) {
+            mapState.exploreRegion(biome, 100);
+        }
+    }
+
 }

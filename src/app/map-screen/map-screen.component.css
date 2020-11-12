@@ -36,10 +36,67 @@ table {
     flex-direction: column;
 }
 
-h2 {
+h2, h3 {
     text-align: center;
+    font-size: 125%;
 }
 
 #inventoryWrapper {
     display: inline;
+}
+
+.biome {
+    min-width: 128px;
+    min-height: 256px;
+    border: 4px solid black;
+    margin: 16px 16px;
+    padding: 8px 8px;
+    position: relative;
+    cursor: pointer;
+    background-size: contain;
+    background-position: bottom;
+    background-repeat: no-repeat;
+}
+
+.biome p.player {
+    font-size: 32px;
+    text-align: center;
+    margin: none;
+    font-weight: bold;
+    position: absolute;
+    top: -36px;
+    left: -24px;
+    background: #000;
+    color: white;
+    padding: 2px;
+}
+
+.biome:hover {
+    border-color: black;
+}
+
+.biome h3, .biome p {
+    margin: none;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.wasteland {
+    background-image: url('../../assets/wasteland_2.png');
+}
+
+.mountain {
+    background-image: url('../../assets/mountain.png');
+}
+
+.forest {
+    background-image: url('../../assets/forest_temp.png');
+}
+
+.desert {
+    background-image: url('../../assets/desert_temp.png');
+}
+
+.ocean {
+    background-image: url('../../assets/ocean_temp.png');
 }

@@ -50,12 +50,24 @@ export class Skill {
     public static readonly Arc = new Skill('Arc', SkillTargetingMode.UnitArtillery,
         [{type: 'Status', status: Status.Charged, focus: 'target', predicate: {type: 'IsFaction', faction: UnitFaction.Drone, focus: 'target'}, otherwise: {type: 'Damage', focus: 'target', amount: 3}}, {type: 'RemoveStatus', status: Status.Charged, focus: 'user'}], true);
 
+    public static readonly Electrify = new Skill('Electrify', SkillTargetingMode.UnitRanged,
+        [{type: 'Status', status: Status.Charged, focus: 'target'}, {type: 'Status', status: Status.Stunned, focus: 'user'}]);
+
+    public static readonly Shock = new Skill('Shock', SkillTargetingMode.UnitRanged,
+        [{ type: 'Damage', focus: 'target', amount: 4 }], true);
+
+    public static readonly Protect = new Skill('Protect', SkillTargetingMode.UnitRanged,
+        [{type: 'Status', status: Status.Shield, focus: 'target'}, {type: 'RemoveStatus', status: Status.Charged, focus: 'user'}], true)
+
     // Fire Skills
     public static readonly Burn = new Skill('Burn', SkillTargetingMode.UnitMelee, [{ type: 'Status', focus: 'target', status: Status.Fire }]);
     public static readonly Detonate = new Skill('Detonate', SkillTargetingMode.UnitMelee, [{ type: 'Status', status: Status.Fire, focus: 'target' }, { type: 'Kill', focus: 'user' }]);
+    public static readonly Bite = new Skill('Bite', SkillTargetingMode.UnitMelee, [{ type: 'Damage', focus: 'target', amount: 1 },
+        { type: 'Refresh', focus: 'user', amount: 1, predicate: {type: 'HasStatus', focus: 'target', status: Status.Fire} }]);
 
     // Corrosion Skills
     public static readonly Corrode = new Skill('Corrode', SkillTargetingMode.UnitMelee, [{type: 'Status', focus: 'target', status: Status.Corroded}]);
+    public static readonly Pinch = new Skill('Pinch', SkillTargetingMode.UnitMelee, [{type: 'Damage', focus: 'target', amount: 1}, {type: 'Damage', focus: 'target', amount: 3, predicate: {type: 'HasStatus', focus: 'target', status: Status.Corroded}}]);
     public static readonly PhlegmaticShriek = new Skill('Phlegmatic Shriek', SkillTargetingMode.RegionAdjacent, [{type: 'Status', focus: 'target', status: Status.Corroded}]);
 
     // Mind Control Skills

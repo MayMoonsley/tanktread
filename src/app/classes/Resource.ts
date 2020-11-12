@@ -10,7 +10,10 @@ export class Resource {
     public static readonly Hide = new Resource('Hide', 'Chitinous creature dermis. Usable after processing.', 1);
     public static readonly Gristle = new Resource('Gristle', 'Low-quality creature flesh. Technically edible.', 1);
     public static readonly Nodule = new Resource('Nodule', 'Sucrose storage organ. Calorie dense.', 10);
+    public static readonly Lithifer = new Resource('Lithifer', 'Faintly slippery mineral. Electrically useful.', 5)
+
     public static readonly Fang = new Resource('Fang', 'Serpentine relic producing constant energy.', 2500, false);
+    public static readonly Scale = new Resource('Scale', 'Fragment of extraterrestrial bio-alloy.', 250, false)
 
     private constructor(public readonly name: string, public readonly description: string, public readonly value: number, public readonly forSale: boolean = true) {}
 
@@ -93,7 +96,7 @@ export class ResourceInventory {
     remove(resource: Resource, amount: number): ResourceInventory {
         const key = Objects.multitonKey(Resource, resource);
         const newRecord = { ...this.amounts };
-        newRecord[key] = this.getAmount(resource) + amount;
+        newRecord[key] = this.getAmount(resource) - amount;
         if (newRecord[key]! <= 0) {
             delete newRecord[key];
         }

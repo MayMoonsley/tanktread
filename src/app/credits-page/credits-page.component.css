@@ -1,0 +1,18 @@
+.people {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    bottom: 0.5em;
+    left: auto;
+    right: auto;
+    font-size: 1.15em;
+}
+
+.heading {
+    text-align: center;
+}
+
+p, h2 {
+    margin: 0.5em 1em;
+}

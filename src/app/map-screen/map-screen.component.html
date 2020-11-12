@@ -1,24 +1,13 @@
 <div id="upper">
-    <table>
-        <tr *ngFor="let row of tiles()">
-            <td *ngFor="let tile of row" [pTooltip]="tile.name" [escape]="false" tooltipPosition="top">{{ tile.tankedSymbol }}</td>
-        </tr>
-    </table>
-    <div id="sidebar">
-        <div id="areaInfo">
-            <h2>{{ playerLocation().name }}</h2>
-            <p-button (onClick)="enter(playerLocation())">Enter</p-button>
-        </div>
-        <div id="d-pad">
-            <p-button (onClick)="moveTank(0, -1)">🡑</p-button>
-            <div>
-                <p-button (onClick)="moveTank(-1, 0)">🡐</p-button>
-                <p-button (onClick)="moveTank(1, 0)">🡒</p-button>
-            </div>
-            <p-button (onClick)="moveTank(0, 1)">🡓</p-button>
-        </div>
+    <div *ngFor="let biome of biomes()" class="biome" (click)="moveTank(biome)" [ngClass]="biome.name.toLowerCase()">
+        <h3>{{ biome.name }}</h3>
+        <p>{{ progress(biome).percentExplored }}% explored</p>
+        <p class="player" *ngIf="biome == playerLocation()">@</p>
     </div>
 </div>
+<p-button (onClick)="enterCombat()">Go Hunting</p-button>
+<p-button *ngFor="let city of cities()" (onClick)="enterCity(city)">Go To {{ city.name }}</p-button>
+<p-button *ngIf="bossFightAvailable(playerLocation())" (onClick)="enterCombat(true)">Enter Alpha Hive</p-button>
 <div id="inventoryWrapper">
     <h2>Inventory</h2>
     <app-inventory-screen flex="true"></app-inventory-screen>

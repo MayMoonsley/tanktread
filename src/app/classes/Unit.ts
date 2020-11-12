@@ -5,6 +5,7 @@ import { Arrays } from '../util/Arrays';
 import { ResourceDrop, resourceDropToAmount, ResourceInventory, Resource } from './Resource';
 import * as Interfaces from '../interfaces/Unit';
 import { AIRating } from '../interfaces/AIRating';
+import { Random } from '../util/Random';
 
 export class Unit implements Interfaces.Unit {
 
@@ -34,7 +35,8 @@ export class Unit implements Interfaces.Unit {
         this.actionsLeft = actionsPerTurn;
         // add each status (effectively cloning input array)
         for (const status of statuses) {
-            this.addStatus(status);
+            // this pushes so it doesn't run into issues with Slippery
+            this.statuses.push(status);
         }
     }
 
@@ -80,6 +82,9 @@ export class Unit implements Interfaces.Unit {
             return;
         }
         this.health -= x;
+        if (x > 0 && this.statuses.includes(Status.Piezoelectric)) {
+            this.addStatus(Status.Charged);
+        }
         if (this.health <= 0) {
             this.die();
         }
@@ -92,10 +97,18 @@ export class Unit implements Interfaces.Unit {
         if (this.health === Infinity) {
             return;
         }
+        if (this.statuses.includes(Status.Undying)) {
+            this.health = this.maxHealth;
+            this.removeStatus(Status.Undying);
+            return;
+        }
         if (this.containingRegion !== undefined) {
             if (dropItems) {
                 for (const drop of this.drops) {
                     this.containingRegion.addResource(drop.resource, resourceDropToAmount(drop));
+                }
+                if (this.faction === Interfaces.UnitFaction.Creature && Random.boolean(this.maxHealth / 255)) {
+                    this.containingRegion.addResource(Resource.Scale, 1);
                 }
             }
             this.containingRegion.removeUnit(this);
@@ -137,6 +150,9 @@ export class Unit implements Interfaces.Unit {
     }
 
     addStatus(status: Status): void {
+        if (this.statuses.includes(Status.Slippery)) {
+            return;
+        }
         this.statuses = Arrays.addWithoutDuplicate(status, this.statuses);
     }
 
@@ -145,7 +161,11 @@ export class Unit implements Interfaces.Unit {
     }
 
     advanceTurn(): void {
-        this.actionsLeft = this.actionsPerTurn;
+        if (this.statuses.includes(Status.Stunned)) {
+            this.removeStatus(Status.Stunned);
+        } else {
+            this.actionsLeft = this.actionsPerTurn;
+        }
         if (this.statuses.includes(Status.Fire)) {
             this.wound(1, true, true);
         }

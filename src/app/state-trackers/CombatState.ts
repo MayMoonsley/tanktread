@@ -8,6 +8,7 @@ import { Targetable } from '../interfaces/Targetable';
 import { UnitFaction } from '../interfaces/Unit';
 import { Random } from '../util/Random';
 import { InventoryState } from './InventoryState';
+import { MapState } from './MapState';
 
 export type AIAction = {
     user: Unit,
@@ -17,7 +18,24 @@ export type AIAction = {
 
 export class CombatState {
 
-    constructor(public tank: Unit, public battlefield: Battlefield, public isEnemyTurn: boolean = false) {}
+    private _bossFight: boolean;
+    private boss?: Unit;
+
+    constructor(public tank: Unit, public battlefield: Battlefield, private mapState: MapState, public isEnemyTurn: boolean = false, bossFight?: boolean, boss?: Unit) {
+        if (bossFight !== undefined) {
+            this._bossFight = bossFight;
+        } else {
+            const bossArr = battlefield.getAllUnits().filter(unit => unit.statuses.includes(Status.Boss));
+            this._bossFight = bossArr.length > 0;
+            if (this._bossFight) {
+                this.boss = bossArr[0];
+            }
+        }
+    }
+
+    get isBossFight(): boolean {
+        return this._bossFight;
+    }
 
     advanceTurn(): void {
         // and now the turn's really over, so...
@@ -36,6 +54,9 @@ export class CombatState {
         }
         user.spendAction();
         user.removeStatus(Status.Pheromones);
+        if (this.boss !== undefined && !this.boss.alive) {
+            this.mapState.killBoss();
+        }
     }
 
     //TODO: There are some issues with this.
@@ -55,6 +76,9 @@ export class CombatState {
             const neutralActions: AIAction[] = [];
             const badActions: AIAction[] = [];
             for (let skill of actor.skills) {
+                if (!skill.canBeUsedBy(actor)) {
+                    continue;
+                }
                 let targets = this.battlefield.getTargetables(actor, skill.targetingMode);
                 for (let target of targets) {
                     const action = {

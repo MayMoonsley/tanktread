@@ -20,6 +20,8 @@ import { MapScreenComponent } from './map-screen/map-screen.component';
 import { CommerceScreenComponent } from './commerce-screen/commerce-screen.component';
 import { UnitSpeciesComponent } from './unit-species/unit-species.component';
 import { StatusEmojiComponent } from './status-emoji/status-emoji.component';
+import { CreditsPageComponent } from './credits-page/credits-page.component';
+import { TitleScreenComponent } from './title-screen/title-screen.component';
 
 
 @NgModule({
@@ -37,7 +39,9 @@ import { StatusEmojiComponent } from './status-emoji/status-emoji.component';
         MapScreenComponent,
         CommerceScreenComponent,
         UnitSpeciesComponent,
-        StatusEmojiComponent
+        StatusEmojiComponent,
+        CreditsPageComponent,
+        TitleScreenComponent
     ],
     imports: [
         BrowserModule,

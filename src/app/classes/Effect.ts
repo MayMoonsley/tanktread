@@ -63,7 +63,9 @@ export class EffectType {
         } else {
             effectFocus = user;
         }
-        effectFocus.addStatus(status);
+        if (status !== Status.MindControl || !effectFocus.statuses.includes(Status.Boss)) {
+            effectFocus.addStatus(status);
+        }
     }, (status: Status) => status.rating);
 
     public static readonly RemoveStatus = EffectType.fromUnitFunction((user: Unit, target: Unit, focus: 'target' | 'user', status: Status) => {
@@ -83,7 +85,9 @@ export class EffectType {
         } else {
             effectFocus = user;
         }
-        effectFocus.die();
+        if (!effectFocus.statuses.includes(Status.Boss)) {
+            effectFocus.die();
+        }
     }, () => AIRating.Bad);
 
     public static readonly MoveTo = EffectType.fromRegionFunction((user: Unit, target: BattlefieldRegion, focus: 'target' | 'user') => {
@@ -119,8 +123,10 @@ export class EffectType {
         } else {
             effectFocus = user;
         }
-        inventory.addResourceInventory(effectFocus.buildCost);
-        effectFocus.die(false);
+        if (!effectFocus.statuses.includes(Status.Boss)) {
+            inventory.addResourceInventory(effectFocus.buildCost);
+            effectFocus.die(false);
+        }
     }, () => AIRating.Good);
 
     public applyToUnit(user: Unit, target: Unit, focus: 'target' | 'user', predicate?: EffectPredicate, otherwise?: Effect, ...args: any[]): void {
@@ -134,16 +140,16 @@ export class EffectType {
         this.unitFunc(user, target, focus, ...args);
     }
 
-    public applyToRegion(user: Unit, target: BattlefieldRegion, focus: 'target' | 'user', predicate?: EffectPredicate, ...args: any[]): void {
+    public applyToRegion(user: Unit, target: BattlefieldRegion, focus: 'target' | 'user', predicate?: EffectPredicate, otherwise?: Effect, ...args: any[]): void {
         this.regionFunc(user, target, focus, ...args);
     }
 
-    public applyToTargetable(user: Unit, target: Targetable, focus: 'target' | 'user', predicate?: EffectPredicate, ...args: any[]): void {
+    public applyToTargetable(user: Unit, target: Targetable, focus: 'target' | 'user', predicate?: EffectPredicate, otherwise?: Effect, ...args: any[]): void {
         if (target instanceof BattlefieldRegion) {
-            this.applyToRegion(user, target, focus, predicate, ...args);
+            this.applyToRegion(user, target, focus, predicate, otherwise, ...args);
         } else {
             // safe unless we add more targetable things
-            this.applyToUnit(user, target as Unit, focus, predicate, ...args);
+            this.applyToUnit(user, target as Unit, focus, predicate, otherwise, ...args);
         }
     }
 
