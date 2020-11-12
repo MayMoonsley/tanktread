@@ -76,6 +76,9 @@ export class CombatState {
             const neutralActions: AIAction[] = [];
             const badActions: AIAction[] = [];
             for (let skill of actor.skills) {
+                if (!skill.canBeUsedBy(actor)) {
+                    continue;
+                }
                 let targets = this.battlefield.getTargetables(actor, skill.targetingMode);
                 for (let target of targets) {
                     const action = {
