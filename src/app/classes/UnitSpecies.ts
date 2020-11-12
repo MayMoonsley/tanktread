@@ -74,6 +74,8 @@ export class UnitSpecies {
 
     public static readonly Magic = new UnitSpecies('Magic', UnitFaction.Creature, 10, 3, [Skill.Move, Skill.Shock, Skill.Protect], [{resource: Resource.Fang, min: 1, max: 1, chance: 1}, {resource: Resource.Lithifer, min: 10, max: 20, chance: 1}], [Status.Boss, Status.Piezoelectric]);
 
+    public static readonly Charleston = new UnitSpecies('Charleston', UnitFaction.Creature, 10, 3, [Skill.Move, Skill.Maul], [ {resource: Resource.Fang, min: 1, max: 1, chance: 1}, { resource: Resource.Hide, min: 10, max: 30, chance: 1 }, { resource: Resource.Gristle, min: 10, max: 30, chance: 1 } ], [Status.Boss]);
+
     // Deposits
     public static Clutch = UnitSpecies.createDepositSpecies('Clutch', 4, [{resource: Resource.Nodule, min: 3, max: 5}]);
     public static Well = UnitSpecies.createDepositSpecies('Well', 3, [{resource: Resource.Petranol, min: 2, max: 4}]);

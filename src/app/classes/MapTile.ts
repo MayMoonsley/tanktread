@@ -15,7 +15,7 @@ export class Biome {
     public static readonly Forest = new Biome('Forest', ['Clearing', 'Thicket', 'Creek'],
         [[UnitSpecies.Rat, 2], [UnitSpecies.Tyger, 1]],
         [[UnitSpecies.Clutch, 1]],
-        UnitSpecies.Rat);
+        UnitSpecies.Charleston);
     public static readonly Mountain = new Biome('Mountain', ['Plateau', 'Peak', 'Valley'],
         [[UnitSpecies.Wyrm, 2], [UnitSpecies.Drake, 1]],
         [[UnitSpecies.Spire, 1]],
