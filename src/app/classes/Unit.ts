@@ -82,6 +82,9 @@ export class Unit implements Interfaces.Unit {
             return;
         }
         this.health -= x;
+        if (x > 0 && this.statuses.includes(Status.Piezoelectric)) {
+            this.addStatus(Status.Charged);
+        }
         if (this.health <= 0) {
             this.die();
         }

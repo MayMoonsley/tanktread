@@ -14,6 +14,7 @@ export class Status {
     public static readonly Undying = new Status('Undying', '🧬', 'Prevents next death.', AIRating.Good);
     public static readonly Slippery = new Status('Slippery', '💦', 'Immune to additional status effects.', AIRating.Neutral);
     public static readonly Stunned = new Status('Stunned', '⏸️', 'Actions don\'t refresh next turn.', AIRating.Bad);
+    public static readonly Piezoelectric = new Status('Piezoelectric', '🔌', 'Gain Charged when taking damage.', AIRating.Good);
 
     private constructor(
         public readonly name: string,
