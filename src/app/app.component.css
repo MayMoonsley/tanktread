@@ -4,7 +4,11 @@ h1 {
 
 :host {
     font-family: monospace;
-
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow-x: hidden;
+    padding: 8px;
 }
 
 #debugMenu {

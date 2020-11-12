@@ -1,2 +1,2 @@
-<app-unit-build-screen></app-unit-build-screen>
-<app-battlefield-region *ngFor="let region of battlefield!.regions" [region]="region" [targetable]='isTargetable(region)'></app-battlefield-region>
+<app-unit-build-screen class="battlefield-section"></app-unit-build-screen>
+<app-battlefield-region class="battlefield-section" *ngFor="let region of battlefield!.regions" [region]="region" [targetable]='isTargetable(region)'></app-battlefield-region>
