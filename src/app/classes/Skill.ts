@@ -56,6 +56,9 @@ export class Skill {
     public static readonly Shock = new Skill('Shock', SkillTargetingMode.UnitRanged,
         [{ type: 'Damage', focus: 'target', amount: 4 }], true);
 
+    public static readonly Protect = new Skill('Protect', SkillTargetingMode.UnitRanged,
+        [{type: 'Status', status: Status.Shield, focus: 'target'}, {type: 'RemoveStatus', status: Status.Charged, focus: 'user'}], true)
+
     // Fire Skills
     public static readonly Burn = new Skill('Burn', SkillTargetingMode.UnitMelee, [{ type: 'Status', focus: 'target', status: Status.Fire }]);
     public static readonly Detonate = new Skill('Detonate', SkillTargetingMode.UnitMelee, [{ type: 'Status', status: Status.Fire, focus: 'target' }, { type: 'Kill', focus: 'user' }]);

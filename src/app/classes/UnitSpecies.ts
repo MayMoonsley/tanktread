@@ -58,7 +58,7 @@ export class UnitSpecies {
 
     // Charged Series
 
-    public static readonly Anemone = new UnitSpecies('Anemone', UnitFaction.Creature, 3, 1, [Skill.Electrify], [{ resource: Resource.Lithifer, min: 1, max: 2, chance: 0.2 }]);
+    public static readonly Anemone = new UnitSpecies('Anemone', UnitFaction.Creature, 3, 1, [Skill.Electrify, Skill.Protect], [{ resource: Resource.Lithifer, min: 1, max: 2, chance: 0.2 }]);
     public static readonly Vermin = new UnitSpecies('Vermin', UnitFaction.Creature, 1, 3, [Skill.Burrow, Skill.Shock], [ { resource: Resource.Lithifer, min: 1, max: 2, chance: 0.2 } ]);
 
     // Bosses
