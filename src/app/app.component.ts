@@ -51,4 +51,12 @@ export class AppComponent {
         return Game.titleActive();
     }
 
+    noteActive(): boolean {
+        return Game.noteActive();
+    }
+
+    activeNote() {
+        return Game.activeNote();
+    }
+
 }

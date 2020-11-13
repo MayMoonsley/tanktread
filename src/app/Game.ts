@@ -9,7 +9,7 @@ import { BattlefieldRegion } from './classes/BattlefieldRegion';
 import { Random } from './util/Random';
 import { Skill } from './classes/Skill';
 import { Targetable } from './interfaces/Targetable';
-import { applyEffect } from './classes/Effect';
+import { Note } from './classes/Note';
 import { City } from './classes/City';
 import { Biome } from './classes/MapTile';
 import { UnitFaction } from './interfaces/Unit';
@@ -209,6 +209,22 @@ export namespace Game {
 
     export function setTitleActive(value: boolean): void {
         currentState.titleActive = value;
+    }
+
+    export function noteActive(): boolean {
+        return currentState.activeNote !== undefined;
+    }
+
+    export function viewNote(note: Note): void {
+        currentState.activeNote = note;
+    }
+
+    export function activeNote(): Note | undefined {
+        return currentState.activeNote;
+    }
+
+    export function hideNote(): void {
+        currentState.activeNote = undefined;
     }
 
 }
