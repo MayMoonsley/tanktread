@@ -40,6 +40,8 @@ export class UnitSpecies {
 
     public static readonly Igniter = new UnitSpecies('Igniter', UnitFaction.Drone, 3, 3, [Skill.Move, Skill.Burn], [{resource: Resource.Petranol, min: 3, max: 3, chance: 0}, {resource: Resource.Aluminite, min: 2, max: 2, chance: 0}]);
 
+    public static readonly Lifter = new UnitSpecies('Lifter', UnitFaction.Drone, 3, 2, [Skill.Move, Skill.Collect, Skill.Lift], [{resource: Resource.Aluminite, min: 4, max: 4, chance: 0}, {resource: Resource.Gristle, min: 1, max: 1, chance: 0}]);
+
     public static readonly Debug = new UnitSpecies('Troubleshooter', UnitFaction.Drone, Infinity, Infinity, [Skill.Move,
         Skill.Decapitate, Skill.Meteor, Skill.Slash], []);
 

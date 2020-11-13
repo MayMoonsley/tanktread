@@ -94,6 +94,9 @@ export class Skill {
     public static readonly Spycheck = new Skill('Spycheck', SkillTargetingMode.UnitMelee,
         [{type: 'Damage', amount: 3, focus: 'target', predicate: {type: 'HasStatus', focus: 'target', status: Status.Pheromones}, otherwise: {type: 'Heal', amount: 1, focus: 'target'}}]);
 
+    // Advantage Skills
+    public static readonly Lift = new Skill('Lift', SkillTargetingMode.UnitMelee, [{type: 'Status', focus: 'target', status: Status.Advantage}]);
+
     // Debug Skills
     public static readonly Decapitate = new Skill('Decapitate', SkillTargetingMode.UnitMelee,
         [{type: 'Kill', focus: 'target'}]);
