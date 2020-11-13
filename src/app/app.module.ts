@@ -14,7 +14,7 @@ import { UnitBuildScreenComponent } from './unit-build-screen/unit-build-screen.
 import { DefaultMessagePipe } from './default-message.pipe';
 import { ButtonModule } from 'primeng/button';
 import { AccordionModule } from 'primeng/accordion';
-import {TooltipModule} from 'primeng/tooltip';
+import { TooltipModule } from 'primeng/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MapScreenComponent } from './map-screen/map-screen.component';
 import { CommerceScreenComponent } from './commerce-screen/commerce-screen.component';
@@ -22,6 +22,9 @@ import { UnitSpeciesComponent } from './unit-species/unit-species.component';
 import { StatusEmojiComponent } from './status-emoji/status-emoji.component';
 import { CreditsPageComponent } from './credits-page/credits-page.component';
 import { TitleScreenComponent } from './title-screen/title-screen.component';
+
+import { MarkdownModule } from 'ngx-markdown';
+import { NoteScreenComponent } from './note-screen/note-screen.component';
 
 
 @NgModule({
@@ -41,14 +44,16 @@ import { TitleScreenComponent } from './title-screen/title-screen.component';
         UnitSpeciesComponent,
         StatusEmojiComponent,
         CreditsPageComponent,
-        TitleScreenComponent
+        TitleScreenComponent,
+        NoteScreenComponent
     ],
     imports: [
         BrowserModule,
         ButtonModule,
         AccordionModule,
         BrowserAnimationsModule,
-        TooltipModule
+        TooltipModule,
+        MarkdownModule.forRoot()
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -59,6 +59,21 @@ export class CommerceScreenComponent implements OnInit {
         this.inventory().removeResource(resource, amount);
     }
 
+    canPayBack(amount: number): boolean {
+        const inv = this.inventory();
+        return inv.credits >= amount && inv.debt >= amount;
+    }
+
+    payBack(amount: number): void {
+        const inv = this.inventory();
+        inv.debt -= amount;
+        inv.credits -= amount;
+    }
+
+    retire(): void {
+        Game.retire();
+    }
+
     resources(): Resource[] {
         return Objects.multitonValues(Resource).filter(x => x.forSale || Game.getInventoryState().resources.getAmount(x) > 0);
     }

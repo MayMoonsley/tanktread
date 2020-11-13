@@ -14,6 +14,7 @@ export class TitleScreenComponent implements OnInit {
     }
 
     enterGame(): void {
+        Game.newGame();
         Game.setTitleActive(false);
     }
 

@@ -47,6 +47,9 @@ export class Skill {
     public static readonly Siphon = new Skill('Siphon', SkillTargetingMode.UnitMelee, [{ type: 'Damage', focus: 'target', amount: 2 },
         { type: 'Status', focus: 'user', status: Status.Charged, predicate: {type: 'IsDead', focus: 'target'} }]);
 
+    public static readonly Mulch = new Skill('Mulch', SkillTargetingMode.UnitMelee, [{ type: 'Damage', focus: 'target', amount: 2, predicate: {type: 'IsFaction', focus: 'target', faction: UnitFaction.Deposit} },
+        { type: 'Status', focus: 'user', status: Status.Charged, predicate: {type: 'IsDead', focus: 'target'} }]);
+
     public static readonly Arc = new Skill('Arc', SkillTargetingMode.UnitArtillery,
         [{type: 'Status', status: Status.Charged, focus: 'target', predicate: {type: 'IsFaction', faction: UnitFaction.Drone, focus: 'target'}, otherwise: {type: 'Damage', focus: 'target', amount: 3}}, {type: 'RemoveStatus', status: Status.Charged, focus: 'user'}], true);
 
@@ -57,13 +60,23 @@ export class Skill {
         [{ type: 'Damage', focus: 'target', amount: 4 }], true);
 
     public static readonly Protect = new Skill('Protect', SkillTargetingMode.UnitRanged,
-        [{type: 'Status', status: Status.Shield, focus: 'target'}, {type: 'RemoveStatus', status: Status.Charged, focus: 'user'}], true)
+        [{type: 'Status', status: Status.Shield, focus: 'target'}, {type: 'RemoveStatus', status: Status.Charged, focus: 'user'}], true);
+
+    public static readonly Charge = new Skill('Charge', SkillTargetingMode.UnitMelee,
+        [{type: 'Status', status: Status.Charged, focus: 'target'}, {type: 'Kill', focus: 'user'}]);
+
+    public static readonly Transfer = new Skill('Transfer', SkillTargetingMode.UnitRanged,
+        [{type: 'Status', status: Status.Charged, focus: 'target'}, {type: 'RemoveStatus', status: Status.Charged, focus: 'user'}], true);
 
     // Fire Skills
     public static readonly Burn = new Skill('Burn', SkillTargetingMode.UnitMelee, [{ type: 'Status', focus: 'target', status: Status.Fire }]);
     public static readonly Detonate = new Skill('Detonate', SkillTargetingMode.UnitMelee, [{ type: 'Status', status: Status.Fire, focus: 'target' }, { type: 'Kill', focus: 'user' }]);
     public static readonly Bite = new Skill('Bite', SkillTargetingMode.UnitMelee, [{ type: 'Damage', focus: 'target', amount: 1 },
         { type: 'Refresh', focus: 'user', amount: 1, predicate: {type: 'HasStatus', focus: 'target', status: Status.Fire} }]);
+
+    public static readonly Smother = new Skill('Smother', SkillTargetingMode.UnitMelee, [{type: 'RemoveStatus', status: Status.Fire, focus: 'target', predicate: {type: 'HasStatus', focus: 'target', status: Status.Fire}, otherwise: {type: 'Damage', focus: 'target', amount: 2}}]);
+
+    public static readonly Chop = new Skill('Chop', SkillTargetingMode.UnitMelee, [{type: 'Damage', focus: 'target', amount: 2, predicate: {type: 'HasStatus', focus: 'target', status: Status.Fire}}]);
 
     // Corrosion Skills
     public static readonly Corrode = new Skill('Corrode', SkillTargetingMode.UnitMelee, [{type: 'Status', focus: 'target', status: Status.Corroded}]);
@@ -77,6 +90,12 @@ export class Skill {
     // Pheromones Skills
     public static readonly Mist = new Skill('Mist', SkillTargetingMode.UnitMelee,
         [{ type: 'Status', focus: 'target', status: Status.Pheromones }, { type: 'Kill', focus: 'user' }]);
+
+    public static readonly Spycheck = new Skill('Spycheck', SkillTargetingMode.UnitMelee,
+        [{type: 'Damage', amount: 3, focus: 'target', predicate: {type: 'HasStatus', focus: 'target', status: Status.Pheromones}, otherwise: {type: 'Heal', amount: 1, focus: 'target'}}]);
+
+    // Advantage Skills
+    public static readonly Lift = new Skill('Lift', SkillTargetingMode.UnitMelee, [{type: 'Status', focus: 'target', status: Status.Advantage}]);
 
     // Debug Skills
     public static readonly Decapitate = new Skill('Decapitate', SkillTargetingMode.UnitMelee,
