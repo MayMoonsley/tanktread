@@ -7,7 +7,7 @@ export class City {
 
     public static readonly FlowerHeights = new City('Flower Heights',
         'Pruning a World in Bloom', Biome.Forest, 0, [[UnitSpecies.Gardener, 50], [UnitSpecies.Mulcher, 60]]);
-    public static readonly Iivi = new City('iivi', 'Old Hands, New Purpose',
+    public static readonly Iivi = new City('iivi', 'Resonance Without Limit',
         Biome.Mountain, 0, [[UnitSpecies.Controller, 100]]);
     public static readonly Solarium = new City('Solarium',
         'For the Love of Light', Biome.Desert, 0, [[UnitSpecies.Igniter, 25], [UnitSpecies.Firefighter, 50]]);
