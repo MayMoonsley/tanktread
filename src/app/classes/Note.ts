@@ -1,6 +1,6 @@
 export class Note {
 
-    private constructor(public readonly title: string, public readonly body: string) {}
+    private constructor(public readonly title: string, public readonly body: string, public readonly isEnding: boolean = false) {}
 
     public static readonly Welcome = new Note('CONGRATULATIONS, CITIZEN!',
     `
@@ -17,6 +17,17 @@ export class Note {
     Chairman of the Interlock Committee for Post-Blight Living
     `
     );
+
+    public static readonly Victory = new Note('Congratulations On Your Retirement',
+    `Commendable service, pilot! The resources you harvested are vital to the continued survival of the last bastions of humanity.
+
+    If you choose to come out of retirement and enter the debtor's lottery again, we'll be rooting for you to win.
+
+    ---
+
+    Dallas "Dale" Breckenridge
+
+    Chairman of the Interlock Committee for Post-Blight Living`, true);
 
 
 }

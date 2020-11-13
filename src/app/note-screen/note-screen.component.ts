@@ -17,7 +17,11 @@ export class NoteScreenComponent implements OnInit {
     }
 
     hide(): void {
-        Game.hideNote();
+        if (this.note.isEnding) {
+            Game.setTitleActive(true);
+        } else {
+            Game.hideNote();
+        }
     }
 
 }

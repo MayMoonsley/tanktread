@@ -56,7 +56,11 @@ export namespace Game {
         return new GameState(GameMode.Map, combat, inv, map);
     }
 
-    const currentState = initialState();
+    let currentState = initialState();
+
+    export function newGame(): void {
+        currentState = initialState();
+    }
 
     export function getMode(): GameMode {
         return currentState.mode;
@@ -225,6 +229,10 @@ export namespace Game {
 
     export function hideNote(): void {
         currentState.activeNote = undefined;
+    }
+
+    export function retire(): void {
+        currentState.activeNote = Note.Victory;
     }
 
 }

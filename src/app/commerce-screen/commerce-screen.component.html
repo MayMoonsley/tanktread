@@ -1,6 +1,8 @@
 <h1>{{ city().name }}</h1>
 <h2><em>"{{ city().motto }}"</em></h2>
 <h2>Money: {{inventory().credits | formatInfinity}}&curren;</h2>
+<h2 *ngIf="inventory().debt > 0">Debt: {{inventory().debt}}&curren; <p-button *ngFor="let amount of [1, 10, 100, 1000]" (onClick)="payBack(amount)" [disabled]="!canPayBack(amount)">Pay Back {{amount}}&curren;.</p-button></h2>
+<h2 *ngIf="inventory().debt <= 0">Your Debt Is Fully Repaid. <p-button (onClick)="retire()">Retire</p-button></h2>
 <h2>Resources</h2>
 <div class="resources">
     <div class="resource" *ngFor="let resource of resources()">

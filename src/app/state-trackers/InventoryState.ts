@@ -4,11 +4,13 @@ import { UnitSpecies } from '../classes/UnitSpecies';
 export class InventoryState {
 
     credits: number;
+    debt: number;
     resources: ResourceInventory;
     schematics: UnitSpecies[];
 
     constructor() {
         this.credits = 0;
+        this.debt = 5000;
         this.resources = new ResourceInventory();
         this.schematics = [UnitSpecies.Stinger, UnitSpecies.Firebomb];
     }
