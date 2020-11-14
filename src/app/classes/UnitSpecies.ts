@@ -44,6 +44,8 @@ export class UnitSpecies {
 
     public static readonly Lifter = new UnitSpecies('Lifter', UnitFaction.Drone, 3, 2, [Skill.Move, Skill.Collect, Skill.Lift], [{resource: Resource.Aluminite, min: 3, max: 3, chance: 0}]);
 
+    public static readonly Gearhead = new UnitSpecies('Gearhead', UnitFaction.Drone, 5, 2, [Skill.Move, Skill.Repair], [{resource: Resource.Nodule, min: 6, max: 6, chance: 0}], [], 2);
+
     public static readonly Debug = new UnitSpecies('Troubleshooter', UnitFaction.Drone, Infinity, Infinity, [Skill.Move,
         Skill.Decapitate, Skill.Meteor, Skill.Slash], []);
 

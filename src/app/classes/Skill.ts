@@ -37,6 +37,9 @@ export class Skill {
     public static readonly Prod = new Skill('Prod', SkillTargetingMode.UnitMelee, [{ type: 'Damage', focus: 'target', amount: 1 }]);
     public static readonly Slash = new Skill('Slash', SkillTargetingMode.UnitMelee, [{ type: 'Damage', focus: 'target', amount: 2 }]);
 
+    // Heal Skills
+    public static readonly Repair = new Skill('Repair', SkillTargetingMode.UnitMelee, [{type: 'Heal', focus: 'target', amount: 1}]);
+
     // Kill-Combo Attacks
     public static readonly Gnaw = new Skill('Gnaw', SkillTargetingMode.UnitMelee, [{ type: 'Damage', focus: 'target', amount: 1 },
         { type: 'Refresh', focus: 'user', amount: 1, predicate: {type: 'IsDead', focus: 'target'} }]);

@@ -14,7 +14,7 @@ export class City {
     public static readonly MilleniumHall = new City('Millenium Hall',
         'To One Thousand Years of Progress', Biome.Ocean, 0, [[UnitSpecies.Lifter, 25], [UnitSpecies.Protector, 60]]);
     public static readonly HuskGarage = new City('Husk Garage',
-        'Repair and Breathe', Biome.Wasteland, 0, [[UnitSpecies.Battery, 25], [UnitSpecies.Dynamo, 50]]);
+        'Repair and Breathe', Biome.Wasteland, 0, [[UnitSpecies.Battery, 25], [UnitSpecies.Dynamo, 50], [UnitSpecies.Gearhead, 75]]);
 
     static getCities(): City[] {
         return [
