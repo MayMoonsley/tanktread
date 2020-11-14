@@ -98,7 +98,7 @@ export class UnitSpecies {
     public static Well = UnitSpecies.createDepositSpecies('Well', 3, [{resource: Resource.Petranol, min: 2, max: 4}]);
     public static Coral = UnitSpecies.createDepositSpecies('Coral', 5, [{resource: Resource.Silicate, min: 2, max: 4}, {resource: Resource.Aluminite, min: 1, max: 3}], [Status.Slippery]);
     public static Spire = UnitSpecies.createDepositSpecies('Spire', 6, [{resource: Resource.Cordylith, min: 2, max: 4}]);
-    public static Lodestone = UnitSpecies.createDepositSpecies('Lodestone', 7, [{resource: Resource.Lithifer, min: 3, max: 5}]);
+    public static Lodestone = UnitSpecies.createDepositSpecies('Lodestone', 7, [{resource: Resource.Lithifer, min: 3, max: 5}], [Status.Slippery]);
 
     private constructor(public name: string, public faction: UnitFaction, public health: number,
         public actionsPerTurn: number, public skills: Skill[], public drops: ResourceDrop[], public statuses: Status[] = []) {}
