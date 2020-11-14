@@ -11,36 +11,38 @@ export class UnitSpecies {
         [Skill.Move, Skill.Collect, Skill.Deconstruct], [], [], 5);
 
     // Drones
-    public static readonly Stinger = new UnitSpecies('Stinger', UnitFaction.Drone, 1, 2, [Skill.Move, Skill.Sting, Skill.Collect], []);
+    public static readonly Stinger = new UnitSpecies('Stinger', UnitFaction.Drone, 1, 2, [Skill.Move, Skill.Sting, Skill.Collect], [
+        {resource: Resource.Aluminite, min: 1, max: 1, chance: 0}
+    ]);
 
     public static readonly Firebomb = new UnitSpecies('Firebomb', UnitFaction.Drone,
-        1, 2, [Skill.Move, Skill.Detonate], [{ resource: Resource.Petranol, min: 1, max: 3, chance: 0 }]);
+        1, 2, [Skill.Move, Skill.Detonate], [{ resource: Resource.Petranol, min: 2, max: 2, chance: 0 }]);
 
     public static readonly Controller = new UnitSpecies('Controller', UnitFaction.Drone,
-        1, 2, [Skill.Move, Skill.Hypnotize], [{ resource: Resource.Cordylith, min: 1, max: 1, chance: 0 }]);
+        1, 2, [Skill.Move, Skill.Hypnotize], [{ resource: Resource.Cordylith, min: 8, max: 8, chance: 0 }]);
 
     public static readonly Mister = new UnitSpecies('Mister', UnitFaction.Drone, 1, 2,
-        [Skill.Move, Skill.Mist], [{resource: Resource.Nodule, min: 2, max: 2, chance: 0}, {resource: Resource.Gristle, min: 2, max: 2, chance: 0}]);
+        [Skill.Move, Skill.Mist], [{resource: Resource.Nodule, min: 4, max: 4, chance: 0}]);
 
     public static readonly Gardener = new UnitSpecies('Gardener', UnitFaction.Drone, 4, 1,
-        [Skill.Move, Skill.Prune], [{ resource: Resource.Aluminite, min: 1, max: 3, chance: 0 }, {resource: Resource.Nodule, min: 1, max: 1, chance: 0}]);
+        [Skill.Move, Skill.Prune], [{ resource: Resource.Aluminite, min: 2, max: 2, chance: 0 }]);
 
-    public static readonly Mulcher = new UnitSpecies('Mulcher', UnitFaction.Drone, 4, 2, [Skill.Move, Skill.Mulch, Skill.Transfer], [{resource: Resource.Aluminite, min: 1, max: 1, chance: 0}, {resource: Resource.Lithifer, min: 1, max: 1, chance: 0}, {resource: Resource.Nodule, min: 1, max: 1, chance: 0}]);
+    public static readonly Mulcher = new UnitSpecies('Mulcher', UnitFaction.Drone, 4, 2, [Skill.Move, Skill.Mulch, Skill.Transfer], [{resource: Resource.Aluminite, min: 3, max: 3, chance: 0}]);
 
-    public static readonly Dynamo = new UnitSpecies('Dynamo', UnitFaction.Drone, 5, 1, [Skill.Move, Skill.Arc],
-        [{resource: Resource.Lithifer, min: 2, max: 2, chance: 0}, {resource: Resource.Hide, min: 4, max: 4, chance: 0}], [Status.Piezoelectric]);
+    public static readonly Dynamo = new UnitSpecies('Dynamo', UnitFaction.Drone, 7, 2, [Skill.Move, Skill.Arc],
+        [{resource: Resource.Lithifer, min: 6, max: 6, chance: 0}], [Status.Piezoelectric]);
 
     public static readonly Protector = new UnitSpecies('Protector', UnitFaction.Drone, 2, 3, [Skill.Move, Skill.Protect],
-        [{resource: Resource.Cordylith, min: 2, max: 2, chance: 0}, {resource: Resource.Silicate, min: 4, max: 4, chance: 0}]);
+        [{resource: Resource.Cordylith, min: 4, max: 4, chance: 0}]);
 
     public static readonly Battery = new UnitSpecies('Battery', UnitFaction.Drone, 1, 2, [Skill.Move, Skill.Charge],
-        [{resource: Resource.Lithifer, min: 1, max: 1, chance: 0}]);
+        [{resource: Resource.Lithifer, min: 3, max: 3, chance: 0}]);
 
-    public static readonly Firefighter = new UnitSpecies('Firefighter', UnitFaction.Drone, 4, 2, [Skill.Move, Skill.Smother, Skill.Chop], [{resource: Resource.Aluminite, min: 3, max: 3}, {resource: Resource.Silicate, min: 3, max: 3}]);
+    public static readonly Firefighter = new UnitSpecies('Firefighter', UnitFaction.Drone, 4, 2, [Skill.Move, Skill.Smother, Skill.Chop], [{resource: Resource.Aluminite, min: 6, max: 6}]);
 
-    public static readonly Igniter = new UnitSpecies('Igniter', UnitFaction.Drone, 3, 3, [Skill.Move, Skill.Burn], [{resource: Resource.Petranol, min: 3, max: 3, chance: 0}, {resource: Resource.Aluminite, min: 2, max: 2, chance: 0}]);
+    public static readonly Igniter = new UnitSpecies('Igniter', UnitFaction.Drone, 3, 3, [Skill.Move, Skill.Burn], [{resource: Resource.Petranol, min: 4, max: 4, chance: 0}]);
 
-    public static readonly Lifter = new UnitSpecies('Lifter', UnitFaction.Drone, 3, 2, [Skill.Move, Skill.Collect, Skill.Lift], [{resource: Resource.Aluminite, min: 4, max: 4, chance: 0}, {resource: Resource.Gristle, min: 1, max: 1, chance: 0}]);
+    public static readonly Lifter = new UnitSpecies('Lifter', UnitFaction.Drone, 3, 2, [Skill.Move, Skill.Collect, Skill.Lift], [{resource: Resource.Aluminite, min: 3, max: 3, chance: 0}]);
 
     public static readonly Debug = new UnitSpecies('Troubleshooter', UnitFaction.Drone, Infinity, Infinity, [Skill.Move,
         Skill.Decapitate, Skill.Meteor, Skill.Slash], []);
