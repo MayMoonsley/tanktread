@@ -61,12 +61,12 @@ export class UnitSpecies {
     public static readonly Drake = new UnitSpecies('Drake', UnitFaction.Creature, 3, 3, [Skill.Move, Skill.Bite],
         [{ resource: Resource.Petranol, min: 4, max: 6, chance: 0.75 }, { resource: Resource.Gristle, min: 3, max: 5, chance: 0.75 }, { resource: Resource.Cordylith, min: 0, max: 1, chance: 0.01}])
 
-    // Armor Series
+    // Shield Series
     public static readonly Isopod = new UnitSpecies('Isopod', UnitFaction.Creature, 2, 1, [Skill.Move, Skill.Prod],
-        [{ resource: Resource.Aluminite, min: 1, max: 3, chance: 0.75 }, { resource: Resource.Hide, min: 2, max: 4, chance: 0.75 }], [Status.Armored]);
+        [{ resource: Resource.Aluminite, min: 1, max: 3, chance: 0.75 }, { resource: Resource.Hide, min: 2, max: 4, chance: 0.75 }], [Status.Shield]);
 
     public static readonly Barracuda = new UnitSpecies('Barracuda', UnitFaction.Creature, 2, 1, [Skill.Move, Skill.Slash],
-        [{ resource: Resource.Aluminite, min: 4, max: 5, chance: 0.75 }, { resource: Resource.Hide, min: 4, max: 6, chance: 0.75 }], [Status.Armored]);
+        [{ resource: Resource.Aluminite, min: 4, max: 5, chance: 0.75 }, { resource: Resource.Hide, min: 4, max: 6, chance: 0.75 }], [Status.Shield]);
 
     // Corrosion Series
     public static readonly Crab = new UnitSpecies('Crab', UnitFaction.Creature, 2, 1, [Skill.Move, Skill.Corrode], [{ resource: Resource.Nodule, min: 0, max: 1, chance: 0.2 }, {resource: Resource.Silicate, min: 1, max: 2, chance: 0.75}]);
@@ -83,7 +83,7 @@ export class UnitSpecies {
     public static readonly Friday = new UnitSpecies('Friday', UnitFaction.Creature, 10, 2, [Skill.Move, Skill.PhlegmaticShriek, Skill.Pinch, Skill.Spycheck], [{ resource: Resource.Fang, min: 1, max: 1, chance: 1 }, {resource: Resource.Silicate, min: 10, max: 20, chance: 1}, {resource: Resource.Nodule, min: 5, max: 10, chance: 1}], [Status.Boss]);
 
     // TODO: this should have a more interesting design
-    public static readonly Mint = new UnitSpecies('Mint', UnitFaction.Creature, 10, 2, [Skill.Move, Skill.Slash, Skill.Spycheck], [{ resource: Resource.Fang, min: 1, max: 1, chance: 1 }, { resource: Resource.Hide, min: 10, max: 20, chance: 1 }, { resource: Resource.Aluminite, min: 8, max: 16, chance: 1 }], [Status.Boss, Status.Armored, Status.Slippery]);
+    public static readonly Mint = new UnitSpecies('Mint', UnitFaction.Creature, 10, 2, [Skill.Move, Skill.Slash, Skill.Spycheck], [{ resource: Resource.Fang, min: 1, max: 1, chance: 1 }, { resource: Resource.Hide, min: 10, max: 20, chance: 1 }, { resource: Resource.Aluminite, min: 8, max: 16, chance: 1 }], [Status.Boss, Status.Shield, Status.Slippery]);
 
     public static readonly Ember = new UnitSpecies('Ember', UnitFaction.Creature, 10, 2, [Skill.FlamingWings, Skill.Bite, Skill.Burn, Skill.Spycheck],
         [{resource: Resource.Fang, min: 1, max: 1, chance: 1}, { resource: Resource.Petranol, min: 15, max: 24, chance: 1 }, { resource: Resource.Gristle, min: 10, max: 14, chance: 1 }, { resource: Resource.Cordylith, min: 3, max: 3, chance: 1}],
@@ -96,9 +96,9 @@ export class UnitSpecies {
     // Deposits
     public static Clutch = UnitSpecies.createDepositSpecies('Clutch', 4, [{resource: Resource.Nodule, min: 3, max: 5}]);
     public static Well = UnitSpecies.createDepositSpecies('Well', 3, [{resource: Resource.Petranol, min: 2, max: 4}]);
-    public static Coral = UnitSpecies.createDepositSpecies('Coral', 5, [{resource: Resource.Silicate, min: 2, max: 4}, {resource: Resource.Aluminite, min: 1, max: 3}], [Status.Armored]);
+    public static Coral = UnitSpecies.createDepositSpecies('Coral', 5, [{resource: Resource.Silicate, min: 2, max: 4}, {resource: Resource.Aluminite, min: 1, max: 3}], [Status.Slippery]);
     public static Spire = UnitSpecies.createDepositSpecies('Spire', 6, [{resource: Resource.Cordylith, min: 2, max: 4}]);
-    public static Lodestone = UnitSpecies.createDepositSpecies('Lodestone', 7, [{resource: Resource.Lithifer, min: 3, max: 5}], [Status.Armored]);
+    public static Lodestone = UnitSpecies.createDepositSpecies('Lodestone', 7, [{resource: Resource.Lithifer, min: 3, max: 5}]);
 
     private constructor(public name: string, public faction: UnitFaction, public health: number,
         public actionsPerTurn: number, public skills: Skill[], public drops: ResourceDrop[], public statuses: Status[] = []) {}
