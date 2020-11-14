@@ -3,6 +3,6 @@
 <div *ngFor="let species of inventory.schematics">
     <app-unit-species [species]="species"></app-unit-species>
     <p-button (onClick)="build(species)"
-        [disabled]="!inventory.canAfford(species.buildCost) || combat.tank.actionsLeft == 0"
+        [disabled]="combat.buildActions < species.buildCost"
         styleClass="p-button-secondary p-button-sm p-button-raised p-button-text">Build</p-button>
 </div>

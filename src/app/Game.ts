@@ -186,8 +186,7 @@ export namespace Game {
         const region = currentState.combat.tank.containingRegion;
         if (region !== undefined) {
             region.addUnit(species.instantiate());
-            currentState.inventory.removeResourceInventory(species.buildCost);
-            currentState.combat.tank.spendAction();
+            currentState.combat.buildActions -= species.buildCost;
         }
     }
 
