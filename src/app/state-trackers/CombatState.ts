@@ -21,7 +21,7 @@ export class CombatState {
     private _bossFight: boolean;
     private boss?: Unit;
 
-    constructor(public tank: Unit, public battlefield: Battlefield, private mapState: MapState, public isEnemyTurn: boolean = false, bossFight?: boolean, boss?: Unit) {
+    constructor(public tank: Unit, public battlefield: Battlefield, private mapState: MapState, public isEnemyTurn: boolean = false, public buildActions: number = 5, bossFight?: boolean, boss?: Unit) {
         if (bossFight !== undefined) {
             this._bossFight = bossFight;
         } else {
@@ -41,6 +41,9 @@ export class CombatState {
         // and now the turn's really over, so...
         for (const unit of this.battlefield.getAllUnits()) {
             unit.advanceTurn();
+            if (unit.playerControlled) {
+                this.buildActions += unit.buildPerTurn;
+            }
         }
     }
 

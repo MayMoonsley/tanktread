@@ -1,6 +1,7 @@
 <h3 *ngIf="showHeader === true">
     {{ formattedName() }}
     <app-status-emoji *ngFor="let status of unit!.statuses" [status]="status"></app-status-emoji>
+    <span *ngIf="unit!.buildPerTurn > 0">({{unit!.buildPerTurn}}⚙️&#xFE0F;)</span>
 </h3>
 <p>
     <span pTooltip="Health" tooltipPosition="top">❤️&#xFE0F;</span> {{unit!.health | formatInfinity}}/{{unit!.maxHealth | formatInfinity}}

@@ -22,8 +22,9 @@ export class Unit implements Interfaces.Unit {
     actionsPerTurn: number;
     alive: boolean = true;
     faction: Interfaces.UnitFaction;
+    buildPerTurn: number;
 
-    constructor(name: string, faction: Interfaces.UnitFaction, health: number, actionsPerTurn: number, skills: Skill[] = [], drops: ResourceDrop[] = [], statuses: Status[] = []) {
+    constructor(name: string, faction: Interfaces.UnitFaction, health: number, actionsPerTurn: number, buildPerTurn: number, skills: Skill[] = [], drops: ResourceDrop[] = [], statuses: Status[] = []) {
         this.name = name;
         this.faction = faction;
         this.health = health;
@@ -32,6 +33,7 @@ export class Unit implements Interfaces.Unit {
         this.statuses = [];
         this.drops = drops;
         this.actionsPerTurn = actionsPerTurn;
+        this.buildPerTurn = buildPerTurn;
         this.actionsLeft = actionsPerTurn;
         // add each status (effectively cloning input array)
         for (const status of statuses) {

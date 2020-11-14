@@ -14,6 +14,7 @@ export interface Unit extends Targetable {
     buildCost: ResourceInventory;
     statuses: Status[];
     alive: boolean;
+    buildPerTurn: number;
 
     wound(amount: number): void;
 

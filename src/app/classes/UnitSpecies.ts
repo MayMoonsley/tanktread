@@ -8,7 +8,7 @@ export class UnitSpecies {
 
     // The Tank
     public static readonly Tank = new UnitSpecies('Tank', UnitFaction.Tank, Infinity, 2,
-        [Skill.Move, Skill.Collect, Skill.Deconstruct], []);
+        [Skill.Move, Skill.Collect, Skill.Deconstruct], [], [], 5);
 
     // Drones
     public static readonly Stinger = new UnitSpecies('Stinger', UnitFaction.Drone, 1, 2, [Skill.Move, Skill.Sting, Skill.Collect], []);
@@ -101,7 +101,8 @@ export class UnitSpecies {
     public static Lodestone = UnitSpecies.createDepositSpecies('Lodestone', 7, [{resource: Resource.Lithifer, min: 3, max: 5}], [Status.Slippery]);
 
     private constructor(public name: string, public faction: UnitFaction, public health: number,
-        public actionsPerTurn: number, public skills: Skill[], public drops: ResourceDrop[], public statuses: Status[] = []) {}
+        public actionsPerTurn: number, public skills: Skill[], public drops: ResourceDrop[],
+        public statuses: Status[] = [], public buildPerTurn: number = 0) {}
 
     private static createDepositSpecies(name: string, health: number, drops: ResourceDrop[], statuses: Status[] = []): UnitSpecies {
         return new UnitSpecies(name, UnitFaction.Deposit, health, 0, [], drops, statuses);
@@ -112,7 +113,7 @@ export class UnitSpecies {
     }
 
     public instantiate(): Unit {
-        return new Unit(this.name, this.faction, this.health, this.actionsPerTurn, this.skills, this.drops, this.statuses);
+        return new Unit(this.name, this.faction, this.health, this.actionsPerTurn, this.buildPerTurn, this.skills, this.drops, this.statuses);
     }
 
 }
