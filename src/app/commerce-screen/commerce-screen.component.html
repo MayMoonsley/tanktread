@@ -7,9 +7,6 @@
 <div class="resources">
     <div class="resource" *ngFor="let resource of resources()">
         <p><strong>{{ resource.name }}:</strong> {{ resource.description }} (Owned: {{ inventory().resources.getAmount(resource) }})</p>
-        <div class="buy" *ngIf="resource.forSale">
-            <p-button *ngFor="let amount of [1, 10, 100]" (onClick)="buy(resource, amount)" [disabled]="!canBuy(resource, amount)">Buy {{amount}} for {{city().getBuyPrice(resource) * amount}}&curren;.</p-button>
-        </div>
         <div class="sell">
             <p-button *ngFor="let amount of [1, 10, 100]" (onClick)="sell(resource, amount)" [disabled]="!canSell(resource, amount)">Sell {{amount}} for {{city().getSellPrice(resource) * amount}}&curren;.</p-button>
         </div>
