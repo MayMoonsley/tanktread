@@ -10,4 +10,6 @@
 .battlefield-section {
     overflow-y: auto;
     overflow-x: hidden;
+    flex-grow: 1;
+    flex-basis: 0;
 }
