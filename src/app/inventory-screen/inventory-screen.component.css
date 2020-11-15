@@ -1,13 +1,31 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .flex {
     display: flex;
     flex-wrap: wrap;
-    max-width: 100%;
+    justify-content: center;
+    max-width: 50vw;
 }
 
 .flex p {
+    text-align: center;
     margin: 0 16px;
 }
 
-.center {
+p, h2, h3 {
     text-align: center;
+}
+
+.main {
+    display: flex;
+}
+
+.main > div {
+    flex-grow: 1;
+    flex-basis: 0;
+    width: 25vw;
 }
