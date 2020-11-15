@@ -53,7 +53,7 @@ export class CombatState {
 
     useSkill(user: Unit, skill: Skill, target: Targetable, inventory: InventoryState = new InventoryState()): void {
         for (const effect of skill.effects) {
-            applyEffect(effect, user, target, inventory);
+            applyEffect(effect, user, target, inventory, this);
         }
         user.spendAction();
         user.removeStatus(Status.Pheromones);

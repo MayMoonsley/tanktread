@@ -1,10 +1,11 @@
-import { Unit } from '../interfaces/Unit';
+import { Unit, UnitFaction } from '../interfaces/Unit';
 import { BattlefieldRegion } from './BattlefieldRegion';
 import { EffectPredicate, testEffectPredicate, effectPredicateToString } from './EffectPredicate';
 import { Status } from './Status';
 import { Types } from '../util/Types';
 import { Targetable } from '../interfaces/Targetable';
 import { InventoryState } from '../state-trackers/InventoryState';
+import { CombatState } from '../state-trackers/CombatState';
 import { AIRating, invertRating } from '../interfaces/AIRating';
 
 type UnitFunction = (user: Unit, target: Unit, focus: 'target' | 'user', ...args: any[]) => void;
@@ -116,7 +117,7 @@ export class EffectType {
         effectFocus.addActions(amount);
     }, () => AIRating.Good);
 
-    public static readonly Harvest = EffectType.fromUnitFunction((user: Unit, target: Unit, focus: 'target' | 'user', inventory: InventoryState) => {
+    public static readonly Harvest = EffectType.fromUnitFunction((user: Unit, target: Unit, focus: 'target' | 'user', inventory: InventoryState, combat: CombatState) => {
         let effectFocus: Unit;
         if (focus === 'target') {
             effectFocus = target;
@@ -124,7 +125,11 @@ export class EffectType {
             effectFocus = user;
         }
         if (!effectFocus.statuses.includes(Status.Boss)) {
-            inventory.addResourceInventory(effectFocus.buildCost);
+            if (effectFocus.faction === UnitFaction.Drone) {
+                combat.buildActions += effectFocus.buildActionCost;
+            } else {
+                inventory.addResourceInventory(effectFocus.buildCost);
+            }
             effectFocus.die(false);
         }
     }, () => AIRating.Good);
@@ -182,7 +187,7 @@ export type Effect = {focus: 'target' | 'user'; predicate?: EffectPredicate; oth
 | {type: 'Harvest';}
 | {type: 'Refresh'; amount: number;});
 
-export function applyEffect(effect: Effect, user: Unit, target: Targetable, inventory?: InventoryState): void {
+export function applyEffect(effect: Effect, user: Unit, target: Targetable, inventory?: InventoryState, combat?: CombatState): void {
     switch (effect.type) {
     case 'Damage':
         EffectType.Damage.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise, effect.amount);
@@ -206,7 +211,7 @@ export function applyEffect(effect: Effect, user: Unit, target: Targetable, inve
         EffectType.Collect.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise, inventory);
         return;
     case 'Harvest':
-        EffectType.Harvest.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise, inventory);
+        EffectType.Harvest.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise, inventory, combat);
         return;
     case 'Refresh':
         EffectType.Refresh.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise, effect.amount);

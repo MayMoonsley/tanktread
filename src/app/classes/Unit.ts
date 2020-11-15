@@ -63,6 +63,10 @@ export class Unit implements Interfaces.Unit {
         return ResourceInventory.fromAmounts(this.drops.map(item => { return { resource: item.resource, amount: item.max }; }));
     }
 
+    get buildActionCost(): number {
+        return this.drops.map(item => item.max).reduce((acc, x) => acc + x, 0);
+    }
+
     get rating(): AIRating {
         if (this.statuses.includes(Status.Pheromones)) {
             return AIRating.Good;

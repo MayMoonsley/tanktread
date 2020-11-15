@@ -112,7 +112,11 @@ export class UnitSpecies {
         return new UnitSpecies(name, UnitFaction.Deposit, health, 0, [], drops, statuses);
     }
 
-    get buildCost(): number {
+    get buildCost(): ResourceInventory {
+        return ResourceInventory.fromAmounts(this.drops.map(item => { return { resource: item.resource, amount: item.max }; }));
+    }
+
+    get buildActionCost(): number {
         return this.drops.map(item => item.max).reduce((acc, x) => acc + x, 0);
     }
 
