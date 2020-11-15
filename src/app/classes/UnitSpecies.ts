@@ -13,6 +13,8 @@ export class UnitSpecies {
     // Drones
     public static readonly Stinger = UnitSpecies.drone('Stinger', 1, 2, 1, [Skill.Move, Skill.Sting, Skill.Collect]);
 
+    public static readonly Scuttler = UnitSpecies.drone('Scuttler', 4, 2, 3, [Skill.Move, Skill.Slash, Skill.Collect]);
+
     public static readonly Firebomb = UnitSpecies.drone('Firebomb', 1, 2, 2, [Skill.Move, Skill.Detonate]);
 
     public static readonly Controller = UnitSpecies.drone('Controller', 1, 2, 8, [Skill.Move, Skill.Hypnotize]);
