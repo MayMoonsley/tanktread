@@ -71,6 +71,11 @@ export class Skill {
     public static readonly Transfer = new Skill('Transfer', SkillTargetingMode.UnitRanged,
         [{type: 'Status', status: Status.Charged, focus: 'target'}, {type: 'RemoveStatus', status: Status.Charged, focus: 'user'}], true);
 
+    // Build action skills
+
+    public static readonly Clobber = new Skill('Clobber', SkillTargetingMode.UnitMelee,
+        [{type: 'Damage', focus: 'target', amount: 3}, {type: 'BuildActions', focus: 'target', amount: 2, predicate: {type: 'IsDead', focus: 'target'}}]);
+
     // Fire Skills
     public static readonly Burn = new Skill('Burn', SkillTargetingMode.UnitMelee, [{ type: 'Status', focus: 'target', status: Status.Fire }]);
     public static readonly Detonate = new Skill('Detonate', SkillTargetingMode.UnitMelee, [{ type: 'Status', status: Status.Fire, focus: 'target' }, { type: 'Kill', focus: 'user' }]);

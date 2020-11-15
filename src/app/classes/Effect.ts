@@ -192,7 +192,7 @@ export type Effect = {focus: 'target' | 'user'; predicate?: EffectPredicate; oth
 | {type: 'Collect';}
 | {type: 'Harvest';}
 | {type: 'Refresh'; amount: number;}
-| {type: 'BuildActions', amount: number});
+| {type: 'BuildActions'; amount: number});
 
 export function applyEffect(effect: Effect, user: Unit, target: Targetable, inventory?: InventoryState, combat?: CombatState): void {
     switch (effect.type) {
