@@ -74,7 +74,7 @@ export class Skill {
     // Build action skills
 
     public static readonly Clobber = new Skill('Clobber', SkillTargetingMode.UnitMelee,
-        [{type: 'Damage', focus: 'target', amount: 3}, {type: 'BuildActions', focus: 'target', amount: 2, predicate: {type: 'IsDead', focus: 'target'}}]);
+        [{type: 'Damage', focus: 'target', amount: 3}, {type: 'BuildActions', focus: 'target', amount: 3, predicate: {type: 'IsDead', focus: 'target'}}]);
 
     // Fire Skills
     public static readonly Burn = new Skill('Burn', SkillTargetingMode.UnitMelee, [{ type: 'Status', focus: 'target', status: Status.Fire }]);
@@ -84,7 +84,7 @@ export class Skill {
 
     public static readonly Smother = new Skill('Smother', SkillTargetingMode.UnitMelee, [{type: 'RemoveStatus', status: Status.Fire, focus: 'target', predicate: {type: 'HasStatus', focus: 'target', status: Status.Fire}, otherwise: {type: 'Damage', focus: 'target', amount: 2}}]);
 
-    public static readonly Chop = new Skill('Chop', SkillTargetingMode.UnitMelee, [{type: 'Damage', focus: 'target', amount: 2, predicate: {type: 'HasStatus', focus: 'target', status: Status.Fire}}]);
+    public static readonly Chop = new Skill('Chop', SkillTargetingMode.UnitMelee, [{type: 'Damage', focus: 'target', amount: 3, predicate: {type: 'HasStatus', focus: 'target', status: Status.Fire}}]);
 
     // Corrosion Skills
     public static readonly Corrode = new Skill('Corrode', SkillTargetingMode.UnitMelee, [{type: 'Status', focus: 'target', status: Status.Corroded}]);

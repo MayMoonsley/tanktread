@@ -35,9 +35,9 @@ export class UnitSpecies {
 
     public static readonly Lifter = UnitSpecies.drone('Lifter', 3, 2, 3, [Skill.Move, Skill.Collect, Skill.Lift]);
 
-    public static readonly Gearhead = UnitSpecies.drone('Gearhead', 5, 2, 6, [Skill.Move, Skill.Repair, Skill.Deconstruct], [], 2);
+    public static readonly Gearhead = UnitSpecies.drone('Gearhead', 5, 2, 8, [Skill.Move, Skill.Repair, Skill.Deconstruct], [], 2);
 
-    public static readonly Salvager = UnitSpecies.drone('Salvager', 5, 2, 8, [Skill.Move, Skill.Clobber, Skill.Repair]);
+    public static readonly Salvager = UnitSpecies.drone('Salvager', 5, 2, 10, [Skill.Move, Skill.Clobber, Skill.Repair]);
 
     public static readonly Debug = UnitSpecies.drone('Troubleshooter', Infinity, Infinity, 0, [Skill.Move,
         Skill.Decapitate, Skill.Meteor, Skill.Slash], []);
