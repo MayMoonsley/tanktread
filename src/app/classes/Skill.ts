@@ -50,9 +50,6 @@ export class Skill {
     public static readonly Siphon = new Skill('Siphon', SkillTargetingMode.UnitMelee, [{ type: 'Damage', focus: 'target', amount: 2 },
         { type: 'Status', focus: 'user', status: Status.Charged, predicate: {type: 'IsDead', focus: 'target'} }]);
 
-    public static readonly Mulch = new Skill('Mulch', SkillTargetingMode.UnitMelee, [{ type: 'Damage', focus: 'target', amount: 2, predicate: {type: 'IsFaction', focus: 'target', faction: UnitFaction.Deposit} },
-        { type: 'Status', focus: 'user', status: Status.Charged, predicate: {type: 'IsDead', focus: 'target'} }]);
-
     public static readonly Arc = new Skill('Arc', SkillTargetingMode.UnitArtillery,
         [{type: 'Status', status: Status.Charged, focus: 'target', predicate: {type: 'IsFaction', faction: UnitFaction.Drone, focus: 'target'}, otherwise: {type: 'Damage', focus: 'target', amount: 3}}, {type: 'RemoveStatus', status: Status.Charged, focus: 'user'}], true);
 
@@ -75,6 +72,13 @@ export class Skill {
 
     public static readonly Clobber = new Skill('Clobber', SkillTargetingMode.UnitMelee,
         [{type: 'Damage', focus: 'target', amount: 3}, {type: 'BuildActions', focus: 'target', amount: 3, predicate: {type: 'IsDead', focus: 'target'}}]);
+
+    public static readonly Mulch = new Skill('Mulch', SkillTargetingMode.UnitMelee,
+        [{type: 'and', focus: 'target',
+            a: {type: 'Kill', focus: 'target'},
+            b: {type: 'BuildActions', focus: 'user', amount: 1},
+            predicate: {type: 'IsFaction', faction: UnitFaction.Deposit, focus: 'target'}
+        }]);
 
     // Fire Skills
     public static readonly Burn = new Skill('Burn', SkillTargetingMode.UnitMelee, [{ type: 'Status', focus: 'target', status: Status.Fire }]);

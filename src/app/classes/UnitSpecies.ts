@@ -21,7 +21,7 @@ export class UnitSpecies {
 
     public static readonly Gardener = UnitSpecies.drone('Gardener', 4, 1, 2, [Skill.Move, Skill.Prune]);
 
-    public static readonly Mulcher = UnitSpecies.drone('Mulcher', 4, 2, 3, [Skill.Move, Skill.Mulch, Skill.Transfer]);
+    public static readonly Mulcher = UnitSpecies.drone('Mulcher', 4, 2, 3, [Skill.Move, Skill.Mulch]);
 
     public static readonly Dynamo = UnitSpecies.drone('Dynamo', 7, 2, 6, [Skill.Move, Skill.Arc], [Status.Piezoelectric]);
 
