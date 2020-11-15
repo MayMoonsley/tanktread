@@ -6,7 +6,7 @@ import { Types } from '../util/Types';
 import { Targetable } from '../interfaces/Targetable';
 import { InventoryState } from '../state-trackers/InventoryState';
 import { CombatState } from '../state-trackers/CombatState';
-import { AIRating, invertRating } from '../interfaces/AIRating';
+import { AIRating, combineRatings, invertRating } from '../interfaces/AIRating';
 
 type UnitFunction = (user: Unit, target: Unit, focus: 'target' | 'user', ...args: any[]) => void;
 type RegionFunction = (user: Unit, target: BattlefieldRegion, focus: 'target' | 'user', ...args: any[]) => void;
@@ -138,6 +138,11 @@ export class EffectType {
         combat.buildActions += amount;
     }, () => AIRating.Neutral);
 
+    public static readonly And = EffectType.fromUnitFunction((user: Unit, target: Unit, focus: 'target' | 'user', a: Effect, b: Effect, inventory: InventoryState, combat: CombatState) => {
+        applyEffect(a, user, target, inventory, combat);
+        applyEffect(b, user, target, inventory, combat);
+    }, (a: Effect, b: Effect) => combineRatings(getSubEffectRating(a), getSubEffectRating(b)));
+
     public applyToUnit(user: Unit, target: Unit, focus: 'target' | 'user', predicate?: EffectPredicate, otherwise?: Effect, ...args: any[]): void {
         if (predicate !== undefined && !testEffectPredicate(user, target, predicate)) {
             // TODO: this should handle inventory
@@ -192,7 +197,8 @@ export type Effect = {focus: 'target' | 'user'; predicate?: EffectPredicate; oth
 | {type: 'Collect';}
 | {type: 'Harvest';}
 | {type: 'Refresh'; amount: number;}
-| {type: 'BuildActions'; amount: number});
+| {type: 'BuildActions'; amount: number}
+| {type: 'and'; a: Effect; b: Effect});
 
 export function applyEffect(effect: Effect, user: Unit, target: Targetable, inventory?: InventoryState, combat?: CombatState): void {
     switch (effect.type) {
@@ -226,6 +232,9 @@ export function applyEffect(effect: Effect, user: Unit, target: Targetable, inve
     case 'BuildActions':
         EffectType.BuildActions.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise, effect.amount, combat);
         return;
+    case 'and':
+        EffectType.And.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise, effect.a, effect.b, inventory, combat);
+        return;
     default:
         return Types.impossible(effect);
     }
@@ -234,25 +243,27 @@ export function applyEffect(effect: Effect, user: Unit, target: Targetable, inve
 function subEffectToString(effect: Effect): string {
     switch (effect.type) {
     case 'Damage':
-        return `Deal ${effect.amount} damage to ${effect.focus}.`;
+        return `Deal ${effect.amount} damage to ${effect.focus}`;
     case 'Heal':
-        return `Heal ${effect.focus} for ${effect.amount}.`;
+        return `Heal ${effect.focus} for ${effect.amount}`;
     case 'Status':
-        return `Give ${effect.focus} ${effect.status.emoji} ${effect.status.name}.`;
+        return `Give ${effect.focus} ${effect.status.emoji} ${effect.status.name}`;
     case 'RemoveStatus':
-        return `Remove ${effect.status.emoji} ${effect.status.name} from ${effect.focus}.`;
+        return `Remove ${effect.status.emoji} ${effect.status.name} from ${effect.focus}`;
     case 'Kill':
-        return `Kill ${effect.focus}.`;
+        return `Kill ${effect.focus}`;
     case 'MoveTo':
-        return `Move to ${effect.focus}.`;
+        return `Move to ${effect.focus}`;
     case 'Collect':
-        return `Collect resources at ${effect.focus}.`;
+        return `Collect resources at ${effect.focus}`;
     case 'Harvest':
-        return `Harvest ${effect.focus}.`;
+        return `Harvest ${effect.focus}`;
     case 'Refresh':
-        return `Increase ${effect.focus}'s actions by ${effect.amount}.`;
+        return `Increase ${effect.focus}'s actions by ${effect.amount}`;
     case 'BuildActions':
-        return `Gain ${effect.amount}⚙️.`;
+        return `Gain ${effect.amount}⚙️`;
+    case 'and':
+        return `${subEffectToString(effect.a)}, then ${subEffectToString(effect.b)}`;
     }
 }
 
@@ -278,6 +289,8 @@ function getSubEffectRating(effect: Effect): AIRating {
             return EffectType.Refresh.getRating();
         case 'BuildActions':
             return EffectType.BuildActions.getRating();
+        case 'and':
+            return EffectType.And.getRating(effect.a, effect.b);
         default:
             return Types.impossible(effect);
         }
@@ -295,11 +308,11 @@ export function getEffectRating(effect: Effect): {'user': AIRating, 'target': AI
 export function effectToString(effect: Effect): string {
     if (effect.predicate !== undefined) {
         if (effect.otherwise !== undefined) {
-            return `If ${effectPredicateToString(effect.predicate)}: ${subEffectToString(effect)} Otherwise: ${subEffectToString(effect.otherwise)}`;
+            return `If ${effectPredicateToString(effect.predicate)}: ${subEffectToString(effect)}; otherwise: ${subEffectToString(effect.otherwise)}.`;
         } else {
-            return `If ${effectPredicateToString(effect.predicate)}: ${subEffectToString(effect)}`;
+            return `If ${effectPredicateToString(effect.predicate)}: ${subEffectToString(effect)}.`;
         }
     } else {
-        return subEffectToString(effect);
+        return `${subEffectToString(effect)}.`;
     }
 }
