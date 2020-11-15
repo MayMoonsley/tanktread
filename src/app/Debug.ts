@@ -33,4 +33,9 @@ export namespace Debug {
         }
     }
 
+    // give infinite build actions
+    export function hundredAndFourDays(): void {
+        Game.getCombatState().buildActions = Infinity;
+    }
+
 }

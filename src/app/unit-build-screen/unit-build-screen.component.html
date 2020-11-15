@@ -1,5 +1,5 @@
 <h2>Build a Unit</h2>
-<h2>{{combat.buildActions}}⚙️&#xFE0F;</h2>
+<h2>{{combat.buildActions | formatInfinity}}⚙️&#xFE0F;</h2>
 <div *ngFor="let species of inventory.schematics">
     <app-unit-species [species]="species"></app-unit-species>
     <p-button (onClick)="build(species)"
