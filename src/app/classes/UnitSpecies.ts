@@ -7,38 +7,37 @@ import { Unit } from './Unit';
 export class UnitSpecies {
 
     // The Tank
-    public static readonly Tank = new UnitSpecies('Tank', UnitFaction.Tank, Infinity, 2,
-        [Skill.Move, Skill.Collect, Skill.Deconstruct], [], [], 5);
+    public static readonly Tank = new UnitSpecies('Tank', UnitFaction.Tank, Infinity, 3,
+        [Skill.Move, Skill.Collect, Skill.Deconstruct], [], [], 3);
 
     // Drones
+    // Starter drones
     public static readonly Stinger = UnitSpecies.drone('Stinger', 1, 2, 1, [Skill.Move, Skill.Sting, Skill.Collect]);
-
     public static readonly Scuttler = UnitSpecies.drone('Scuttler', 4, 2, 3, [Skill.Move, Skill.Slash, Skill.Collect]);
 
+    // Self-Destructors
     public static readonly Firebomb = UnitSpecies.drone('Firebomb', 1, 2, 2, [Skill.Move, Skill.Detonate]);
-
     public static readonly Controller = UnitSpecies.drone('Controller', 1, 2, 8, [Skill.Move, Skill.Hypnotize]);
-
     public static readonly Mister = UnitSpecies.drone('Mister', 1, 2, 3, [Skill.Move, Skill.Mist]);
 
+    // Deposit Synergies
     public static readonly Gardener = UnitSpecies.drone('Gardener', 4, 1, 2, [Skill.Move, Skill.Prune]);
-
     public static readonly Mulcher = UnitSpecies.drone('Mulcher', 4, 2, 3, [Skill.Move, Skill.Mulch]);
 
+    // Charge Producers
     public static readonly Dynamo = UnitSpecies.drone('Dynamo', 7, 2, 6, [Skill.Move, Skill.Arc], [Status.Piezoelectric]);
-
-    public static readonly Protector = UnitSpecies.drone('Protector', 2, 3, 4, [Skill.Move, Skill.Protect]);
-
     public static readonly Battery = UnitSpecies.drone('Battery', 1, 2, 3, [Skill.Move, Skill.Charge]);
 
+    // Fire Synergies
     public static readonly Firefighter = UnitSpecies.drone('Firefighter', 4, 2, 6, [Skill.Move, Skill.Smother, Skill.Chop]);
-
     public static readonly Igniter = UnitSpecies.drone('Igniter', 3, 3, 4, [Skill.Move, Skill.Burn]);
 
+    // Millenium Hall
+    public static readonly Protector = UnitSpecies.drone('Protector', 2, 3, 4, [Skill.Move, Skill.Protect]);
     public static readonly Lifter = UnitSpecies.drone('Lifter', 3, 2, 3, [Skill.Move, Skill.Collect, Skill.Lift]);
 
-    public static readonly Gearhead = UnitSpecies.drone('Gearhead', 5, 2, 8, [Skill.Move, Skill.Repair, Skill.Deconstruct], [], 2);
-
+    // Build Action Synergies
+    public static readonly Gearhead = UnitSpecies.drone('Gearhead', 5, 2, 8, [Skill.Move, Skill.Repair, Skill.Deconstruct], [], 1);
     public static readonly Salvager = UnitSpecies.drone('Salvager', 5, 2, 10, [Skill.Move, Skill.Clobber, Skill.Repair]);
 
     public static readonly Debug = UnitSpecies.drone('Troubleshooter', Infinity, Infinity, 0, [Skill.Move,
