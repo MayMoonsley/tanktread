@@ -134,6 +134,10 @@ export class EffectType {
         }
     }, () => AIRating.Good);
 
+    public static readonly BuildActions = EffectType.fromUnitFunction((user: Unit, target: Unit, focus: 'target' | 'user', amount: number, combat: CombatState) => {
+        combat.buildActions += amount;
+    }, () => AIRating.Neutral);
+
     public applyToUnit(user: Unit, target: Unit, focus: 'target' | 'user', predicate?: EffectPredicate, otherwise?: Effect, ...args: any[]): void {
         if (predicate !== undefined && !testEffectPredicate(user, target, predicate)) {
             // TODO: this should handle inventory
@@ -175,6 +179,8 @@ export class EffectType {
  * -MoveTo: moves user to focus
  * -Collect: collect resources at focus
  * -Harvest: kills focus + gives player its build cost
+ * -Refresh: regain (amount) actions
+ * -BuildActions: gain (amount) buildactions
  */
 
 export type Effect = {focus: 'target' | 'user'; predicate?: EffectPredicate; otherwise?: Effect} & ({type: 'Damage'; amount: number;}
@@ -185,7 +191,8 @@ export type Effect = {focus: 'target' | 'user'; predicate?: EffectPredicate; oth
 | {type: 'MoveTo';}
 | {type: 'Collect';}
 | {type: 'Harvest';}
-| {type: 'Refresh'; amount: number;});
+| {type: 'Refresh'; amount: number;}
+| {type: 'BuildActions', amount: number});
 
 export function applyEffect(effect: Effect, user: Unit, target: Targetable, inventory?: InventoryState, combat?: CombatState): void {
     switch (effect.type) {
@@ -216,6 +223,9 @@ export function applyEffect(effect: Effect, user: Unit, target: Targetable, inve
     case 'Refresh':
         EffectType.Refresh.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise, effect.amount);
         return;
+    case 'BuildActions':
+        EffectType.BuildActions.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise, effect.amount, combat);
+        return;
     default:
         return Types.impossible(effect);
     }
@@ -241,6 +251,8 @@ function subEffectToString(effect: Effect): string {
         return `Harvest ${effect.focus}.`;
     case 'Refresh':
         return `Increase ${effect.focus}'s actions by ${effect.amount}.`;
+    case 'BuildActions':
+        return `Gain ${effect.amount}⚙️.`;
     }
 }
 
@@ -264,6 +276,8 @@ function getSubEffectRating(effect: Effect): AIRating {
             return EffectType.Harvest.getRating();
         case 'Refresh':
             return EffectType.Refresh.getRating();
+        case 'BuildActions':
+            return EffectType.BuildActions.getRating();
         default:
             return Types.impossible(effect);
         }
