@@ -209,7 +209,7 @@ export function applyEffect(effect: Effect, user: Unit, target: Targetable, inve
         EffectType.Harvest.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise, inventory);
         return;
     case 'Refresh':
-        EffectType.Harvest.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise, effect.amount);
+        EffectType.Refresh.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise, effect.amount);
         return;
     default:
         return Types.impossible(effect);
@@ -258,7 +258,7 @@ function getSubEffectRating(effect: Effect): AIRating {
         case 'Harvest':
             return EffectType.Harvest.getRating();
         case 'Refresh':
-            return EffectType.Harvest.getRating();
+            return EffectType.Refresh.getRating();
         default:
             return Types.impossible(effect);
         }
