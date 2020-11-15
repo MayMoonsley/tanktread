@@ -23,6 +23,7 @@ export class UnitSpecies {
     // Immobile Drones
     public static readonly MiniFactory = UnitSpecies.drone('Mini-Factory', 5, 0, 10, [], [Status.Armored], 3);
     public static readonly ShieldGenerator = UnitSpecies.drone('Shield Generator', 5, 0, 10, [], [Status.Armored, Status.Projecting]);
+    public static readonly Diffuser = UnitSpecies.drone('Diffuser', 5, 0, 10, [], [Status.Aromatic, Status.Armored]);
 
     // Deposit Synergies
     public static readonly Gardener = UnitSpecies.drone('Gardener', 4, 1, 2, [Skill.Move, Skill.Prune]);

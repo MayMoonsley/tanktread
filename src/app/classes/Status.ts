@@ -16,6 +16,7 @@ export class Status {
     public static readonly Stunned = new Status('Stunned', '⏸️', 'Actions don\'t refresh next turn.', AIRating.Bad);
     public static readonly Piezoelectric = new Status('Piezoelectric', '🔌', 'Gain Charged when taking damage.', AIRating.Good);
     public static readonly Projecting = new Status('Projecting', '📡', 'At the start of each turn, give all adjacent units Shields.', AIRating.Good);
+    public static readonly Aromatic = new Status('Aromatic', '♨️', 'At the start of each turn, give all adjacent units Pheromones.', AIRating.Good);
 
     private constructor(
         public readonly name: string,

@@ -177,6 +177,11 @@ export class Unit implements Interfaces.Unit {
                 unit.addStatus(Status.Shield);
             }
         }
+        if (this.statuses.includes(Status.Aromatic) && this.containingRegion !== undefined) {
+            for (let unit of this.containingRegion.units) {
+                unit.addStatus(Status.Pheromones);
+            }
+        }
         if (this.statuses.includes(Status.Fire)) {
             this.wound(1, true, true);
         }
