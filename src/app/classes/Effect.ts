@@ -206,7 +206,7 @@ export function applyEffect(effect: Effect, user: Unit, target: Targetable, inve
         EffectType.Status.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise, effect.status);
         return;
     case 'RemoveStatus':
-        EffectType.Status.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise, effect.status);
+        EffectType.RemoveStatus.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise, effect.status);
         return;
     case 'Kill':
         EffectType.Kill.applyToTargetable(user, target, effect.focus, effect.predicate, effect.otherwise);
@@ -295,7 +295,7 @@ export function getEffectRating(effect: Effect): {'user': AIRating, 'target': AI
 export function effectToString(effect: Effect): string {
     if (effect.predicate !== undefined) {
         if (effect.otherwise !== undefined) {
-            return `If ${effectPredicateToString(effect.predicate)}: ${subEffectToString(effect)}`;
+            return `If ${effectPredicateToString(effect.predicate)}: ${subEffectToString(effect)} Otherwise: ${subEffectToString(effect.otherwise)}`;
         } else {
             return `If ${effectPredicateToString(effect.predicate)}: ${subEffectToString(effect)}`;
         }
