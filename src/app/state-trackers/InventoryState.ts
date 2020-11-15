@@ -12,7 +12,7 @@ export class InventoryState {
         this.credits = 0;
         this.debt = 5000;
         this.resources = new ResourceInventory();
-        this.schematics = [UnitSpecies.Stinger, UnitSpecies.Firebomb];
+        this.schematics = [UnitSpecies.Stinger];
     }
 
     addCredits(amount: number): void {

@@ -7,12 +7,12 @@ export class City {
 
     public static readonly FlowerHeights = new City('Flower Heights',
         'Pruning a World in Bloom', Biome.Forest, 0,
-        [[UnitSpecies.Gardener, 50], [UnitSpecies.Mulcher, 60]]);
+        [[UnitSpecies.Mister, 30], [UnitSpecies.Gardener, 50], [UnitSpecies.Mulcher, 60]]);
     public static readonly Iivi = new City('iivi', 'Resonance Without Limit',
         Biome.Mountain, 0, [[UnitSpecies.Controller, 100]]);
     public static readonly Solarium = new City('Solarium',
         'For the Love of Light', Biome.Desert, 0,
-        [[UnitSpecies.Igniter, 25], [UnitSpecies.Firefighter, 50]]);
+        [[UnitSpecies.Firebomb, 10], [UnitSpecies.Igniter, 25], [UnitSpecies.Firefighter, 50]]);
     public static readonly MilleniumHall = new City('Millenium Hall',
         'To One Thousand Years of Progress', Biome.Ocean, 0,
         [[UnitSpecies.Lifter, 25], [UnitSpecies.Protector, 60]]);
