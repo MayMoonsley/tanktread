@@ -3,6 +3,6 @@
 <div *ngFor="let species of inventory.schematics">
     <app-unit-species [species]="species"></app-unit-species>
     <p-button (onClick)="build(species)"
-        [disabled]="combat.buildActions < species.buildCost"
+        [disabled]="combat.buildActions < species.buildActionsCost"
         styleClass="p-button-secondary p-button-sm p-button-raised p-button-text">Build</p-button>
 </div>
