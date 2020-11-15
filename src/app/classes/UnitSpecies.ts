@@ -8,7 +8,7 @@ export class UnitSpecies {
 
     // The Tank
     public static readonly Tank = new UnitSpecies('Tank', UnitFaction.Tank, Infinity, 3,
-        [Skill.Move, Skill.Collect, Skill.Deconstruct], [], [], 3);
+        [Skill.Move, Skill.Collect, Skill.Deconstruct], [], [], 5);
 
     // Drones
     // Starter drones
@@ -19,6 +19,9 @@ export class UnitSpecies {
     public static readonly Firebomb = UnitSpecies.drone('Firebomb', 1, 2, 2, [Skill.Move, Skill.Detonate]);
     public static readonly Controller = UnitSpecies.drone('Controller', 1, 2, 8, [Skill.Move, Skill.Hypnotize]);
     public static readonly Mister = UnitSpecies.drone('Mister', 1, 2, 3, [Skill.Move, Skill.Mist]);
+
+    // Immobile Drones
+    public static readonly MiniFactory = UnitSpecies.drone('Mini-Factory', 5, 0, 10, [], [Status.Armored], 3);
 
     // Deposit Synergies
     public static readonly Gardener = UnitSpecies.drone('Gardener', 4, 1, 2, [Skill.Move, Skill.Prune]);

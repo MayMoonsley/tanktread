@@ -18,7 +18,7 @@ export class City {
         [[UnitSpecies.Lifter, 25], [UnitSpecies.Protector, 60]]);
     public static readonly HuskGarage = new City('Husk Garage',
         'Repair and Breathe', Biome.Wasteland, 0,
-        [[UnitSpecies.Battery, 25], [UnitSpecies.Dynamo, 50], [UnitSpecies.Gearhead, 75], [UnitSpecies.Salvager, 100]]);
+        [[UnitSpecies.Battery, 25], [UnitSpecies.Dynamo, 50], [UnitSpecies.Gearhead, 60], [UnitSpecies.Salvager, 75], [UnitSpecies.MiniFactory, 125]]);
 
     static getCities(): City[] {
         return [
