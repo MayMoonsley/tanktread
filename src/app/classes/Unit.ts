@@ -172,6 +172,11 @@ export class Unit implements Interfaces.Unit {
         } else {
             this.actionsLeft = this.actionsPerTurn;
         }
+        if (this.statuses.includes(Status.Projecting) && this.containingRegion !== undefined) {
+            for (let unit of this.containingRegion.units) {
+                unit.addStatus(Status.Shield);
+            }
+        }
         if (this.statuses.includes(Status.Fire)) {
             this.wound(1, true, true);
         }
