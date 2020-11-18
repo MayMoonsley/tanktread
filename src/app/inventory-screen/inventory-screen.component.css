@@ -1,31 +1,25 @@
-:host {
+.flex {
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 20vh;
+    overflow-y: scroll;
 }
 
-.flex {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    max-width: 50vw;
-}
-
-.flex p {
-    text-align: center;
-    margin: 0 16px;
+.flex > p {
+    margin: 2px 0;
 }
 
 p, h2, h3 {
     text-align: center;
 }
 
-.main {
+.columns {
     display: flex;
+    justify-content: space-between;
 }
 
-.main > div {
+.columns > div {
     flex-grow: 1;
     flex-basis: 0;
-    width: 25vw;
 }
