@@ -109,6 +109,13 @@ export class Skill {
     // Advantage Skills
     public static readonly Lift = new Skill('Lift', SkillTargetingMode.UnitMelee, [{type: 'Status', focus: 'target', status: Status.Advantage}]);
 
+    // Matriarch Skills
+    public static readonly Divebomb = new Skill('Divebomb', SkillTargetingMode.UnitArtillery,
+        [{type: 'MoveTo', focus: 'target'}, {type: 'Damage', amount: 3, focus: 'target'}]);
+
+    public static readonly Buffet = new Skill('Buffet', SkillTargetingMode.RegionArtillery,
+        [{type: 'Damage', focus: 'target', amount: 1}, {type: 'MoveTo', focus: 'target'}]);
+
     // Debug Skills
     public static readonly Decapitate = new Skill('Decapitate', SkillTargetingMode.UnitMelee,
         [{type: 'Kill', focus: 'target'}]);

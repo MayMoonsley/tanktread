@@ -50,7 +50,7 @@ export class CombatState {
                 const location = unit.containingRegion;
                 unit.die();
                 if (location !== undefined) {
-                    location.addUnit(UnitSpecies.Crab.instantiate());
+                    location.addUnit(UnitSpecies.Larva.instantiate());
                 }
             }
         }
