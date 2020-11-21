@@ -3,6 +3,7 @@ import { applyEffect } from '../classes/Effect';
 import { Skill } from '../classes/Skill';
 import { Status } from '../classes/Status';
 import { Unit } from '../classes/Unit';
+import { UnitSpecies } from '../classes/UnitSpecies';
 import { AIRating, multiplyRatings } from '../interfaces/AIRating';
 import { Targetable } from '../interfaces/Targetable';
 import { UnitFaction } from '../interfaces/Unit';
@@ -44,6 +45,14 @@ export class CombatState {
             if (unit.playerControlled) {
                 this.buildActions += unit.buildPerTurn;
             }
+            if (unit.statuses.includes(Status.Hatching) && unit.maxHealth === 0) {
+                // time 2 hatch
+                const location = unit.containingRegion;
+                unit.die();
+                if (location !== undefined) {
+                    location.addUnit(UnitSpecies.Crab.instantiate());
+                }
+            }
         }
     }
 
@@ -52,8 +61,12 @@ export class CombatState {
     }
 
     useSkill(user: Unit, skill: Skill, target: Targetable, inventory: InventoryState = new InventoryState()): void {
+        const location = user.containingRegion;
         for (const effect of skill.effects) {
             applyEffect(effect, user, target, inventory, this);
+        }
+        if (user.containingRegion !== location && location !== undefined && user.statuses.includes(Status.Avian)) {
+            location.addUnit(UnitSpecies.Egg.instantiate());
         }
         user.spendAction();
         user.removeStatus(Status.Pheromones);

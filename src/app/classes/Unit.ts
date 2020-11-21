@@ -185,6 +185,10 @@ export class Unit implements Interfaces.Unit {
         if (this.statuses.includes(Status.Fire)) {
             this.wound(1, true, true);
         }
+        if (this.alive && this.statuses.includes(Status.Hatching)) {
+            this.maxHealth--;
+            this.health = Math.min(this.health, this.maxHealth);
+        }
     }
 
 }

@@ -96,6 +96,10 @@ export class UnitSpecies {
 
     public static readonly Charleston = new UnitSpecies('Charleston', UnitFaction.Creature, 10, 3, [Skill.Move, Skill.Maul], [ {resource: Resource.Fang, min: 1, max: 1, chance: 1}, { resource: Resource.Hide, min: 10, max: 30, chance: 1 }, { resource: Resource.Gristle, min: 10, max: 30, chance: 1 } ], [Status.Boss]);
 
+    public static readonly Matriarch = new UnitSpecies('Matriarch', UnitFaction.Creature, 20, 4, [Skill.Move], [], [Status.Boss, Status.Avian]);
+
+    public static readonly Egg = UnitSpecies.deposit('Egg', 3, [], [Status.Armored, Status.Hatching]);
+
     // Deposits
     public static Clutch = UnitSpecies.deposit('Clutch', 4, [{resource: Resource.Nodule, min: 3, max: 5}]);
     public static Well = UnitSpecies.deposit('Well', 3, [{resource: Resource.Petranol, min: 2, max: 4}]);
