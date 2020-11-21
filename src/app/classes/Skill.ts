@@ -116,6 +116,9 @@ export class Skill {
     public static readonly Buffet = new Skill('Buffet', SkillTargetingMode.RegionArtillery,
         [{type: 'Damage', focus: 'target', amount: 1}, {type: 'MoveTo', focus: 'target'}]);
 
+    public static readonly Roost = new Skill('Roost', SkillTargetingMode.RegionArtillery,
+        [{type: 'Heal', focus: 'target', amount: 1, predicate: {type: 'HasStatus', focus: 'target', status: Status.Hatching}}, {type: 'MoveTo', focus: 'target'}]);
+
     // Debug Skills
     public static readonly Decapitate = new Skill('Decapitate', SkillTargetingMode.UnitMelee,
         [{type: 'Kill', focus: 'target'}]);
