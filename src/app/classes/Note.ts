@@ -34,7 +34,11 @@ export class Note {
 
     Drones can be commanded and your tank can be piloted via buttons representing their capabilities. Targetable regions or entities will show up in green and can be selected by clicking on them, and you can cancel a command with the X button next to it.
 
-    Resources in a particular region will be listed at the bottom. They can be collected by your tank and some drones and sold in cities.`);
+    Resources in a particular region will be listed at the bottom. They can be collected by your tank and some drones and sold in cities.
+
+    Sometimes units will have certain modifiers applied. They may be on fire, or afflicted with corrosive acid. These are indicated by icons following their name. Please read the attached explanatory tooltips (found by hovering over said icons) for further details.
+
+    You should now be able to effectively interface with your tank. Best of luck, pilot!`);
 
     public static readonly Blight = new Note('History and Nature of the Blight (Fourth Edition)',
     ``);
