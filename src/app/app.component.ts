@@ -51,6 +51,10 @@ export class AppComponent {
         Debug.hundredAndFourDays();
     }
 
+    efficientDefeats(): void {
+        Debug.efficientDefeats();
+    }
+
     titleActive(): boolean {
         return Game.titleActive();
     }

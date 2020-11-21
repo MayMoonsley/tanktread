@@ -71,7 +71,11 @@ export class CombatState {
         user.spendAction();
         user.removeStatus(Status.Pheromones);
         if (this.boss !== undefined && !this.boss.alive) {
-            this.mapState.killBoss();
+            if (this.boss.name === 'Matriarch') {
+                this.mapState.matriarchBeaten = true;
+            } else {
+                this.mapState.killBoss();
+            }
         }
     }
 

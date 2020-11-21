@@ -48,4 +48,12 @@ export class MapScreenComponent implements OnInit {
         Game.enterCity(city);
     }
 
+    finalBossAvailable(): boolean {
+        return Game.getMapState().finalBossAvailable;
+    }
+
+    fightMatriarch(): void {
+        Game.enterBiome(Biome.Nest, true);
+    }
+
 }

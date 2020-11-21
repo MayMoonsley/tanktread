@@ -38,4 +38,12 @@ export namespace Debug {
         Game.getCombatState().buildActions = Infinity;
     }
 
+    // defeat all pre-final bosses
+    export function efficientDefeats(): void {
+        const mapState = Game.getMapState();
+        for (let biome of mapState.biomes) {
+            mapState.killBoss(biome);
+        }
+    }
+
 }
