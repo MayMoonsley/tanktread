@@ -30,7 +30,7 @@ export class Biome {
         UnitSpecies.Magic);
     public static readonly Nest = new Biome('Nest', ['Marsh', 'Swamp', 'Wetland'],
         [],
-        [],
+        [[UnitSpecies.Egg, 1]],
         UnitSpecies.Matriarch);
 
     private constructor(private _name: string,
