@@ -8,11 +8,10 @@ export class Note {
 
     Please be aware that you are responsible for both your pre-existing 500&curren; debt and the additional cost of your tank, gene therapies, life insurance, etc. In total, your debt amounts to **5000&curren;** and must be paid in full before you may retire from service.
 
-    In order to comply with Committee regulations and prevent unnecessary losses, you have been given the following informative literature (abridged to save space):
+    In order to comply with Committee regulations and prevent unnecessary losses, you have been given the following informative literature:
 
     * _Tank Combat for the Debt-Ridden_
-    * _History and Nature of the Blight (Fourth Edition)_
-    * _Cities, the Committee, and You_
+    * _History and Nature of the Blight (Abridged Fourth Edition)_
 
     We are all wishing you a meritorious term as pilot!
 
@@ -40,11 +39,15 @@ export class Note {
 
     You should now be able to effectively interface with your tank. Best of luck, pilot!`);
 
-    public static readonly Blight = new Note('History and Nature of the Blight (Fourth Edition)',
-    ``);
+    public static readonly Blight = new Note('History and Nature of the Blight (Abridged Fourth Edition)',
+    `
+    The Serpent coming in from beyond the Kuiper belt sent the world into a panic [...] It came apart near Mars, and there was
+    a collective sigh of relief [...] the surreality of the fragmented alien mothership slowly descending with all its pilots and crew dead was a cause for further panic even before the mutagenic spores were released [...]
 
-    public static readonly Cities = new Note('Cities, the Committee, and You',
-    ``)
+    It is a great irony that serpentine detritus was our salvation even as it ravaged the world [...] the air was toxifying in preparation for a deceased invading force [...] wildlife twisted into forms for efficient resource extraction [...]
+    alien technology was necessary to construct the vast airtight domes humanity retreated into [...]
+
+    Even now, travel into the outer wastelands is the only way any of these domed communities can survive [...]`);
 
     public static readonly Victory = new Note('Congratulations On Your Retirement',
     `Commendable service, pilot! The resources you harvested are vital to the continued survival of the last bastions of humanity.
