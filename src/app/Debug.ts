@@ -33,4 +33,17 @@ export namespace Debug {
         }
     }
 
+    // give infinite build actions
+    export function hundredAndFourDays(): void {
+        Game.getCombatState().buildActions = Infinity;
+    }
+
+    // defeat all pre-final bosses
+    export function efficientDefeats(): void {
+        const mapState = Game.getMapState();
+        for (let biome of mapState.biomes) {
+            mapState.killBoss(biome);
+        }
+    }
+
 }

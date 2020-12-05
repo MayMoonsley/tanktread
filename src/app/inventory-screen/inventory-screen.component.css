@@ -1,13 +1,25 @@
 .flex {
     display: flex;
-    flex-wrap: wrap;
-    max-width: 100%;
+    flex-direction: column;
+    align-items: center;
+    height: 20vh;
+    overflow-y: scroll;
 }
 
-.flex p {
-    margin: 0 16px;
+.flex > p {
+    margin: 2px 0;
 }
 
-.center {
+p, h2, h3 {
     text-align: center;
+}
+
+.columns {
+    display: flex;
+    justify-content: space-between;
+}
+
+.columns > div {
+    flex-grow: 1;
+    flex-basis: 0;
 }

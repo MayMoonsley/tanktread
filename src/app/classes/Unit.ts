@@ -22,8 +22,9 @@ export class Unit implements Interfaces.Unit {
     actionsPerTurn: number;
     alive: boolean = true;
     faction: Interfaces.UnitFaction;
+    buildPerTurn: number;
 
-    constructor(name: string, faction: Interfaces.UnitFaction, health: number, actionsPerTurn: number, skills: Skill[] = [], drops: ResourceDrop[] = [], statuses: Status[] = []) {
+    constructor(name: string, faction: Interfaces.UnitFaction, health: number, actionsPerTurn: number, buildPerTurn: number, skills: Skill[] = [], drops: ResourceDrop[] = [], statuses: Status[] = []) {
         this.name = name;
         this.faction = faction;
         this.health = health;
@@ -32,6 +33,7 @@ export class Unit implements Interfaces.Unit {
         this.statuses = [];
         this.drops = drops;
         this.actionsPerTurn = actionsPerTurn;
+        this.buildPerTurn = buildPerTurn;
         this.actionsLeft = actionsPerTurn;
         // add each status (effectively cloning input array)
         for (const status of statuses) {
@@ -59,6 +61,10 @@ export class Unit implements Interfaces.Unit {
 
     get buildCost(): ResourceInventory {
         return ResourceInventory.fromAmounts(this.drops.map(item => { return { resource: item.resource, amount: item.max }; }));
+    }
+
+    get buildActionCost(): number {
+        return this.drops.map(item => item.max).reduce((acc, x) => acc + x, 0);
     }
 
     get rating(): AIRating {
@@ -166,8 +172,22 @@ export class Unit implements Interfaces.Unit {
         } else {
             this.actionsLeft = this.actionsPerTurn;
         }
+        if (this.statuses.includes(Status.Projecting) && this.containingRegion !== undefined) {
+            for (let unit of this.containingRegion.units) {
+                unit.addStatus(Status.Shield);
+            }
+        }
+        if (this.statuses.includes(Status.Aromatic) && this.containingRegion !== undefined) {
+            for (let unit of this.containingRegion.units) {
+                unit.addStatus(Status.Pheromones);
+            }
+        }
         if (this.statuses.includes(Status.Fire)) {
             this.wound(1, true, true);
+        }
+        if (this.alive && this.statuses.includes(Status.Hatching)) {
+            this.maxHealth--;
+            this.health = Math.min(this.health, this.maxHealth);
         }
     }
 

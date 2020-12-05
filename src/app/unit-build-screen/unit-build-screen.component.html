@@ -1,12 +1,8 @@
 <h2>Build a Unit</h2>
+<h2>{{combat.buildActions | formatInfinity}}⚙️&#xFE0F;</h2>
 <div *ngFor="let species of inventory.schematics">
     <app-unit-species [species]="species"></app-unit-species>
     <p-button (onClick)="build(species)"
-        [disabled]="!inventory.canAfford(species.buildCost) || combat.tank.actionsLeft == 0"
+        [disabled]="combat.buildActions < species.buildActionsCost"
         styleClass="p-button-secondary p-button-sm p-button-raised p-button-text">Build</p-button>
 </div>
-<h3>Current Resources</h3>
-<ul>
-    <li *ngIf="inventory.resources.arr.length === 0">Nothing</li>
-    <li *ngFor="let item of inventory.resources.arr">{{item.resource.name}} ×{{item.amount | formatInfinity}}</li>
-</ul>

@@ -14,6 +14,7 @@ export class MapState {
     private _location: Biome;
     public city?: City;
     public progress: Record<string, BiomeProgressInfo>;
+    public matriarchBeaten: boolean = false;
 
     public constructor(progress?: Record<string, BiomeProgressInfo>) {
         this.biomes = [
@@ -42,12 +43,22 @@ export class MapState {
         return this._location;
     }
 
+    get finalBossAvailable(): boolean {
+        return !this.matriarchBeaten && Object.values(this.progress).map(progress => progress.bossBeaten).reduce((acc, x) => acc && x);
+    }
+
     public bossFightAvailable(biome: Biome): boolean {
         const progress = this.progress[biome.name];
         return !progress.bossBeaten && progress.percentExplored >= 100;
     }
 
     public getProgress(biome: Biome): BiomeProgressInfo {
+        if (biome === Biome.Nest) {
+            return {
+                percentExplored: 100,
+                bossBeaten: this.matriarchBeaten
+            };
+        }
         return this.progress[biome.name];
     }
 
@@ -59,6 +70,9 @@ export class MapState {
     }
 
     public exploreRegion(biome: Biome, amount: number): void {
+        if (biome === Biome.Nest) {
+            return;
+        }
         this.progress[biome.name].percentExplored = Math.min(100,
             this.progress[biome.name].percentExplored + amount);
     }
@@ -68,6 +82,9 @@ export class MapState {
     }
 
     public killBoss(biome: Biome = this._location): void {
+        if (biome === Biome.Nest) {
+            return;
+        }
         this.progress[biome.name].bossBeaten = true;
     }
 

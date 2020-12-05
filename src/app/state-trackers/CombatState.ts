@@ -3,6 +3,7 @@ import { applyEffect } from '../classes/Effect';
 import { Skill } from '../classes/Skill';
 import { Status } from '../classes/Status';
 import { Unit } from '../classes/Unit';
+import { UnitSpecies } from '../classes/UnitSpecies';
 import { AIRating, multiplyRatings } from '../interfaces/AIRating';
 import { Targetable } from '../interfaces/Targetable';
 import { UnitFaction } from '../interfaces/Unit';
@@ -21,7 +22,7 @@ export class CombatState {
     private _bossFight: boolean;
     private boss?: Unit;
 
-    constructor(public tank: Unit, public battlefield: Battlefield, private mapState: MapState, public isEnemyTurn: boolean = false, bossFight?: boolean, boss?: Unit) {
+    constructor(public tank: Unit, public battlefield: Battlefield, private mapState: MapState, public isEnemyTurn: boolean = false, public buildActions: number = 5, bossFight?: boolean, boss?: Unit) {
         if (bossFight !== undefined) {
             this._bossFight = bossFight;
         } else {
@@ -41,6 +42,17 @@ export class CombatState {
         // and now the turn's really over, so...
         for (const unit of this.battlefield.getAllUnits()) {
             unit.advanceTurn();
+            if (unit.playerControlled) {
+                this.buildActions += unit.buildPerTurn;
+            }
+            if (unit.statuses.includes(Status.Hatching) && unit.maxHealth === 0) {
+                // time 2 hatch
+                const location = unit.containingRegion;
+                unit.die();
+                if (location !== undefined) {
+                    location.addUnit(UnitSpecies.Larva.instantiate());
+                }
+            }
         }
     }
 
@@ -49,13 +61,21 @@ export class CombatState {
     }
 
     useSkill(user: Unit, skill: Skill, target: Targetable, inventory: InventoryState = new InventoryState()): void {
+        const location = user.containingRegion;
         for (const effect of skill.effects) {
-            applyEffect(effect, user, target, inventory);
+            applyEffect(effect, user, target, inventory, this);
+        }
+        if (user.containingRegion !== location && location !== undefined && user.statuses.includes(Status.Avian)) {
+            location.addUnit(UnitSpecies.Egg.instantiate());
         }
         user.spendAction();
         user.removeStatus(Status.Pheromones);
         if (this.boss !== undefined && !this.boss.alive) {
-            this.mapState.killBoss();
+            if (this.boss.name === 'Matriarch') {
+                this.mapState.matriarchBeaten = true;
+            } else {
+                this.mapState.killBoss();
+            }
         }
     }
 

@@ -28,6 +28,10 @@ export class Biome {
         [[UnitSpecies.Anemone, 1], [UnitSpecies.Vermin, 1]],
         [[UnitSpecies.Lodestone, 1]],
         UnitSpecies.Magic);
+    public static readonly Nest = new Biome('Nest', ['Marsh', 'Swamp', 'Wetland'],
+        [],
+        [[UnitSpecies.Egg, 1]],
+        UnitSpecies.Matriarch);
 
     private constructor(private _name: string,
         private regionNames: string[],
@@ -52,8 +56,10 @@ export class Biome {
             regions[regions.length - 1].addUnit(this.boss.instantiate());
         }
         const numUnits = boss ? 4 : Random.int(numRegions, numRegions * 2);
-        for (let i = 0; i < numUnits; i++) {
-            Random.weightedRandom(weightedRegions).addUnit(Random.weightedRandom(this.species).instantiate());
+        if (this.species.length > 0) {
+            for (let i = 0; i < numUnits; i++) {
+                Random.weightedRandom(weightedRegions).addUnit(Random.weightedRandom(this.species).instantiate());
+            }
         }
         if (this.deposits.length > 0) {
             const numDeposits = Random.int(numRegions * 0.5, numRegions * 1);

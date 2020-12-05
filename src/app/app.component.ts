@@ -47,6 +47,14 @@ export class AppComponent {
         Debug.mapTheWorld();
     }
 
+    hundredAndFourDays(): void {
+        Debug.hundredAndFourDays();
+    }
+
+    efficientDefeats(): void {
+        Debug.efficientDefeats();
+    }
+
     titleActive(): boolean {
         return Game.titleActive();
     }

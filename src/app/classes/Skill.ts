@@ -37,6 +37,9 @@ export class Skill {
     public static readonly Prod = new Skill('Prod', SkillTargetingMode.UnitMelee, [{ type: 'Damage', focus: 'target', amount: 1 }]);
     public static readonly Slash = new Skill('Slash', SkillTargetingMode.UnitMelee, [{ type: 'Damage', focus: 'target', amount: 2 }]);
 
+    // Heal Skills
+    public static readonly Repair = new Skill('Repair', SkillTargetingMode.UnitMelee, [{type: 'Heal', focus: 'target', amount: 1}]);
+
     // Kill-Combo Attacks
     public static readonly Gnaw = new Skill('Gnaw', SkillTargetingMode.UnitMelee, [{ type: 'Damage', focus: 'target', amount: 1 },
         { type: 'Refresh', focus: 'user', amount: 1, predicate: {type: 'IsDead', focus: 'target'} }]);
@@ -45,9 +48,6 @@ export class Skill {
 
     // Charged Skills
     public static readonly Siphon = new Skill('Siphon', SkillTargetingMode.UnitMelee, [{ type: 'Damage', focus: 'target', amount: 2 },
-        { type: 'Status', focus: 'user', status: Status.Charged, predicate: {type: 'IsDead', focus: 'target'} }]);
-
-    public static readonly Mulch = new Skill('Mulch', SkillTargetingMode.UnitMelee, [{ type: 'Damage', focus: 'target', amount: 2, predicate: {type: 'IsFaction', focus: 'target', faction: UnitFaction.Deposit} },
         { type: 'Status', focus: 'user', status: Status.Charged, predicate: {type: 'IsDead', focus: 'target'} }]);
 
     public static readonly Arc = new Skill('Arc', SkillTargetingMode.UnitArtillery,
@@ -68,6 +68,18 @@ export class Skill {
     public static readonly Transfer = new Skill('Transfer', SkillTargetingMode.UnitRanged,
         [{type: 'Status', status: Status.Charged, focus: 'target'}, {type: 'RemoveStatus', status: Status.Charged, focus: 'user'}], true);
 
+    // Build action skills
+
+    public static readonly Clobber = new Skill('Clobber', SkillTargetingMode.UnitMelee,
+        [{type: 'Damage', focus: 'target', amount: 3}, {type: 'BuildActions', focus: 'target', amount: 3, predicate: {type: 'IsDead', focus: 'target'}}]);
+
+    public static readonly Mulch = new Skill('Mulch', SkillTargetingMode.UnitMelee,
+        [{type: 'and', focus: 'target',
+            a: {type: 'Kill', focus: 'target'},
+            b: {type: 'BuildActions', focus: 'user', amount: 1},
+            predicate: {type: 'IsFaction', faction: UnitFaction.Deposit, focus: 'target'}
+        }]);
+
     // Fire Skills
     public static readonly Burn = new Skill('Burn', SkillTargetingMode.UnitMelee, [{ type: 'Status', focus: 'target', status: Status.Fire }]);
     public static readonly Detonate = new Skill('Detonate', SkillTargetingMode.UnitMelee, [{ type: 'Status', status: Status.Fire, focus: 'target' }, { type: 'Kill', focus: 'user' }]);
@@ -76,7 +88,7 @@ export class Skill {
 
     public static readonly Smother = new Skill('Smother', SkillTargetingMode.UnitMelee, [{type: 'RemoveStatus', status: Status.Fire, focus: 'target', predicate: {type: 'HasStatus', focus: 'target', status: Status.Fire}, otherwise: {type: 'Damage', focus: 'target', amount: 2}}]);
 
-    public static readonly Chop = new Skill('Chop', SkillTargetingMode.UnitMelee, [{type: 'Damage', focus: 'target', amount: 2, predicate: {type: 'HasStatus', focus: 'target', status: Status.Fire}}]);
+    public static readonly Chop = new Skill('Chop', SkillTargetingMode.UnitMelee, [{type: 'Damage', focus: 'target', amount: 3, predicate: {type: 'HasStatus', focus: 'target', status: Status.Fire}}]);
 
     // Corrosion Skills
     public static readonly Corrode = new Skill('Corrode', SkillTargetingMode.UnitMelee, [{type: 'Status', focus: 'target', status: Status.Corroded}]);
@@ -96,6 +108,16 @@ export class Skill {
 
     // Advantage Skills
     public static readonly Lift = new Skill('Lift', SkillTargetingMode.UnitMelee, [{type: 'Status', focus: 'target', status: Status.Advantage}]);
+
+    // Matriarch Skills
+    public static readonly Divebomb = new Skill('Divebomb', SkillTargetingMode.UnitArtillery,
+        [{type: 'MoveTo', focus: 'target'}, {type: 'Damage', amount: 3, focus: 'target'}]);
+
+    public static readonly Buffet = new Skill('Buffet', SkillTargetingMode.RegionArtillery,
+        [{type: 'Damage', focus: 'target', amount: 1}, {type: 'MoveTo', focus: 'target'}]);
+
+    public static readonly Roost = new Skill('Roost', SkillTargetingMode.RegionArtillery,
+        [{type: 'Heal', focus: 'target', amount: 1, predicate: {type: 'HasStatus', focus: 'target', status: Status.Hatching}}, {type: 'MoveTo', focus: 'target'}]);
 
     // Debug Skills
     public static readonly Decapitate = new Skill('Decapitate', SkillTargetingMode.UnitMelee,

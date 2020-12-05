@@ -2,12 +2,15 @@
     display: flex;
     justify-content: space-around;
     overflow-y: hidden;
-    height: auto;
     align-items: stretch;
-    height: calc(100vh - 135px);
+    height: calc(100vh - 64px);
+    position: absolute;
+    bottom: 0px;
 }
 
 .battlefield-section {
     overflow-y: auto;
     overflow-x: hidden;
+    flex-grow: 1;
+    flex-basis: 0;
 }

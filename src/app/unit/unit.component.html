@@ -1,10 +1,11 @@
 <h3 *ngIf="showHeader === true">
     {{ formattedName() }}
     <app-status-emoji *ngFor="let status of unit!.statuses" [status]="status"></app-status-emoji>
+    <span *ngIf="unit!.buildPerTurn > 0">(+{{unit!.buildPerTurn}}⚙️&#xFE0F; per turn)</span>
 </h3>
 <p>
-    <span pTooltip="Health" tooltipPosition="top">❤️&#xFE0E;</span> {{unit!.health | formatInfinity}}/{{unit!.maxHealth | formatInfinity}}
-    <span *ngIf="unit!.actionsPerTurn > 0"><span pTooltip="Actions" tooltipPosition="top">⚡&#xFE0E;</span> {{unit!.actionsLeft | formatInfinity}}/{{unit!.actionsPerTurn | formatInfinity}}</span>
+    <span pTooltip="Health" tooltipPosition="top">❤️&#xFE0F;</span> {{unit!.health | formatInfinity}}/{{unit!.maxHealth | formatInfinity}}
+    <span *ngIf="unit!.actionsPerTurn > 0"><span pTooltip="Actions" tooltipPosition="top">⚡&#xFE0F;</span> {{unit!.actionsLeft | formatInfinity}}/{{unit!.actionsPerTurn | formatInfinity}}</span>
 </p>
 <div id="skills" *ngIf="unit!.skills.length > 0">
     <h4>Skills</h4>

@@ -1,4 +1,23 @@
-<div [ngClass]="(flex ? 'flex' : '')">
-    <p>{{inventory.credits | formatInfinity}}&curren;</p>
-    <p *ngFor="let item of inventory.resources.arr">{{item.resource.name}} &times;{{item.amount | formatInfinity}}</p>
+<p>{{inventory.credits | formatInfinity}}&curren;</p>
+<div class="columns">
+    <div>
+        <h3>Resources</h3>
+        <div id="resources" class="flex">
+            <p *ngIf="inventory.resources.arr.length === 0">None</p>
+            <p *ngFor="let item of inventory.resources.arr">{{item.resource.name}} &times;{{item.amount | formatInfinity}}</p>
+        </div>
+    </div>
+    <div>
+        <h3>Schematics</h3>
+        <div id="schematics" class="flex">
+            <p *ngIf="inventory.schematics.length === 0">None</p>
+            <p *ngFor="let species of inventory.schematics">{{species.name}}</p>
+        </div>
+    </div>
+    <div>
+        <h3>Documents</h3>
+        <div id="notes" class="flex">
+            <p-button *ngFor="let note of notes()" (onClick)="view(note)">{{note.title}}</p-button>
+        </div>
+    </div>
 </div>

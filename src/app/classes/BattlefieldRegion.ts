@@ -1,7 +1,9 @@
 import { Unit } from './Unit';
+import { UnitSpecies } from './UnitSpecies';
 import { Targetable } from '../interfaces/Targetable';
 import { ResourceInventory, Resource } from './Resource';
 import { AIRating, combineRatings } from '../interfaces/AIRating';
+import { Status } from './Status';
 
 export class BattlefieldRegion implements Targetable {
 

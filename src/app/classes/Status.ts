@@ -15,6 +15,10 @@ export class Status {
     public static readonly Slippery = new Status('Slippery', '💦', 'Immune to additional status effects.', AIRating.Neutral);
     public static readonly Stunned = new Status('Stunned', '⏸️', 'Actions don\'t refresh next turn.', AIRating.Bad);
     public static readonly Piezoelectric = new Status('Piezoelectric', '🔌', 'Gain Charged when taking damage.', AIRating.Good);
+    public static readonly Projecting = new Status('Projecting', '📡', 'At the start of each turn, give all adjacent units Shields.', AIRating.Good);
+    public static readonly Aromatic = new Status('Aromatic', '♨️', 'At the start of each turn, give all adjacent units Pheromones.', AIRating.Good);
+    public static readonly Avian = new Status('Avian', '🦅', 'Lay an egg upon leaving a region.', AIRating.Good);
+    public static readonly Hatching = new Status('Hatching', '🥚', 'Lose 1 maximum health each turn. Hatches when it hits zero.', AIRating.Neutral);
 
     private constructor(
         public readonly name: string,
