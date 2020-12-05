@@ -44,10 +44,10 @@ export class Note {
     The Serpent coming in from beyond the Kuiper belt sent the world into a panic [...] It came apart near Mars, and there was
     a collective sigh of relief [...] the surreality of the fragmented alien mothership slowly descending with all its pilots and crew dead was a cause for further panic even before the mutagenic spores were released [...]
 
-    It is a great irony that serpentine detritus was our salvation even as it ravaged the world [...] the air was toxifying in preparation for a deceased invading force [...] wildlife twisted into forms for efficient resource extraction [...]
-    alien technology was necessary to construct the vast airtight domes humanity retreated into [...]
+    It is a great irony that serpentine detritus was our salvation even as it ravaged the world [...] the air was toxifying in preparation for a deceased invading force [...] wildlife twisted into forms designed for efficient resource extraction [...]
+    alien technology was necessary to construct the vast airtight domes into which humanity retreated [...]
 
-    Even now, travel into the outer wastelands is the only way any of these domed communities can survive [...]`);
+    Even now, travel into the outer wastelands is the only way any of these domed communities can obtain the resources necessary to survive [...]`);
 
     public static readonly Victory = new Note('Congratulations On Your Retirement',
     `Commendable service, pilot! The resources you harvested are vital to the continued survival of the last bastions of humanity.
